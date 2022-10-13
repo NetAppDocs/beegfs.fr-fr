@@ -1,0 +1,127 @@
+---
+sidebar: sidebar 
+permalink: beegfs-terms.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: 'Termes et concepts qui s"appliquent à la solution BeeGFS sur NetApp.' 
+---
+= Termes et concepts
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Les termes et concepts suivants s'appliquent à la solution BeeGFS sur NetApp.
+
+[cols="25h,~"]
+|===
+| Durée | Description 
+
+
+ a| 
+L'IA
+ a| 
+L'intelligence artificielle.
+
+
+
+ a| 
+Inventaire Ansible
+ a| 
+Structure de répertoire contenant les fichiers YAML qui sont utilisés pour décrire le cluster BeeGFS HA souhaité.
+
+
+
+ a| 
+BMC
+ a| 
+Contrôleur de gestion de la carte mère. Parfois appelé processeur de service.
+
+
+
+ a| 
+nœuds de blocs
+ a| 
+Systèmes de stockage NetApp FAS.
+
+
+
+ a| 
+clients
+ a| 
+Nœuds de serveur.
+
+
+
+ a| 
+DL
+ a| 
+Apprentissage profond.
+
+
+
+ a| 
+nœuds de fichiers
+ a| 
+Serveurs de fichiers BeeGFS.
+
+
+
+ a| 
+HAUTE DISPONIBILITÉ
+ a| 
+Haute disponibilité.
+
+
+
+ a| 
+HIC
+ a| 
+Carte d'interface hôte.
+
+
+
+ a| 
+HPC
+ a| 
+Informatique hautes performances.
+
+
+
+ a| 
+Les workloads de type HPC
+ a| 
+Les charges de travail de type HPC se caractérisent généralement par plusieurs nœuds de calcul ou GPU nécessitant l'accès au même dataset en parallèle pour faciliter une tâche de calcul ou d'entraînement distribuée. Ces jeux de données comprennent souvent des fichiers volumineux qui doivent être répartis sur plusieurs nœuds de stockage physique, afin d'éliminer les goulets d'étranglement matériels traditionnels qui empêchent l'accès simultané à un seul fichier.
+
+
+
+ a| 
+ML
+ a| 
+Apprentissage machine.
+
+
+
+ a| 
+NLP
+ a| 
+Traitement du langage naturel.
+
+
+
+ a| 
+NLU
+ a| 
+Compréhension du langage naturel.
+
+
+
+ a| 
+NVA
+ a| 
+Le programme NetApp Verified Architecture (NVA) propose des configurations de référence et des conseils de dimensionnement pour des charges de travail et des cas d'utilisation spécifiques. Ces solutions sont testées en profondeur, conçues pour réduire les risques de déploiement et accélérer le délai de mise sur le marché.
+
+|===

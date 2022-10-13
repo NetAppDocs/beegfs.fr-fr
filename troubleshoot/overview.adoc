@@ -1,0 +1,14 @@
+---
+permalink: troubleshoot/overview.html 
+sidebar: sidebar 
+keywords: troubleshoot, overview 
+summary: 'Vue d"ensemble du dépannage' 
+---
+= Vue d'ensemble du dépannage
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Lorem ipsum dolor sit amet, consectetur adipisciting elit, sed do eiusmod tentor incididunt ut lamore et dolore magna aliqua.

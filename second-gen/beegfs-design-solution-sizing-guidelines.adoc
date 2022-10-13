@@ -1,0 +1,88 @@
+---
+sidebar: sidebar 
+permalink: beegfs-design-solution-sizing-guidelines.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: La solution BeeGFS inclut des recommandations sur le dimensionnement de la performance et de la capacité qui étaient basées sur des tests de vérification. 
+---
+= Instructions de dimensionnement
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+La solution BeeGFS inclut des recommandations sur le dimensionnement de la performance et de la capacité qui étaient basées sur des tests de vérification.
+
+L'objectif de l'architecture modulaire est de créer une solution simple à dimensionner en ajoutant plusieurs éléments de base pour répondre aux exigences d'un système BeeGFS particulier. À l'aide des lignes directrices ci-dessous, vous pouvez estimer la quantité et les types de blocs de construction BeeGFS qui sont nécessaires pour répondre aux exigences de votre environnement.
+
+Notez que ces estimations sont les meilleures performances au cas par cas. Les applications de test des performances synthétiques sont écrites et utilisées pour optimiser l'utilisation des systèmes de fichiers sous-jacents d'une manière qui n'est pas forcément possible pour les applications réelles.
+
+
+
+== Dimensionnement de la performance
+
+Le tableau suivant indique le dimensionnement de performance recommandé.
+
+|===
+| Profil de configuration | 1MiB lit | Écritures 1MiB 
+
+
+| Métadonnées + stockage | 62 GiBps | 21 GiBps 
+
+
+| Stockage uniquement | 64 GiBps | 21 GiBps 
+|===
+Le dimensionnement de la capacité des métadonnées est basé sur la « règle générale » selon laquelle 500 Go de capacité suffisent pour environ 150 millions de fichiers sur BeeGFS. (Pour plus d'informations, consultez la documentation BeeGFS pour https://doc.beegfs.io/latest/system_design/system_requirements.html["Configuration minimale requise"^].)
+
+L'utilisation de fonctions telles que les listes de contrôle d'accès et le nombre de répertoires et de fichiers par répertoire affecte également la vitesse de consommation de l'espace de métadonnées. Les estimations de capacité de stockage tiennent compte de la capacité de disque utilisable ainsi que de la surcharge RAID 6 et XFS.
+
+
+
+== Dimensionnement de la capacité pour les métadonnées + éléments de base du stockage
+
+Le tableau suivant indique le dimensionnement de la capacité recommandé pour les métadonnées et les éléments de base du stockage.
+
+|===
+| Taille du disque (2+2 RAID 1) groupes de volumes de métadonnées | Capacité des métadonnées (nombre de fichiers) | Taille des disques (RAID 6 8+2) groupes de volumes de stockage | Capacité de stockage (contenu de fichiers) 
+
+
+| 1,92 TO | 1,797,120,000 | 1,92 TO | 47,91 TO 
+
+
+| 3,84 TO | 3,594,240,000 | 3,84 TO | 95,84 TO 
+
+
+| 7,68 TO | 7,557,120,000 | 7,68 TO | 201,51 TO 
+
+
+| 15,3 TO | 16,156,800,000 | 15,3 TO | 430.84 TO 
+|===
+
+NOTE: Lors du dimensionnement des métadonnées et des éléments de base de stockage, vous pouvez réduire les coûts en utilisant des disques plus petits pour les groupes de volumes de métadonnées et les groupes de volumes de stockage.
+
+
+
+== Dimensionnement de la capacité pour les éléments de base uniquement destinés au stockage
+
+Le tableau suivant indique la règle générale de dimensionnement de la capacité pour les éléments de base uniquement liés au stockage.
+
+|===
+| Taille des disques (RAID 6 10+2) groupes de volumes de stockage | Capacité de stockage (contenu de fichiers) 
+
+
+| 1,92 TO | 59,89 TO 
+
+
+| 3,84 TO | 11980 TO 
+
+
+| 7,68 TO | 251,89TB 
+
+
+| 15,3 TO | 58,55 TO 
+|===
+
+NOTE: Les performances et la surcharge liée à la capacité de l'inclusion du service de gestion dans le premier élément de base sont minimales, sauf si le verrouillage global des fichiers est activé.

@@ -1,0 +1,54 @@
+---
+section: second-gen
+title: Utilisez NVA deuxième génération
+entries:
+- title: Commencez
+  entries:
+  - title: Présentation de la solution
+    url: "/beegfs-solution-overview.html"
+  - title: Exigences techniques
+    url: "/beegfs-technology-requirements.html"
+- title: Design
+  entries:
+  - title: Présentation
+    url: "/beegfs-design-overview.html"
+  - title: Conception matérielle
+    url: "/beegfs-design-hardware-architecture.html"
+  - title: Conception logicielle
+    url: "/beegfs-design-software-architecture.html"
+  - title: Vérification
+    url: "/beegfs-design-solution-verification.html"
+  - title: Instructions de dimensionnement
+    url: "/beegfs-design-solution-sizing-guidelines.html"
+  - title: Réglage des performances
+    url: "/beegfs-design-performance-tuning.html"
+- title: Déployez
+  entries:
+  - title: Présentation
+    url: "/beegfs-deploy-overview.html"
+  - title: Découvrez Ansible
+    url: "/beegfs-deploy-learn-ansible.html"
+  - title: Et des meilleures pratiques
+    url: "/beegfs-deploy-bestpractice.html"
+  - title: Déployez le matériel
+    url: "/beegfs-deploy-hardware.html"
+  - title: Déployez des logiciels
+    entries:
+    - title: Configurez les nœuds de fichiers et de blocs
+      url: "/beegfs-deploy-setup-nodes.html"
+    - title: Configurez le nœud de contrôle Ansible
+      url: "/beegfs-deploy-setting-up-an-ansible-control-node.html"
+    - title: Créer un inventaire Ansible
+      url: "/beegfs-deploy-beegfs-general-config.html"
+    - title: Définir des éléments de base BeeGFS
+      url: "/beegfs-deploy-beegfs-build-inventory.html"
+    - title: Déployez BeeGFS
+      url: "/beegfs-deploy-beegfs-playbook.html"
+    - title: Configurer le client BeeGFS
+      url: "/beegfs-deploy-beegfs-configure-clients.html"
+    - title: Réglez les paramètres du système en fonction des performances
+      url: beegfs-deploy-file-node-tuning.html
+  - title: Faire évoluer les clusters BeeGFS
+    url: "/beegfs-deploy-beegfs-scale.html"
+  - title: Pourcentages de volume recommandés
+    url: "/beegfs-deploy-recommended-volume-percentages.html"

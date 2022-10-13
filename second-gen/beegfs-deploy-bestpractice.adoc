@@ -1,0 +1,152 @@
+---
+sidebar: sidebar 
+permalink: beegfs-deploy-bestpractice.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: Suivez les bonnes pratiques pour déployer la solution BeeGFS sur NetApp. 
+---
+= Passez en revue les bonnes pratiques
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Suivez les bonnes pratiques pour déployer la solution BeeGFS sur NetApp.
+
+
+
+== Conventions standard
+
+Lors du montage physique et de la création du fichier d'inventaire Ansible, respecter les conventions standard suivantes (pour plus d'informations, voir link:beegfs-deploy-beegfs-general-config.html["Créez l'inventaire Ansible"]).
+
+* Les noms d'hôte de nœud de fichiers sont numérotés séquentiellement (h01-HN), les chiffres inférieurs se trouvant en haut du rack et les chiffres plus élevés en bas.
++
+Par exemple, la convention de dénomination `[location][row][rack]hN` ressemble à : `ictad22h01`.
+
+* Chaque nœud de bloc comprend deux contrôleurs de stockage, chacun avec son propre nom d'hôte.
++
+Un nom de baie de stockage est utilisé pour désigner l'ensemble du système de stockage en mode bloc dans le cadre d'un inventaire Ansible. Les noms de matrice de stockage doivent être numérotés de façon séquentielle (a01 - an), et les noms d'hôte des contrôleurs individuels sont dérivés de cette convention de nommage.
+
++
+Par exemple, un nœud de bloc nommé `ictad22a01` en général, des noms d'hôte peuvent être configurés pour chaque contrôleur comme `ictad22a01-a` et `ictad22a01-b`, Mais être mentionné dans un inventaire Ansible comme `ictad22a01`.
+
+* Les nœuds de fichiers et de blocs du même bloc de construction partagent le même schéma de numérotation et sont adjacents les uns aux autres dans le rack, les deux nœuds de fichiers étant situés en haut et les deux nœuds de bloc directement en dessous.
++
+Par exemple, dans le premier module, les nœuds de fichiers h01 et h02 sont tous deux connectés directement aux nœuds de bloc a01 et a02. De haut en bas, les noms d'hôte sont h01, h02, a01 et a02.
+
+* Les blocs de construction sont installés dans un ordre séquentiel en fonction de leurs noms d'hôtes, de sorte que les noms d'hôtes aux numéros inférieurs se trouvent en haut du rack et les noms d'hôtes aux numéros supérieurs se trouvent en bas.
++
+L'objectif est de réduire la longueur du câble qui passe en haut des commutateurs du rack et de définir une pratique de déploiement standard afin de simplifier le dépannage. Pour les centres de données où cela n'est pas autorisé en raison de problèmes liés à la stabilité des racks, l'inverse est certainement autorisé, en remplissant le rack par le bas vers le haut.
+
+
+
+
+
+== Configuration du réseau de stockage InfiniBand
+
+Moitié des ports InfiniBand sur chaque nœud de fichiers sont utilisés pour se connecter directement aux nœuds de bloc. L'autre moitié est connectée aux commutateurs InfiniBand et est utilisée pour la connectivité client-serveur BeeGFS. Pour déterminer la taille des sous-réseaux IPoIB utilisés pour les clients et les serveurs BeeGFS, vous devez tenir compte de la croissance prévue de votre cluster Compute/GPU et de votre système de fichiers BeeGFS. Si vous devez vous écarter des plages IP recommandées, n'oubliez pas que chaque connexion directe d'un bloc de construction unique possède un sous-réseau unique et qu'il n'y a pas de chevauchement avec les sous-réseaux utilisés pour la connectivité client-serveur.
+
+
+
+=== Connexions directes
+
+Les nœuds de fichiers et de blocs dans chaque bloc de construction utilisent toujours les adresses IP du tableau suivant pour leurs connexions directes.
+
+
+NOTE: Ce schéma d'adressage adhère à la règle suivante : le troisième octet est toujours impair ou pair, ce qui dépend du fait que le nœud de fichier est impair ou pair.
+
+|===
+| Nœud de fichier | Port IB | Adresse IP | Nœud de bloc | Port IB | IP physique | IP virtuel 
+
+
+| Impair (h1) | i1a | 192.168.1.10 | Impair (c1) | 2a | 192.168.1.100 | 192.168.1.101 
+
+
+| Impair (h1) | i2a | 192.168.3.10 | Impair (c1) | 2a | 192.168.3.100 | 192.168.3.101 
+
+
+| Impair (h1) | i3a | 192.168.5.10 | Pair (c2) | 2a | 192.168.5.100 | 192.168.5.101 
+
+
+| Impair (h1) | i4a | 192.168.7.10 | Pair (c2) | 2a | 192.168.7.100 | 192.168.7.101 
+
+
+| Pair (h2) | i1a | 192.168.2.10 | Impair (c1) | 2b | 192.168.2.100 | 192.168.2.101 
+
+
+| Pair (h2) | i2a | 192.168.4.10 | Impair (c1) | 2b | 192.168.4.100 | 192.168.4.101 
+
+
+| Pair (h2) | i3a | 192.168.6.10 | Pair (c2) | 2b | 192.168.6.100 | 192.168.6.101 
+
+
+| Pair (h2) | i4a | 192.168.8.10 | Pair (c2) | 2b | 192.168.8.100 | 192.168.8.101 
+|===
+
+
+=== Schéma d'adressage IPoIB BeeGFS client-serveur (deux sous-réseaux)
+
+Pour permettre aux clients BeeGFS d'utiliser deux ports InfiniBand, deux sous-réseaux IPoIB sont requis avec la moitié des services de serveur BeeGFS configurés avec une adresse IP préférée sur chaque sous-réseau pour s'assurer que les clients utilisent deux ports InfiniBand pour maximiser la redondance et le débit possible vers le système de fichiers.
+
+Chaque nœud de fichier exécute plusieurs services BeeGFS Server (gestion, métadonnées ou stockage). Pour permettre à chaque service de basculer de manière indépendante vers l'autre nœud de fichiers, chaque service est configuré avec des adresses IP uniques qui peuvent basculer entre les deux nœuds (parfois appelées interfaces logiques ou LIF).
+
+Bien qu'il ne soit pas obligatoire, ce déploiement suppose que les plages de sous-réseau IPoIB suivantes sont utilisées pour ces connexions et définit un modèle d'adressage standard qui applique les règles suivantes :
+
+* Le second octet est toujours impair ou pair, en fonction du fait que le port InfiniBand du nœud de fichiers est impair ou pair.
+* Les adresses IP du cluster BeeGFS sont toujours `xxx. 127.100.yyy` ou `xxx.128.100.yyy`.
+
+
+
+NOTE: En plus de l'interface utilisée pour la gestion du système d'exploitation intrabande, Corosync peut utiliser des interfaces supplémentaires pour la synchronisation et la battements cardiaques du cluster. Cela permet de s'assurer que la perte d'une interface unique n'entraîne pas l'arrêt complet du cluster.
+
+* Le service BeeGFS Management est toujours à `xxx.yyy.101.0` ou `xxx.yyy.102.0`.
+* Les services de métadonnées de BeeGFS sont toujours à `xxx.yyy.101.zzz` ou `xxx.yyy.102.zzz`.
+* Les services de stockage BeeGFS sont toujours à `xxx.yyy.103.zzz` ou `xxx.yyy.103.zzz`.
+* Adresses dans la plage `100.xxx.1.1` à `100.xxx.99.255` sont réservés aux clients.
+
+
+Le tableau suivant indique la plage pour le sous-réseau A : 100.127.0.0/16.
+
+|===
+| Objectif | Port InfiniBand | Adresse IP ou plage 
+
+
+| Cluster BeeGFS IP | i1b | 100.127.100.1 - 100.127.100.255 
+
+
+| Gestion BeeGFS | i1b | 100.127.101.0 
+
+
+| Métadonnées BeeGFS | i1b ou i3b | 100.127.101.1 - 100.127.101.255 
+
+
+| Stockage BeeGFS | i1b ou i3b | 100.127.103.1 - 100.127.103.255 
+
+
+| Clients BeeGFS | (varie selon le client) | 100.127.1.1 - 100.127.99.255 
+|===
+Le tableau suivant indique la plage pour le sous-réseau B : 100.128.0.0/16.
+
+|===
+| Objectif | Port InfiniBand | Adresse IP ou plage 
+
+
+| Cluster BeeGFS IP | i4b | 100.128.100.1 - 100.128.100.255 
+
+
+| Gestion BeeGFS | i2b | 100.128.102.0 
+
+
+| Métadonnées BeeGFS | i2b ou i4b | 100.128.102.1 - 100.128.102.255 
+
+
+| Stockage BeeGFS | i2b ou i4b | 100.128.104.1 - 100.128.104.255 
+
+
+| Clients BeeGFS | (varie selon le client) | 100.128.1.1 - 100.128.99.255 
+|===
+
+NOTE: Toutes les adresses IP comprises dans les plages ci-dessus ne sont pas utilisées dans cette architecture vérifiée NetApp. Ils montrent comment les adresses IP peuvent être pré-allouées pour faciliter l'extension du système de fichiers à l'aide d'un schéma d'adressage IP cohérent. Dans ce schéma, les nœuds de fichiers BeeGFS et les ID de service correspondent au quatrième octet d'une plage bien connue d'adresses IP. Le système de fichiers peut évidemment évoluer au-delà de 255 nœuds ou services si nécessaire.

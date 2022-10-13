@@ -1,0 +1,103 @@
+---
+sidebar: sidebar 
+permalink: beegfs-deploy-learn-ansible.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: 'Avant de commencer le déploiement, veillez à bien comprendre comment utiliser Ansible pour configurer et déployer la solution BeeGFS sur NetApp en utilisant la conception d"élément de base BeeGFS deuxième génération.' 
+---
+= Découvrez l'inventaire Ansible
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Avant de commencer le déploiement, veillez à bien comprendre comment utiliser Ansible pour configurer et déployer la solution BeeGFS sur NetApp en utilisant la conception d'élément de base BeeGFS deuxième génération.
+
+L'inventaire Ansible définit la configuration des nœuds de fichiers et de blocs et représente le système de fichiers BeeGFS que vous souhaitez déployer. L'inventaire inclut les hôtes, les groupes et les variables décrivant le système de fichiers BeeGFS souhaité. Les inventaires d'échantillons peuvent être téléchargés à partir de https://github.com/netappeseries/beegfs/tree/master/getting_started/["NetApp E-Series BeeGFS GitHub"^].
+
+
+
+== Modules et rôles Ansible
+
+Pour appliquer la configuration décrite dans l'inventaire Ansible, utilisez les différents modules et rôles Ansible fournis dans la collection NetApp E-Series Ansible, en particulier le rôle BeeGFS HA 7.2 (disponible sur le https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_2["NetApp E-Series BeeGFS GitHub"^]) qui déploie la solution de bout en bout.
+
+Chaque rôle de la collection NetApp E-Series Ansible est un déploiement de bout en bout complet de la solution BeeGFS sur NetApp. Les rôles utilisent les collections NetApp E-Series SANtricity, Host et BeeGFS qui vous permettent de configurer le système de fichiers BeeGFS avec la haute disponibilité. Vous pouvez ensuite provisionner et mapper le stockage, et vérifier que le stockage du cluster est prêt à être utilisé.
+
+Bien que la documentation approfondie soit fournie avec les rôles, les procédures de déploiement décrivent comment utiliser le rôle de déploiement d'une architecture vérifiée NetApp à l'aide de la conception de l'élément de base BeeGFS deuxième génération.
+
+
+NOTE: Bien que la procédure de déploiement tenter d'offrir suffisamment de détails pour que l'expérience précédente avec Ansible ne soit pas une condition préalable, vous devez avoir quelques connaissances de Ansible et de la terminologie connexe.
+
+
+
+== Disposition de l'inventaire pour un cluster BeeGFS HA
+
+Utilisez la structure d'inventaire Ansible pour définir un cluster BeeGFS HA.
+
+Tout le monde disposant d'une expérience Ansible précédente doit être conscient que le rôle BeeGFS HA implémente une méthode personnalisée pour découvrir quelles variables (ou faits) s'appliquent à chaque hôte. Pour simplifier la création d'un inventaire Ansible, qui décrit les ressources pouvant être exécutées sur plusieurs serveurs.
+
+Un inventaire Ansible comprend généralement les fichiers dans `host_vars` et `group_vars`, et un `inventory.yml` fichier qui affecte des hôtes à des groupes spécifiques (et éventuellement des groupes à d'autres groupes).
+
+
+NOTE: Ne créez pas de fichiers contenant le contenu de cette sous-section, qui est uniquement un exemple.
+
+Bien que cette configuration soit prédéterminée en fonction du profil de configuration, vous devez généralement comprendre comment tout s'établit comme un inventaire Ansible, comme suit :
+
+....
+# BeeGFS HA (High Availability) cluster inventory.
+all:
+  children:
+    # Ansible group representing all block nodes:
+    eseries_storage_systems:
+      hosts:
+        ictad22a01:
+        ictad22a02:
+        ictad22a03:
+        ictad22a04:
+        ictad22a05:
+        ictad22a06:
+    # Ansible group representing all file nodes:
+    ha_cluster:
+      children:
+        meta_01:  # Group representing a metadata service with ID 01.
+          hosts:
+            file_node_01:  # This service is preferred on the first file node.
+            file_node_02:  # And can failover to the second file node.
+        meta_02:  # Group representing a metadata service with ID 02.
+          hosts:
+            file_node_02:  # This service is preferred on the second file node.
+            file_node_01: # And can failover to the first file node.
+....
+Pour chaque service, un fichier supplémentaire est créé sous `group_vars` description de sa configuration :
+
+....
+# meta_01 - BeeGFS HA Metadata Resource Group
+beegfs_ha_beegfs_meta_conf_resource_group_options:
+  connMetaPortTCP: 8015
+  connMetaPortUDP: 8015
+  tuneBindToNumaZone: 0
+floating_ips:
+  - i1b: <IP>/<SUBNET_MASK>
+  - i4b: <IP>/<SUBNET_MASK>
+# Type of BeeGFS service the HA resource group will manage.
+beegfs_service: metadata # Choices: management, metadata, storage.
+# What block node should be used to create a volume for this service:
+beegfs_targets:
+  ictad22a01:
+    eseries_storage_pool_configuration:
+      - name: beegfs_m1_m2_m5_m6
+        raid_level: raid1
+        criteria_drive_count: 4
+        owning_controller: A
+        common_volume_configuration:
+          segment_size_kb: 128
+        volumes:
+          - size: 21.25
+....
+Cette disposition permet de définir le service, le réseau et la configuration de stockage BeeGFS pour chaque ressource à un seul emplacement. En arrière-plan, le rôle BeeGFS rassemble la configuration nécessaire pour chaque fichier et nœud de bloc en fonction de cette structure d'inventaire. Pour plus d'informations, consultez ce bulletin de blog : https://www.netapp.com/blog/accelerate-deployment-of-ha-for-beegfs-with-ansible/["NetApp accélère le déploiement de HA pour BeeGFS avec Ansible"^].
+
+
+NOTE: L'ID de noeud de type BeeGFS numérique et chaîne pour chaque service est automatiquement configuré en fonction du nom du groupe. Ainsi, en plus de l'exigence générale Ansible pour que les noms de groupe soient uniques, les groupes représentant un service BeeGFS doivent se terminer par un nombre unique pour le type de service BeeGFS que le groupe représente. Par exemple, META_01 et stor_01 sont autorisés, mais Metadata_01 et META_01 ne le sont pas.

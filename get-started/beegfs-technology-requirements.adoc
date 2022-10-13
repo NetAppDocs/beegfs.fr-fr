@@ -1,0 +1,276 @@
+---
+sidebar: sidebar 
+permalink: beegfs-technology-requirements.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: Pour implémenter la solution BeeGFS sur NetApp, assurez-vous que votre environnement répond aux exigences technologiques. 
+---
+= Exigences techniques
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Pour implémenter la solution BeeGFS sur NetApp, assurez-vous que votre environnement répond aux exigences technologiques.
+
+
+
+== Configuration matérielle requise
+
+Le tableau suivant répertorie les composants matériels requis pour implémenter un élément de base de deuxième génération unique de la solution BeeGFS sur NetApp.
+
+
+NOTE: Ils peuvent varier selon la mise en œuvre de la solution et les besoins du client.
+
+[cols="10%,20%,70%"]
+|===
+| Nombre | Composant matériel | De formation 
+
+
+ a| 
+2
+ a| 
+Nœuds de fichiers BeeGFS.
+ a| 
+Pour atteindre les performances attendues, chaque nœud de fichier doit remplir ou dépasser la configuration suivante.
+
+*Processeurs:*
+
+* 2 AMD EPYC 7343 16C 3.2 GHz.
+* Configuré comme deux zones NUMA.
+
+
+*Mémoire:*
+
+* 256 GO.
+* 16x 16 Go TruDDR4 3800 MHz (2Rx8 1,2V) RDIMM-A (préférez des barrettes DIMM plus petites sur moins de barrettes DIMM plus grandes).
+* Rempli pour maximiser la bande passante de la mémoire.
+
+
+*Extension PCIe : quatre emplacements PCE Gen4 x16 :*
+
+* Deux emplacements par zone NUMA.
+* Chaque slot doit fournir suffisamment d'alimentation/de refroidissement pour l'adaptateur Mellanox MCX4653106A-HDAT.
+
+
+*Divers:*
+
+* Deux disques SATA 1 To 7200 tr/min (ou comparables) configurés en RAID 1 pour le système d'exploitation.
+* Adaptateur 10GbE OCP 3.0 (ou équivalent) pour la gestion du système d'exploitation intrabande.
+* 1GbE BMC avec Redfish API pour la gestion de serveurs hors bande.
+* Deux blocs d'alimentation et ventilateurs de performances remplaçables à chaud.
+* Les câbles InfiniBand optiques Mellanox doivent être pris en charge si nécessaire pour atteindre les commutateurs InfiniBand de stockage.
+
+
+*Lenovo SR665:*
+
+* Un modèle NetApp personnalisé inclut la version requise du firmware du contrôleur XClarity requise pour prendre en charge les adaptateurs Mellanox ConnectX-6 à deux ports. Contactez NetApp pour en savoir plus sur le processus de commande.
+
+
+
+
+| 8 | Mellanox ConnectX-6 HCA (pour les nœuds de fichiers).  a| 
+* Adaptateurs de canal hôte MCX653106A-HDAT (HDR IB 200 Go, QSFP56 à deux ports, PCIe4.0 x16).
+
+
+
+
+| 8 | 1 m de câbles InfiniBand HDR (pour les connexions directes de nœud/bloc).  a| 
+* MCP1650-H001E30 (câble en cuivre passif Mellanox de 1 m, IB HDR, jusqu'à 200 Gbit/s, QSFP56, 30 AWG).
+
+
+La longueur peut être ajustée pour tenir compte des distances plus longues entre les nœuds de fichier et de bloc si nécessaire.
+
+
+
+| 8 | Câbles InfiniBand HDR (pour les connexions de nœud de fichiers/commutateur de stockage)  a| 
+Nécessite des câbles HDR InfiniBand (émetteurs-récepteurs QSFP56) de la longueur appropriée pour connecter des nœuds de fichiers aux switchs de lames de stockage. Les options possibles sont les suivantes :
+
+* MCP1650-H002E26 (câble en cuivre passif Mellanox de 2 m, IB HDR, jusqu'à 200 Go/s, QSFP56, 30 AWG).
+* MFS1S00-H003E (câble à fibre active Mellanox de 3 m, IB HDR, jusqu'à 200 Go/s, QSFP56).
+
+
+
+
+| 2 | Nœuds de blocs E-Series  a| 
+Deux contrôleurs EF600 configurés comme suit :
+
+* Mémoire : 256 Go (128 Go par contrôleur).
+* Adaptateur : 2 ports 200 Go/HDR (NVMe/IB).
+* Disques : configurés pour correspondre à la capacité souhaitée.
+
+
+|===
+
+
+== Configuration logicielle requise
+
+Pour des performances et une fiabilité prévisibles, les versions de la solution BeeGFS sur NetApp sont testées avec des versions spécifiques des composants logiciels requis pour implémenter la solution.
+
+
+
+=== Configuration requise pour le déploiement de logiciels
+
+Le tableau suivant répertorie les exigences logicielles déployées automatiquement dans le cadre du déploiement BeeGFS basé sur Ansible.
+
+[cols="20%,80%"]
+|===
+| Logiciel | Version 
+
+
+| BeeGFS | 7.2.6 
+
+
+| Corosync | 3.1.5-1 
+
+
+| Stimulateur cardiaque | 2.1.0-8 
+
+
+| OpenSM  a| 
+openmm-5.9.0 (à partir de mlnx_ofed 5.4-1.0.3.0)
+
+
+NOTE: Uniquement nécessaire pour les connexions directes afin d'activer la virtualisation.
+
+|===
+
+
+=== Configuration requise pour le nœud de contrôle Ansible
+
+La solution BeeGFS sur NetApp est déployée et gérée à partir d'un nœud de contrôle Ansible. Pour plus d'informations, reportez-vous à la section https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html["Documentation Ansible"^].
+
+Les exigences logicielles répertoriées dans les tableaux suivants sont spécifiques à la version de la collection NetApp BeeGFS Ansible indiquée ci-dessous.
+
+[cols="20%,80%"]
+|===
+| Logiciel | Version 
+
+
+| Ansible | 2.11 lorsqu'il est installé via pip : ansible-4.7.0 et ansible-core < 2.12,>=2.11.6 
+
+
+| Python | 3.9 
+
+
+| Packs Python supplémentaires | Cryptographie-35.0.0, netaddr-0.8.0 
+
+
+| Collection BeeGFS Ansible | 3.0.0 
+|===
+
+
+=== Configuration requise pour les nœuds de fichiers
+
+[cols="20%,80%"]
+|===
+| Logiciel | Version 
+
+
+ a| 
+Red Hat Enterprise Linux
+ a| 
+Red Hat 8.4 Server Physical avec haute disponibilité (2 sockets).
+
+
+IMPORTANT: Les nœuds de fichiers nécessitent un abonnement Red Hat Enterprise Linux Server valide et le module complémentaire haute disponibilité de Red Hat Enterprise Linux.
+
+
+
+| Noyau Linux | 4.18.0-305.25.1.el8_4.x86_64 
+
+
+| Pilotes InfiniBand / RDMA | Boîte de réception 
+
+
+| Microprogramme HCA ConnectX-6 | FW : 20.31.1014 
+
+
+| PXE : 3.6.0403 | UEFI : 14.24.0013 
+|===
+
+
+=== Exigences liées aux nœuds en mode bloc EF600
+
+[cols="20%,80%"]
+|===
+| Logiciel | Version 
+
+
+| SANtricity OS | 11.70.2 
+
+
+| NVSRAM | N6000-872834-D06.dlp 
+
+
+| Micrologiciel de lecteur | Dernière version disponible pour les modèles de lecteurs utilisés. 
+|===
+
+
+== Supplémentaires requise
+
+L'équipement indiqué dans le tableau suivant a été utilisé pour la validation, mais des alternatives appropriées peuvent être utilisées si nécessaire. En général, NetApp recommande d'exécuter les dernières versions de logiciels pour éviter les problèmes inattendus.
+
+|===
+| Composant matériel | Logiciel installé 
+
+
+ a| 
+* 2 switchs InfiniBand 200 Gb Mellanox MQ700
+
+ a| 
+* Micrologiciel 3.9.2110
+
+
+
+
+ a| 
+*1x nœud de contrôle Ansible (virtualisé) :*
+
+* Processeurs : processeur Intel(R) Xeon(R) Gold 6146 à 3,20 GHz
+* Mémoire: 8 Go
+* Stockage local : 24 Go
+
+ a| 
+* CentOS Linux 8.4.2105
+* Noyau 4.18.0-305.3.1.el8.x86_64
+
+
+Les versions Ansible et Python installés correspondent à celles du tableau ci-dessus.
+
+
+
+ a| 
+*10x clients BeeGFS (nœuds CPU):*
+
+* Processeur : 1 processeur AMD EPYC 7302 16 cœurs à 3 GHz
+* Mémoire : 128 Go
+* Réseau : 2 x Mellanox MCX4653106A-HDAT (un port connecté par adaptateur).
+
+ a| 
+* Ubuntu 20.04
+* Noyau: 5.4.0-100-générique
+* Pilotes InfiniBand : Mellanox OFED 5.4-1.0.3.0
+
+
+
+
+ a| 
+*1x BeeGFS client (nœud GPU):*
+
+* Processeurs : 2 processeurs AMD EPYC 7742 64 cœurs à 2,25 GHz
+* Mémoire : 1 To
+* Réseau : 2 x Mellanox MCX4653106A-HDAT (un port connecté par adaptateur).
+
+
+Ce système est basé sur la plateforme NVIDIA IDA HGX A100 et inclut quatre GPU A100.
+ a| 
+* Ubuntu 20.04
+* Noyau: 5.4.0-100-générique
+* Pilotes InfiniBand : Mellanox OFED 5.4-1.0.3.0
+
+
+|===

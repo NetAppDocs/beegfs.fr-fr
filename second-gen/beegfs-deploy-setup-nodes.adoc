@@ -1,0 +1,75 @@
+---
+sidebar: sidebar 
+permalink: beegfs-deploy-setup-nodes.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: 'Configurez la mise en réseau sur le contrôleur de gestion de la carte mère (BMC) de chaque serveur et configurez le port de gestion sur chaque contrôleur.' 
+---
+= Configurez les nœuds de fichiers et les nœuds en mode bloc
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Si la plupart des tâches de configuration logicielle sont automatisées au moyen des collections Ansible fournies par NetApp, vous devez configurer la mise en réseau sur le contrôleur de gestion de la carte de base (BMC) de chaque serveur et configurer le port de gestion sur chaque contrôleur.
+
+
+
+== Configurez les nœuds de fichiers
+
+. Configurez la mise en réseau sur le contrôleur de gestion de la carte mère (BMC) de chaque serveur.
++
+Pour savoir comment configurer le réseau pour les nœuds de fichiers validés du serveur Lenovo SR665, consultez le https://thinksystem.lenovofiles.com/help/index.jsp?topic=%2F7D2W%2Fset_the_network_connection.html["Documentation Lenovo ThinkSystem"^].
+
++
+
+NOTE: Un contrôleur de gestion de la carte mère (BMC), parfois appelé processeur de service, est le nom générique de la fonctionnalité de gestion hors bande intégrée dans diverses plates-formes de serveurs qui fournissent un accès à distance même si le système d'exploitation n'est pas installé ou accessible. Les fournisseurs vendent généralement cette fonctionnalité avec leur propre marque. Par exemple, sur le Lenovo SR665, le contrôleur BMC est appelé le contrôleur XClarity (XCC)_ de _Lenovo.
+
+. Configurez les paramètres du système pour des performances maximales.
++
+Vous configurez les paramètres système à l'aide de la configuration UEFI (anciennement appelée BIOS) ou en utilisant les API Redfish fournies par de nombreux BMCs. Les paramètres système varient en fonction du modèle de serveur utilisé comme nœud de fichier.
+
++
+Pour savoir comment configurer les paramètres système des nœuds de fichiers Lenovo SR665 validés, reportez-vous à la section link:beegfs-deploy-file-node-tuning.html["Réglez les paramètres du système en fonction des performances"].
+
+. Installez Red Hat 8.4 et configurez le nom d'hôte et le port réseau utilisés pour gérer le système d'exploitation, y compris la connectivité SSH à partir du nœud de contrôle Ansible.
++
+Ne configurez pas d'adresses IP sur l'un des ports InfiniBand pour le moment.
+
++
+
+NOTE: Bien qu'il ne soit pas strictement nécessaire, les sections suivantes présument que les noms d'hôte sont numérotés séquentiellement (comme h1-HN) et font référence aux tâches qui doivent être effectuées sur les hôtes impairs et pairs.
+
+. Utilisez RedHat Subscription Manager pour enregistrer et abonner le système afin de permettre l'installation des packages requis dans les référentiels Red Hat officiels et de limiter les mises à jour vers la version prise en charge de Red Hat : `subscription-manager release --set=8.4`. Pour obtenir des instructions, reportez-vous à la section https://access.redhat.com/solutions/253273["Comment enregistrer et souscrire un système RHEL"^] et  https://access.redhat.com/solutions/2761031["Comment limiter les mises à jour"^].
+. Activez le référentiel Red Hat contenant les packages requis pour la haute disponibilité.
++
+....
+subscription-manager repo-override --repo=rhel-8-for-x86_64-highavailability-rpms --add=enabled:1
+....
+. Mettez à jour tous les micrologiciels de l'HCA ConnectX-6 avec la version recommandée dans link:beegfs-technology-requirements.html["Exigences technologiques"].
++
+Cette mise à jour peut être effectuée en téléchargeant et en exécutant une version de l'outil mlxup qui regroupe le micrologiciel recommandé. Vous pouvez télécharger cet outil à partir de https://www.mellanox.com/support/firmware/mlxup-mft["Mlxup - Utilitaire de mise à jour et de requête"^].
+
+
+
+
+
+== Configurez les nœuds en mode bloc
+
+Configurez les nœuds en mode bloc EF600 en configurant le port de gestion sur chaque contrôleur.
+
+. Configurez le port de gestion sur chaque contrôleur EF600.
++
+Pour obtenir des instructions sur la configuration des ports, reportez-vous à la section https://docs.netapp.com/us-en/e-series/maintenance-ef600/hpp-overview-supertask-concept.html["Centre de documentation E-Series"^].
+
+. Vous pouvez également définir le nom de la matrice de stockage pour chaque système.
++
+La définition d'un nom peut faciliter la référence à chaque système dans les sections suivantes. Pour obtenir des instructions sur la définition du nom de la matrice, accédez à https://docs.netapp.com/us-en/e-series/maintenance-ef600/hpp-overview-supertask-concept.html["Centre de documentation E-Series"^].
+
+
+
+
+NOTE: Bien qu'il ne soit pas strictement nécessaire, les rubriques suivantes présument que les noms des matrices de stockage sont numérotés de façon séquentielle (comme c1 - CN) et font référence aux étapes à suivre sur les systèmes pairs ou impairs.

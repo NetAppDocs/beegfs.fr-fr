@@ -1,0 +1,115 @@
+---
+sidebar: sidebar 
+permalink: beegfs-design-performance-tuning.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: La solution BeeGFS inclut des recommandations sur le réglage de la performance qui étaient basées sur des tests de vérification. 
+---
+= Réglage des performances
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+La solution BeeGFS inclut des recommandations sur le réglage de la performance qui étaient basées sur des tests de vérification.
+
+Bien que BeeGFS fournit des performances raisonnables, NetApp a développé un ensemble de paramètres d'ajustement recommandés pour optimiser les performances. Ces paramètres prennent en compte les fonctionnalités des nœuds de bloc E-Series sous-jacents et les exigences spéciales requises pour exécuter BeeGFS dans une architecture HA à disque partagé.
+
+
+
+== L'ajustement des performances des nœuds de fichiers
+
+Les paramètres de réglage disponibles que vous pouvez configurer sont les suivants :
+
+. *Paramètres système dans l'UEFI/BIOS des nœuds de fichiers.* pour optimiser les performances, nous vous recommandons de configurer les paramètres système sur le modèle de serveur que vous utilisez comme nœuds de fichiers. Vous configurez les paramètres système lorsque vous configurez vos nœuds de fichiers à l'aide de la configuration du système (UEFI/BIOS) ou des API Redfish fournies par le contrôleur de gestion de la carte mère (BMC).
++
+Les paramètres système varient en fonction du modèle de serveur que vous utilisez comme nœud de fichier. Les paramètres doivent être configurés manuellement en fonction du modèle de serveur utilisé. Pour savoir comment configurer les paramètres système des nœuds de fichiers Lenovo SR665 validés, reportez-vous à la section link:beegfs-deploy-file-node-tuning.html["Réglez les paramètres du système de nœud de fichiers en fonction des performances"].
+
+. *Paramètres par défaut pour les paramètres de configuration requis.* les paramètres de configuration requis affectent la configuration des services BeeGFS et la façon dont les volumes E-Series (dispositifs de bloc) sont formatés et montés par Pacemaker. Voici les paramètres de configuration requis :
++
+** Paramètres de configuration du service BeeGFS
++
+Vous pouvez remplacer les paramètres par défaut des paramètres de configuration selon vos besoins. Pour connaître les paramètres que vous pouvez adapter en fonction de vos charges de travail ou de vos cas d'utilisation spécifiques, consultez le https://github.com/netappeseries/beegfs/blob/135d9a04ae96f4d202300bae870c6404b77b6865/roles/beegfs_ha_7_2/defaults/main.yml#L155["Paramètres de configuration du service BeeGFS"^].
+
+** Le formatage de volume et les paramètres de montage sont définis sur les valeurs par défaut recommandées et ne doivent être ajustés que pour des cas d'utilisation avancés. Les valeurs par défaut sont les suivantes :
++
+*** Optimiser le formatage du volume initial en fonction du type de cible (gestion, métadonnées ou stockage, par exemple), de la configuration RAID et de la taille du segment du volume sous-jacent.
+*** Réglez la manière dont Pacemaker monte chaque volume pour vous assurer que les modifications sont immédiatement transférées vers les nœuds de blocs E-Series. Cela empêche la perte de données en cas d'échec des nœuds de fichier pour les écritures actives.
++
+Pour connaître les paramètres que vous pouvez adapter en fonction de vos charges de travail ou de vos cas d'utilisation spécifiques, consultez le https://github.com/netappeseries/beegfs/blob/135d9a04ae96f4d202300bae870c6404b77b6865/roles/beegfs_ha_7_2/defaults/main.yml#L258["formatage du volume et paramètres de configuration du montage"^].
+
+
+
+
+
+. *Paramètres système dans le système d'exploitation Linux installé sur les nœuds de fichiers.* vous pouvez remplacer les paramètres système d'exploitation Linux par défaut lorsque vous créez l'inventaire Ansible à l'étape 4 de link:beegfs-deploy-beegfs-general-config.html["Créez l'inventaire Ansible"].
++
+Les paramètres par défaut ont été utilisés pour valider la solution BeeGFS sur NetApp, mais vous pouvez les modifier pour s'adapter à vos workloads ou à vos utilisations spécifiques. Voici quelques exemples de paramètres système d'exploitation Linux que vous pouvez modifier :
+
++
+** Files d'attente des E/S sur les dispositifs de bloc E-Series.
++
+Vous pouvez configurer des files d'attente d'E/S sur les périphériques de bloc E-Series utilisés comme cibles BeeGFS pour :
+
++
+*** Réglez l'algorithme de planification en fonction du type de périphérique (NVMe, HDD, etc.).
+*** Augmenter le nombre de demandes en attente.
+*** Réglez les tailles des demandes.
+*** Optimisez le comportement de lecture anticipée.
+
+
+** Paramètres de la mémoire virtuelle.
++
+Vous pouvez régler les paramètres de la mémoire virtuelle pour des performances de diffusion optimales en continu.
+
+** Paramètres CPU.
++
+Vous pouvez régler le régulateur de fréquence de l'UC et d'autres configurations de l'UC pour obtenir des performances maximales.
+
+** Taille de la demande de lecture.
++
+Vous pouvez augmenter la taille maximale des demandes de lecture pour les HCA Mellanox.
+
+
+
+
+
+
+
+== Réglage des performances des nœuds en mode bloc
+
+En fonction des profils de configuration appliqués à un élément de base BeeGFS particulier, les groupes de volumes configurés sur les nœuds de blocs changent légèrement. Par exemple, avec un nœud de bloc EF600 de 24 disques :
+
+* Pour un seul élément de base, y compris la gestion BeeGFS, les métadonnées et les services de stockage :
++
+** 1 groupe de volumes RAID 10 2+2 pour la gestion BeeGFS et les services de métadonnées
+** 2 groupes de volumes RAID 6 8+2 pour les services de stockage BeeGFS
+
+
+* Pour un élément de base de métadonnées + de stockage BeeGFS :
++
+** 1 groupe de volumes RAID 10 2+2 pour les services de métadonnées BeeGFS
+** 2 groupes de volumes RAID 6 8+2 pour les services de stockage BeeGFS
+
+
+* Pour l'élément de base de stockage BeeGFS uniquement :
++
+** 2 groupes de volumes RAID 6 10+2 pour les services de stockage BeeGFS
+
+
+
+
+
+NOTE: Comme BeeGFS a besoin d'un espace de stockage considérable pour la gestion et les métadonnées par rapport au stockage, une seule option consiste à utiliser des disques plus petits pour les groupes de volumes RAID 10. Les lecteurs plus petits doivent être insérés dans les emplacements de lecteur les plus extérieurs. Pour plus d'informations, reportez-vous à la section link:beegfs-deploy-overview.html["instructions de déploiement"].
+
+Tous ces paramètres sont configurés par le déploiement Ansible, et plusieurs autres paramètres sont généralement recommandés pour optimiser les performances/comportements :
+
+* Ajustement de la taille du bloc de cache global à 32Kio et ajustement de la vidage du cache à la demande à 80 %.
+* Désactivation de l'équilibrage automatique (en veillant à ce que les attributions de volume du contrôleur restent telles que prévues).
+* Activation de la mise en cache de lecture et désactivation de la mise en cache de lecture anticipée
+* Activation de la mise en cache d'écriture avec la mise en miroir et demande de sauvegarde sur batterie, les caches sont donc conservés suite à la panne d'un contrôleur de nœud bloc.
+* Spécification de l'ordre dans lequel les disques sont affectés aux groupes de volumes, en équilibrant les E/S entre les canaux de disque disponibles.
+

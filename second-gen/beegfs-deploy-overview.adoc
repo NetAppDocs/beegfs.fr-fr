@@ -1,0 +1,76 @@
+---
+sidebar: sidebar 
+permalink: beegfs-deploy-overview.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: 'Vous pouvez déployer BeeGFS sur NetApp pour des nœuds de fichiers et de blocs validés en utilisant la deuxième génération de l"architecture de base BeeGFS de NetApp.' 
+---
+= Présentation du déploiement
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Vous pouvez déployer BeeGFS sur NetApp pour des nœuds de fichiers et de blocs validés en utilisant la deuxième génération de l'architecture de base BeeGFS de NetApp.
+
+
+
+== Collections et rôles Ansible
+
+Vous déployez la solution BeeGFS sur NetApp à l'aide d'Ansible, un moteur d'automatisation IT très populaire qui permet d'automatiser les déploiements d'applications. Ansible utilise ensemble de fichiers appelés « inventaire », qui modélise le système de fichiers BeeGFS que vous souhaitez déployer.
+
+Ansible permet à des entreprises telles que NetApp de développer leurs fonctionnalités intégrées à l'aide des collections sur Ansible Galaxy (voir https://galaxy.ansible.com/netapp_eseries["Collection NetApp E-Series BeeGFS"^]). Les collections incluent des modules qui effectuent une fonction ou une tâche spécifique (comme créer un volume E-Series) et incluent des rôles qui peuvent appeler plusieurs modules et d'autres rôles. Cette approche automatisée réduit la durée de déploiement du système de fichiers BeeGFS et du cluster HA sous-jacent. Il simplifie en outre l'ajout d'éléments de base pour développer les systèmes de fichiers existants.
+
+Pour plus de détails, voir link:beegfs-deploy-learn-ansible.html["Découvrez l'inventaire Ansible"].
+
+
+NOTE: Comme de nombreuses étapes sont nécessaires pour déployer la solution BeeGFS sur NetApp, NetApp ne prend pas en charge le déploiement manuel de la solution.
+
+
+
+== Profils de configuration pour les éléments de base BeeGFS
+
+Les procédures de déploiement couvrent les profils de configuration suivants :
+
+* Un seul élément de base inclut des services de gestion, de métadonnées et de stockage.
+* Un second élément de base qui inclut les métadonnées et les services de stockage.
+* Un troisième élément inclut uniquement des services de stockage.
+
+
+Ces profils illustrent la gamme complète de profils de configuration recommandés pour les éléments de base NetApp BeeGFS. Pour chaque déploiement, le nombre de métadonnées et d'éléments de base de stockage ou d'éléments de base uniquement destinés aux services de stockage peut varier selon les procédures appliquées à la capacité et aux performances.
+
+
+
+== Présentation des étapes de déploiement
+
+Le déploiement implique plusieurs tâches générales :
+
+.Déploiement matériel
+. Assembler physiquement chaque élément de bâtiment.
+. Installez le rack et le matériel de câblage. Pour des procédures détaillées, voir link:beegfs-deploy-hardware.html["Déployez le matériel"].
+
+
+.De déploiement logiciel
+. link:beegfs-deploy-setup-nodes.html["Configurez les nœuds de fichiers et de blocs"].
++
+** Configurez les adresses IP BMC sur les nœuds de fichiers
+** Installez un système d'exploitation pris en charge et configurez la mise en réseau de gestion sur les nœuds de fichiers
+** Configurez les adresses IP de gestion sur les nœuds de bloc
+
+
+. link:beegfs-deploy-setting-up-an-ansible-control-node.html["Configurez un nœud de contrôle Ansible"].
+. link:beegfs-deploy-file-node-tuning.html["Réglez les paramètres du système en fonction des performances"].
+. link:beegfs-deploy-create-inventory.html["Créez l'inventaire Ansible"].
+. link:beegfs-deploy-define-inventory.html["Définissez l'inventaire Ansible pour les éléments de base BeeGFS"].
+. link:beegfs-deploy-playbook.html["Déploiement de BeeGFS avec Ansible"].
+. link:beegfs-deploy-configure-clients.html["Configurer les clients BeeGFS"].
+
+
+
+NOTE: Les procédures de déploiement incluent plusieurs exemples où du texte doit être copié dans un fichier. Portez une attention particulière aux commentaires en ligne signalés par les caractères “#” ou “//” pour tout ce qui doit ou peut être modifié pour un déploiement spécifique. Par exemple :
+`beegfs_ha_ntp_server_pools:  # THIS IS AN EXAMPLE OF A COMMENT!
+  - "pool 0.pool.ntp.org iburst maxsources 3"
+  - "pool 1.pool.ntp.org iburst maxsources 3"`

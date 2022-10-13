@@ -1,0 +1,39 @@
+---
+sidebar: sidebar 
+permalink: beegfs-deploy-recommended-volume-percentages.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
+summary: Lorsque vous suivez la configuration standard des quatre volumes par pool de stockage pour les éléments de base de deuxième génération, reportez-vous à ces pourcentages recommandés. 
+---
+= Pourcentages de surprovisionnement recommandés pour le pool de stockage
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Lorsque vous suivez la configuration standard des quatre volumes par pool de stockage pour les éléments de base de deuxième génération, consultez le tableau suivant.
+
+Ce tableau fournit les pourcentages recommandés à utiliser comme taille de volume dans `eseries_storage_pool_configuration` Pour chaque cible de stockage ou de métadonnées BeeGFS :
+
+|===
+| Taille du disque | Taille 
+
+
+| 1,92 TO | 18 
+
+
+| 3,84 TO | 21.5 
+
+
+| 7,68 TO | 22.5 
+
+
+| 15,3 TO | 24 
+|===
+
+NOTE: Les recommandations ci-dessus ne s'appliquent pas au pool de stockage contenant le service de gestion, ce qui devrait réduire la taille ci-dessus de .25 % pour allouer 1 % du pool de stockage aux données de gestion.
+
+Pour comprendre comment ces valeurs ont été déterminées, reportez-vous à la section https://www.netapp.com/media/17009-tr4800.pdf["Tr-4800 : Annexe A : compréhension de la longévité et du sur-provisionnement des disques SSD"^].
