@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head class="at-element-marker">
+  <title>Créez l&#8217;inventaire Ansible</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
+  <meta http-equiv="language" content="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Créez l&#8217;inventaire Ansible" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://docs.netapp.com/fr-fr/beegfs/beegfs-deploy-create-inventory.html" />
+	<meta property="og:description" content="Pour définir la configuration des nœuds de fichiers et de blocs, vous créez un inventaire Ansible qui représente le système de fichiers BeeGFS que vous souha..." />
+  <meta property="og:image" content="https://docs.netapp.com/fr-fr/beegfs/images/logo-tophat-social.png" />
+  <meta property="og:image:alt" content="NetApp Logo" />
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="encoding" content="utf-8">
+  <meta http-equiv="nss-type" content="Product Documentation"/>
+  <meta http-equiv="nss-subtype" content="User Guide"/><meta name="description" content="Pour définir la configuration des nœuds de fichiers et de blocs, vous créez un inventaire Ansible qui représente le système de fichiers BeeGFS que vous souha...">
+  <meta name="keywords" content=" BeeGFS on NetApp, NetApp Verified Architecture, EF600"><!-- Icons -->
+  <link rel="icon" href="/fr-fr/beegfs/images/favicon.ico" type="image/x-icon">
+
+  <!-- RSS Feed --><!-- CSS Definitions: NetApp CSS should be defined after generic css -->
+
+  <!-- Elastic Search -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/searchkit/0.10.0/theme.css">
+
+  <!-- Combined CSS -->
+  <link rel="stylesheet" type="text/css" href="/fr-fr/beegfs/css/netappdocs.css">
+
+  
+  <link rel="stylesheet" href="/fr-fr/beegfs/css/landing-page.css" type="text/css">
+  <link rel="stylesheet" href="/fr-fr/beegfs/css/tabbed-blocks.css" type="text/css">
+  <!-- Canonical url -->
+  <link rel='stylesheet' href='/fr-fr/beegfs/css/na-feature.css' type='text/css'><!-- Top level site integrations --><script>
+    function addAdobeLaunch(adobeId) {
+      var head = document.getElementsByTagName('head')[0];
+      var adobe = document.createElement("script");
+      adobe.type = "text/plain";
+      adobe.className = "optanon-category-C0002";
+      adobe.src = "//assets.adobedtm.com/60287eadf1ee/c284da483c83/"+adobeId+".min.js";
+      head.appendChild(adobe);
+    }
+
+    function addGoogleAnalytics(gtagId) {
+      var google = document.createElement("script");
+      google.type = "text/plain";
+      google.className = "optanon-category-C0002";
+      google.src = "https://www.googletagmanager.com/gtag/js?id="+gtagId;
+      var head = document.getElementsByTagName('head')[0];
+      head.appendChild(google);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', gtagId);
+    }
+
+    function addConsent(consentId) {
+      var head = document.getElementsByTagName('head')[0];
+      var onetrustConsent = document.createElement("script");
+      onetrustConsent.type = "text/javascript";
+      onetrustConsent.src = "https://cdn.cookielaw.org/consent/"+consentId+"/OtAutoBlock.js";
+      head.appendChild(onetrustConsent);
+
+      var onetrustScript = document.createElement("script");
+      onetrustScript.type = "text/javascript";
+      onetrustScript.src = "https://cdn.cookielaw.org/scripttemplates/otSDKStub.js";
+      onetrustScript.charset = "UTF-8";
+      onetrustScript.dataset.documentLanguage = "true";
+      onetrustScript.dataset.domainScript = consentId;
+      head.appendChild(onetrustScript);
+    }addConsent("72570c5c-fe30-465f-b0e0-b77f7fb4ae34");
+    addAdobeLaunch("launch-e9ff3acac59f");
+    addGoogleAnalytics("UA-81697994-3");function OptanonWrapper() { }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+  <!-- Used for Product Family Page Sidebar Visibility --><!-- Used to import Promise for IE. Required for SearchKit -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"></script><script src='/fr-fr/beegfs/js/na-search.js'></script><script src='/fr-fr/beegfs/js/na-pagenav.js'></script><script src='/fr-fr/beegfs/js/na-utility.js'></script>
+  <script src='/fr-fr/beegfs/js/clouddocs.js'></script>
+  <script src='/fr-fr/beegfs/js/jquery.navgoco.min.js'></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src='/fr-fr/beegfs/js/toc.js'></script>
+  <script src='/fr-fr/beegfs/js/customscripts.js'></script><script>
+      $(document).ready(function() {
+          
+          var collapseOnInit = true;
+          
+
+          var navSettings = {
+              "caretHtml": '',
+              "accordion": collapseOnInit,
+              "openClass": 'active', // open
+              "save": false, // leave false or nav highlighting doesn't work right
+              "cookie": {
+                  "name": 'navgoco',
+                  "expires": false,
+                  "path": '/'
+              },
+              "slide": {
+                  "duration": 400,
+                  "easing": 'swing'
+              }
+          };
+
+          // Initialize navgoco with default options
+          $("#mysidebar").navgoco(navSettings);
+          
+
+          $("#collapseAll").click(function(e) {
+              e.preventDefault();
+              $("#mysidebar").navgoco('toggle', false);
+          });
+
+          $("#expandAll").click(function(e) {
+              e.preventDefault();
+              $("#mysidebar").navgoco('toggle', true);
+          });
+
+          $(".sidebar-nav-container").on("scroll", function() {
+            $.cookie("sidebarScroll", $(".sidebar-nav-container").scrollTop(), {
+              path    : "/fr-fr/beegfs"  
+            });
+          });
+          $(function() {
+            if ($.cookie("sidebarScroll")) {
+              $(".sidebar-nav-container").scrollTop($.cookie("sidebarScroll"));
+            }
+          });
+
+      });
+
+  </script>
+  <script>
+      $(document).ready(function() {
+          $("#tg-sb-link").click(function() {
+              $("#tg-sb-sidebar").toggle();
+              $("#tg-sb-content").toggleClass('col-md-9');
+              $("#tg-sb-content").toggleClass('col-md-12');
+              $("#tg-sb-icon").toggleClass('fa-toggle-on');
+              $("#tg-sb-icon").toggleClass('fa-toggle-off');
+          });
+      });
+  </script>
+  <script src='/fr-fr/beegfs/js/custom-dropdown.js'></script>
+  <script src='/fr-fr/beegfs/js/FileSaver.min.js'></script>
+  <script src='/fr-fr/beegfs/js/jszip-utils.min.js'></script>
+  <script src='/fr-fr/beegfs/js/jszip.min.js'></script>
+  <script src='/fr-fr/beegfs/js/pdf-ux.js'></script>
+</head>
+
+
+  <body class role="document" data-flavor="">
+    <div id="page" class="n-off-canvas-menu">
+      <div class="n-off-canvas-menu__menu"><!--TODO: Add offcanvas code --></div>
+      <div class="n-off-canvas-menu__content-wrap">
+        <header class="site-header" id="banner">
+  
+  <!-- Start Page Toolbar -->
+  
+  <div class="page-nav-toolbar"><div class="page-nav-contribute"><a target="_blank" href="https://github.com/NetAppDocs/beegfs/issues/new?body=Page%3A%20[Créez l&#8217;inventaire Ansible](https://docs.netapp.com/fr-fr/beegfs/beegfs-deploy-create-inventory.html)&template=public-issue-template.md" class="page-nav-contribute-link" role="button"><img src="/fr-fr/beegfs/images/discuss-sm.svg" alt="" class="github-icon" />Demander de modifier un document</a><a target="_blank" href="https://github.com/NetAppDocs/beegfs/blob/main/second-gen/beegfs-deploy-create-inventory.adoc" class="page-nav-contribute-link" role="button"><img src="/fr-fr/beegfs/images/edit-sm.svg" alt="" class="github-icon" />Modifier sur GitHub</a><a target="_blank" href="https://docs.netapp.com/us-en/contribute/" class="page-nav-contribute-link"  ><img src="/fr-fr/beegfs/images/article-sm.svg" alt="" class="github-icon" />Guide des contributeurs</a></div>
+    <div class="page-nav-container">
+      <nav class="page-nav-fixed">
+        <div class="page-nav-title">SUR CETTE PAGE</div>
+        <div class="page-nav-links">
+          <ul class="page-nav-inner" id="page-menu"></ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+  
+  
+  <!-- Start top_hat -->
+  <div class="n-top-hat">
+    <div class="n-container">
+      <div class="n-top-hat__cross-property-nav">
+        <ul class="n-top-hat__list">
+          <li class="n-top-hat__list-item">
+            <a href="https://www.netapp.com/products-a-z/" class="n-top-hat__link">Produits et solutions</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://www.netapp.com/support-and-training/netapp-university/" class="n-top-hat__link">Support et formation</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://cloud.netapp.com" class="n-top-hat__link">Cloud Central</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://community.netapp.com/" class="n-top-hat__link">Communauté</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://blog.netapp.com/" class="n-top-hat__link">Blog</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://customers.netapp.com/en/" class="n-top-hat__link">Témoignages clients</a>
+          </li>
+          <li class="n-top-hat__list-item">
+            <a href="https://www.netapp.com/us/contact-us/index.aspx" target="_self" class="n-top-hat__link" data-ntap-ui="contact-us">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <div class="n-top-hat__utils">
+        <ul class="n-top-hat__list">
+          <li class="n-top-hat__list-item">
+            <a href="https://www.netapp.com/us/contact-us/index.aspx" target="_self" class="n-top-hat__link" data-ntap-ui="contact-us">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- End top_hat -->
+
+  <!-- Start property bar -->
+  <style>
+    .n-property-navigation-bar__menus--desktop-experience .n-menu--mega__default-content__heading span {
+    color: #34B0FF;
+    }
+  </style>
+  <div class="n-property-bar " data-ntap-ui="sticky-nav">
+    <div class="n-property-bar__inner-wrap">
+      <div class="n-property-bar__menu-toggle">
+        <a href="#" class="n-property-bar__menu-toggle-link">
+          <span class="n-property-bar__menu-toggle-text">Menu</span>
+          <svg class="n-icon-bars n-property-bar__menu-toggle-icon" aria-labelledby="title">
+            <title>bars</title>
+            <use xlink:href="/fr-fr/beegfs/common/svg/sprite.svg#bars"></use>
+          </svg>
+        </a>
+      </div>
+      <div class="n-property-bar__property-mark ">
+        <a href="https://www.netapp.com" class="n-property-bar__property-link">
+          <div class="n-property-bar__logo">
+            <svg class="n-icon-netapp-mark n-icon-netapp-mark n-property-bar__netapp-mark-icon" aria-labelledby="title">
+              <title>netapp-mark</title>
+              <use xlink:href="/fr-fr/beegfs/common/svg/sprite.svg#netapp-mark"></use>
+            </svg>
+            <svg class="n-icon-netapp-logo n-property-bar__logo-svg" aria-labelledby="title">
+              <title>netapp-logo</title>
+              <use xlink:href="/fr-fr/beegfs/common/svg/sprite.svg#netapp-logo"></use>
+            </svg>
+          </div>
+        </a>
+      </div>
+
+      
+      
+      
+      <div class="search-property-bar">
+        <div id="search-demo-container" class="searchbox n-property-bar__search">
+          <div id="react-search" 
+          data-search-html="/fr-fr/beegfs/search.html"
+          data-type="widget" 
+          data-placeholder="Rechercher une documentation"
+          data-no-results-found="Aucun résultat n'a été trouvé pour {query}"
+          data-did-you-mean="Rechercher {suggestion}."
+          data-no-results-found-did-you-mean="Aucun résultat n’a été trouvé pour {query}. Voulez-vous dire {suggestion} ?"
+          data-results-found="{hitCount} résultats trouvés"
+          data-error-message="We're sorry, an issue occurred when fetching your results. Please try again."
+          data-error-reset="Reset Search"
+          data-sk-es-pf-indexes=""
+          data-flavor=""></div>
+          <button class="n-property-bar__search-toggle-button" type="button">
+            <svg class="n-icon-search n-property-bar__search-toggle-button-icon" aria-labelledby="title">
+              <title>search</title>
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/fr-fr/beegfs/common/svg/sprite.svg#search"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <div class="n-property-bar__toolbar">
+    <!-- Start Language Selector --><div id="language-dropdown" class="custom-dropdown custom-dropdown-lang">
+      <div class="custom-dropdown-select custom-dropdown-select-lang">
+      <span class="lang-name">Français</span>
+          <svg class="n-globe__icon" aria-labelledby="title">
+            <title>globe</title>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/fr-fr/beegfs/common/svg/sprite.svg#globe"></use>
+          </svg>
+        </button>
+      </div>
+
+      <ul class="custom-dropdown-menu"><li>
+          <a href="https://docs.netapp.com/fr-fr/beegfs/beegfs-deploy-create-inventory.html" target="_self"><span translate="no" class="notranslate">Français</span></a>
+        </li><li>
+          <a href="https://docs.netapp.com/us-en/beegfs/beegfs-deploy-create-inventory.html" target="_self"><span translate="no" class="notranslate">English</span></a>
+        </li><li>
+          <a href="https://docs.netapp.com/ja-jp/beegfs/beegfs-deploy-create-inventory.html" target="_self"><span translate="no" class="notranslate">日本語</span></a>
+        </li><li>
+          <a href="https://docs.netapp.com/zh-cn/beegfs/beegfs-deploy-create-inventory.html" target="_self"><span translate="no" class="notranslate">简体中文</span></a>
+        </li><li>
+          <a href="https://docs.netapp.com/zh-tw/beegfs/beegfs-deploy-create-inventory.html" target="_self"><span translate="no" class="notranslate">繁體中文</span></a>
+        </li><li>
+          <a href="https://docs.netapp.com/ko-kr/beegfs/beegfs-deploy-create-inventory.html" target="_self"><span translate="no" class="notranslate">한국어</span></a>
+        </li><li>
+          <a href="https://docs.netapp.com/de-de/beegfs/beegfs-deploy-create-inventory.html" target="_self"><span translate="no" class="notranslate">Deutsch</span></a>
+        </li></ul>
+    </div><!-- End Language Selector -->
+
+    <div class="n-property-bar__cta"></div>
+  </div>
+  <script>
+    $(function(){
+        var currentLocalization = $('html').attr('lang');
+
+        var localizationsDictionary = {
+            "en-CA" : "https://www.netapp.com/search/index.aspx?for_cr=canada&",
+            "en-IN" : "https://www.netapp.com/search/index.aspx?for_cr=india&",
+            "nl-NL" : "https://www.netapp.com/search/index.aspx?for_cr=netherlands&",
+            "ru-RU" : "https://www.netapp.com/search/index.aspx?for_cr=russia&",
+            "sv-SE" : "https://www.netapp.com/search/index.aspx?for_cr=sweden&",
+            "it-IT" : "https://www.netapp.com/search/index.aspx?for_cr=italy&",
+            "he-IL" : "https://www.netapp.com/search/index.aspx?for_cr=israel&",
+            "ko-KR" : "https://www.netapp.com/search/index.aspx?for_cr=korea&",
+            "zh-TW" : "https://www.netapp.com/search/index.aspx?for_cr=taiwan&",
+            "en-GB" : "https://www.netapp.com/search/index.aspx?for_cr=unitedkingdom&",
+            "en-SG" : "https://www.netapp.com/search/index.aspx?for_cr=asean&",
+            "en-AU" : "https://www.netapp.com/search/index.aspx?for_cr=australia&",
+            "pt-BR" : "https://www.netapp.com/search/index.aspx?for_cr=brasil&",
+            "de-CH" : "https://www.netapp.com/search/index.aspx?for_cr=switzerland&",
+            "es-MX" : "https://www.netapp.com/search/index.aspx?for_cr=mexico&"
+        };
+
+        if($('html').hasClass('ntap-whitelisted') && localizationsDictionary.hasOwnProperty(currentLocalization)) {
+            $('.n-property-bar__property-link').attr('href', '/');
+        }
+    });
+  </script>
+  <!-- End property bar -->
+</header>
+
+
+        <main id="n-main-content" class="n-main-content">
+          <!-- Start Documentation Content -->
+<div class="ie-main">
+  <!-- Sidebar Column -->
+  
+  <div class="col-md-3" id="sidebar-height">
+      <button id="btn-sidebar-collapse" onclick="hideSidebar()"><img src="/fr-fr/beegfs/images/collapse.png" alt="Réduire le panneau de navigation"></button>
+      <div class="n-pdf-header">
+  <a id="toggleButtonPdf" class="n-pdf-button" type="button">
+    <img src="/fr-fr/beegfs/images/pdf.png" alt="" width="16" height="16"/>PDFs disponibles<span>
+    </span>
+  </a>
+</div>
+<div class="n-pdf-body-container">
+  <ul id="toggleContainerPdf" class="n-pdf-body" style="display:none;"><li class="pdf-ux-container">
+        
+        
+        
+        <a target="_blank" href="/fr-fr/beegfs/pdfs/fullsite-sidebar/BeeGFS_sur_NetApp_avec_E_Series_Storage.pdf" >
+          <img src="/fr-fr/beegfs/images/pdf.png" alt="" width="16" height="16"/>PDF de ce site de documentation</a>
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Commencez.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf.png" alt="" width="16" height="16"/>
+            Commencez
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Examen_du_design_de_la_solution.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf.png" alt="" width="16" height="16"/>
+            Examen du design de la solution
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Déploiement_de_la_solution.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf.png" alt="" width="16" height="16"/>
+            Déploiement de la solution
+          </a>
+          
+
+
+
+
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" 
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Déployez_des_logiciels.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf.png" alt="" width="16" height="16"/>
+            Déployez des logiciels
+          </a>
+          
+
+
+
+
+
+
+    <ul class="subfolders" id="pdf-remove" style="display:none;"><li class="active"></li></ul>
+  
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+</li></ul>
+  <div class="zip-pdf-link-container" style="display: none;">   
+    <a href="#" id="zipPdf">
+      <img src="/fr-fr/beegfs/images/pdf-zip.png" alt="" width="16" height="16"/>
+      <pre>Collection de documents PDF séparés<span class="zip-size"></span></pre>
+    </a><div id="zip-link-popup" class="hide">
+    <div class="inner-modal">
+        <div class="downloading-progress">
+            <div class="spinner"></div>
+            <h1>Creating your file...</h1>
+            <div>This may take a few minutes. Thanks for your patience.</div>
+            <button class="cancel-download-btn" type="button">Cancel</button>
+        </div>
+        <div class="download-complete hide">
+            <div class="done-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>
+            </div>
+            <div>Your file is ready</div>
+            <button class="cancel-download-btn" type="button">OK</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(".cancel-download-btn").click(function(){
+        $("#zip-link-popup").addClass("hide");
+        $("#zip-link-popup .downloading-progress").removeClass("hide");
+        $("#zip-link-popup .download-complete").addClass("hide");
+    });
+</script></div>
+</div>
+<script>
+  $("#toggleContainerPdf li.active:last-child").parents('ul.subfolders').toggle('display');
+  $("#toggleButtonPdf").click(function () {
+    $("#toggleContainerPdf").toggle('display');
+    $(".n-pdf-body-container .zip-pdf-link-container").toggle('display');
+  });
+</script><div class="sidebar-nav-container" id="mysidebardiv">
+  <ul id="mysidebar" class="nav"><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="BeeGFS sur les documents NetApp"
+      data-li-level="1#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/index.html">
+        BeeGFS sur les documents NetApp
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Commencez"
+      data-li-level="1" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Commencez</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Ce qui est inclus dans ce site"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/whats-included.html">
+        Ce qui est inclus dans ce site
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Termes et concepts"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-terms.html">
+        Termes et concepts
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Générations de conception"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-gens.html">
+        Générations de conception
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation de la solution"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-solution-overview.html">
+        Présentation de la solution
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation de l'architecture"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-architecture-overview.html">
+        Présentation de l'architecture
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Exigences techniques"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-technology-requirements.html">
+        Exigences techniques
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Examen du design de la solution"
+      data-li-level="1" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Examen du design de la solution</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation du design"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-design-overview.html">
+        Présentation du design
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configuration matérielle"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-design-hardware-architecture.html">
+        Configuration matérielle
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configuration logicielle"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-design-software-architecture.html">
+        Configuration logicielle
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Vérification de la conception"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-design-solution-verification.html">
+        Vérification de la conception
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Instructions de dimensionnement"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-design-solution-sizing-guidelines.html">
+        Instructions de dimensionnement
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Réglage des performances"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-design-performance-tuning.html">
+        Réglage des performances
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Déploiement de la solution"
+      data-li-level="1" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Déploiement de la solution</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation du déploiement"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-deploy-overview.html">
+        Présentation du déploiement
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Découvrez l'inventaire Ansible"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-deploy-learn-ansible.html">
+        Découvrez l'inventaire Ansible
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Passez en revue les bonnes pratiques"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-deploy-bestpractice.html">
+        Passez en revue les bonnes pratiques
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Déployez le matériel"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-deploy-hardware.html">
+        Déployez le matériel
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Déployez des logiciels"
+      data-li-level="2" 
+      class="subfolders "
+    ><a href="#">
+        <div class="na-navbar-padding"> Déployez des logiciels</div>
+      </a>
+      <ul style="display: none;">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configurez les nœuds de fichiers et de blocs"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-deploy-setup-nodes.html">
+        Configurez les nœuds de fichiers et de blocs
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Réglez les paramètres du système en fonction des performances"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-deploy-file-node-tuning.html">
+        Réglez les paramètres du système en fonction des performances
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configurez le nœud de contrôle Ansible"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-deploy-setting-up-an-ansible-control-node.html">
+        Configurez le nœud de contrôle Ansible
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Créer un inventaire Ansible"
+      data-li-level="3#" 
+      class="  active "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-deploy-create-inventory.html">
+        Créer un inventaire Ansible
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Définir des éléments de base BeeGFS"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-deploy-define-inventory.html">
+        Définir des éléments de base BeeGFS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Déployez BeeGFS"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-deploy-playbook.html">
+        Déployez BeeGFS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configurer les clients BeeGFS"
+      data-li-level="3#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-deploy-configure-clients.html">
+        Configurer les clients BeeGFS
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Faire évoluer les clusters BeeGFS"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-deploy-scale-building-blocks.html">
+        Faire évoluer les clusters BeeGFS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Pourcentages de volume recommandés"
+      data-li-level="2#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/beegfs-deploy-recommended-volume-percentages.html">
+        Pourcentages de volume recommandés
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Mentions légales"
+      data-li-level="1#" 
+      class=" "
+    ><a class="na-navbar-padding" href="/fr-fr/beegfs/legal-notices.html">
+        Mentions légales
+      </a></li></ul>
+</div>
+<script>
+  window.onscroll = () => {
+    const value = -40 - (document.body.scrollHeight - (window.innerHeight + document.scrollingElement.scrollTop));
+    
+    document.getElementById("sidebar-height").style.bottom = Math.max(0,value) + "px";
+};
+</script>
+<!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
+<script>$("li.active").parents('li').toggleClass("active");</script>
+<script>$("#mysidebar li.active").parents('ul').css("display","block");</script>
+
+
+  </div>
+  
+
+  <div class="ie-content-pane n-doc__component-detail-content n-doc__component-detail-content--show-code">
+    <!-- Begin of page container --><article class="page-content" id="main">
+      <div class="ie-utility">
+  <button id="btn-sidebar-expand" onclick="showSidebar()"><img src="/fr-fr/beegfs/images/expand.png" alt="Développer le panneau de navigation"></button>
+  <div class="ie-menu">
+    <div class="n-breadcrumb">
+      <ul class="n-breadcrumb__list">
+        <li class="n-breadcrumb__list-item">
+          <a href="https://docs.netapp.com">docs.netapp.com</a>
+        </li>
+        
+
+        
+        <li class="n-breadcrumb__list-item">
+          <a href="https://docs.netapp.com/fr-fr/e-series-family/">E-Series</a>
+        </li>
+        
+
+        <li class="n-breadcrumb__list-item">
+          <a href="/fr-fr/beegfs/">BeeGFS&nbsp;on&nbsp;NetApp&nbsp;with&nbsp;E-Series&nbsp;Storage</a>
+        </li>
+
+      </ul>
+    </div>
+    <div style="clear: both"></div><!-- Main needs to have height -->
+  </div>
+</div>
+
+      <div class="ie-nmt-disclaimer">
+  <span>
+    <div class="ie-nmt-disclaimer-container">
+      <div class="ie-nmt-disclaimer-icon">
+        <svg class="luci-icon" aria-hidden="true">
+          <use xlink:href="/fr-fr/beegfs/common/svg/sprite.svg#circle-info">
+        </svg>
+      </div>
+      <div class="ie-nmt-disclaimer-content">
+        <span> La version française est une traduction automatique. La version anglaise prévaut sur la française en cas de divergence. </span>
+      </div>
+      <div style="clear:both;"></div>
+    </div>
+  </span>
+</div><div class="n-doc__component-detail-heading-wrap">
+  <h1 class="n-doc__component-detail-heading">Créez l&#8217;inventaire Ansible</h1>
+</div>
+
+
+<p class="page-details">
+  
+    
+    <time datetime="2022-11-16 22:00:42 +0000">11/16/2022</time>
+    
+  
+
+<span>Contributeurs
+</span>
+
+
+</p>
+
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p>Pour définir la configuration des nœuds de fichiers et de blocs, vous créez un inventaire Ansible qui représente le système de fichiers BeeGFS que vous souhaitez déployer. L&#8217;inventaire inclut les hôtes, les groupes et les variables décrivant le système de fichiers BeeGFS souhaité.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="étape-1-définir-la-configuration-de-tous-les-éléments-de-base">Étape 1 : définir la configuration de tous les éléments de base</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Définissez la configuration qui s&#8217;applique à tous les blocs de construction, quel que soit le profil de configuration que vous pouvez appliquer individuellement.</p>
+</div>
+<div class="ulist">
+<div class="title">Avant de commencer</div>
+<ul>
+<li>
+<p>Utilisez un système de contrôle source tel que BitBucket ou Git pour stocker le contenu du répertoire contenant les fichiers d&#8217;inventaire et de PlayBook Ansible.</p>
+</li>
+<li>
+<p>Créer un <code>.gitignore</code> Fichier qui spécifie les fichiers que Git doit ignorer. Cela évite de stocker des fichiers volumineux dans Git.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Étapes</div>
+<ol class="arabic">
+<li>
+<p>Sur votre nœud de contrôle Ansible, identifiez un répertoire à utiliser pour stocker les fichiers d&#8217;inventaire et de PlayBook Ansible.</p>
+<div class="paragraph">
+<p>Sauf indication contraire, tous les fichiers et répertoires créés dans cette étape et les étapes suivantes sont créés par rapport à ce répertoire.</p>
+</div>
+</li>
+<li>
+<p>Créez les sous-répertoires suivants :</p>
+<div class="paragraph">
+<p><code>host_vars</code></p>
+</div>
+<div class="paragraph">
+<p><code>group_vars</code></p>
+</div>
+<div class="paragraph">
+<p><code>packages</code></p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="étape-2-définir-la-configuration-des-nœuds-de-fichiers-et-de-blocs-individuels">Étape 2 : définir la configuration des nœuds de fichiers et de blocs individuels</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Définissez la configuration qui s&#8217;applique aux nœuds de fichiers individuels et aux nœuds d&#8217;élément de base individuels.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Sous <code>host_vars/</code>, Créez un fichier pour chaque noeud de fichier BeeGFS nommé <code>&lt;HOSTNAME&gt;.yml</code> Avec le contenu suivant, en portant une attention particulière aux notes concernant le contenu à remplir pour les adresses IP de cluster BeeGFS et les noms d&#8217;hôte se terminant par des nombres impairs et impairs.</p>
+<div class="paragraph">
+<p>Initialement, les noms d&#8217;interface de nœud de fichier correspondent à ce qui est répertorié ici (comme ib0 ou ibs1f0). Ces noms personnalisés sont configurés dans  4: Define configuration that should apply to all file nodes.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>ansible_host: “&lt;MANAGEMENT_IP&gt;”
+eseries_ipoib_interfaces:  # Used to configure BeeGFS cluster IP addresses.
+  - name: i1b
+    address: 100.127.100. &lt;NUMBER_FROM_HOSTNAME&gt;/16
+  - name: i4b
+    address: 100.128.100. &lt;NUMBER_FROM_HOSTNAME&gt;/16
+beegfs_ha_cluster_node_ips:
+  - &lt;MANAGEMENT_IP&gt;
+  - &lt;i1b_BEEGFS_CLUSTER_IP&gt;
+  - &lt;i4b_BEEGFS_CLUSTER_IP&gt;
+# NVMe over InfiniBand storage communication protocol information
+# For odd numbered file nodes (i.e., h01, h03, ..):
+eseries_nvme_ib_interfaces:
+  - name: i1a
+    address: 192.168.1.10/24
+    configure: true
+  - name: i2a
+    address: 192.168.3.10/24
+    configure: true
+  - name: i3a
+    address: 192.168.5.10/24
+    configure: true
+  - name: i4a
+    address: 192.168.7.10/24
+    configure: true
+# For even numbered file nodes (i.e., h02, h04, ..):
+# NVMe over InfiniBand storage communication protocol information
+eseries_nvme_ib_interfaces:
+  - name: i1a
+    address: 192.168.2.10/24
+    configure: true
+  - name: i2a
+    address: 192.168.4.10/24
+    configure: true
+  - name: i3a
+    address: 192.168.6.10/24
+    configure: true
+  - name: i4a
+    address: 192.168.8.10/24
+    configure: true</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/beegfs/images/note.svg" alt="Note">
+</td>
+<td class="content">
+Si vous avez déjà déployé le cluster BeeGFS, vous devez arrêter le cluster avant d&#8217;ajouter ou de modifier des adresses IP configurées de manière statique, y compris les adresses IP et IP du cluster utilisées pour NVMe/IB. Cette modification est nécessaire afin que ces modifications prennent effet correctement et ne perturbent pas les opérations du cluster.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Sous <code>host_vars/</code>, Créez un fichier pour chaque noeud de bloc BeeGFS nommé <code>&lt;HOSTNAME&gt;.yml</code> et remplissez-le avec le contenu suivant.</p>
+<div class="paragraph">
+<p>Faites particulièrement attention aux remarques concernant le contenu à remplir pour les noms de matrices de stockage se terminant par des nombres pairs ou impairs.</p>
+</div>
+<div class="paragraph">
+<p>Pour chaque noeud de bloc, créez un fichier et spécifiez <code>&lt;MANAGEMENT_IP&gt;</code> Pour un des deux contrôleurs (généralement Un).</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>eseries_system_name: &lt;STORAGE_ARRAY_NAME&gt;
+eseries_system_api_url: https://&lt;MANAGEMENT_IP&gt;:8443/devmgr/v2/
+eseries_initiator_protocol: nvme_ib
+# For odd numbered block nodes (i.e., a01, a03, ..):
+eseries_controller_nvme_ib_port:
+  controller_a:
+    - 192.168.1.101
+    - 192.168.2.101
+    - 192.168.1.100
+    - 192.168.2.100
+  controller_b:
+    - 192.168.3.101
+    - 192.168.4.101
+    - 192.168.3.100
+    - 192.168.4.100
+# For even numbered block nodes (i.e., a02, a04, ..):
+eseries_controller_nvme_ib_port:
+  controller_a:
+    - 192.168.5.101
+    - 192.168.6.101
+    - 192.168.5.100
+    - 192.168.6.100
+  controller_b:
+    - 192.168.7.101
+    - 192.168.8.101
+    - 192.168.7.100
+    - 192.168.8.100</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="étape-3-définissez-une-configuration-à-appliquer-à-tous-les-nœuds-de-fichiers-et-de-blocs">Étape 3 : définissez une configuration à appliquer à tous les nœuds de fichiers et de blocs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Vous pouvez définir une configuration commune à un groupe d&#8217;hôtes sous <code>group_vars</code> dans un nom de fichier correspondant au groupe. Cela empêche de répéter une configuration partagée à plusieurs endroits.</p>
+</div>
+<div class="paragraph">
+<p>Les hôtes peuvent se trouver dans plusieurs groupes et au moment de l&#8217;exécution, Ansible choisit les variables qui s&#8217;appliquent à un hôte donné en fonction de ses règles de priorité de variable. (Pour plus d&#8217;informations sur ces règles, consultez la documentation Ansible pour <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html" target="_blank" rel="noopener">"Utilisation de variables"</a>.)</p>
+</div>
+<div class="paragraph">
+<p>Les affectations hôte-groupe sont définies dans le fichier d&#8217;inventaire Ansible réel, créé à la fin de cette procédure.</p>
+</div>
+<div class="paragraph">
+<p>Dans Ansible, vous pouvez définir n&#8217;importe quelle configuration que vous souhaitez appliquer à tous les hôtes dans un groupe appelé <code>All</code>. Créez le fichier <code>group_vars/all.yml</code> avec le contenu suivant :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>ansible_python_interpreter: /usr/bin/python3
+beegfs_ha_ntp_server_pools:  # Modify the NTP server addressess if desired.
+  - "pool 0.pool.ntp.org iburst maxsources 3"
+  - "pool 1.pool.ntp.org iburst maxsources 3"</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="étape-4-définissez-la-configuration-qui-doit-sappliquer-à-tous-les-nœuds-de-fichiers">Étape 4 : définissez la configuration qui doit s&#8217;appliquer à tous les nœuds de fichiers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La configuration partagée pour les nœuds de fichiers est définie dans un groupe appelé <code>ha_cluster</code>. Les étapes de cette section créent la configuration qui doit être incluse dans le <code>group_vars/ha_cluster.yml</code> fichier.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Étapes</div>
+<ol class="arabic">
+<li>
+<p>En haut du fichier, définissez les valeurs par défaut, y compris le mot de passe à utiliser comme <code>sudo</code> utilisateur sur les nœuds de fichiers.</p>
+<div class="literalblock">
+<div class="content">
+<pre>### ha_cluster Ansible group inventory file.
+# Place all default/common variables for BeeGFS HA cluster resources below.
+### Cluster node defaults
+ansible_ssh_user: root
+ansible_become_password: &lt;PASSWORD&gt;
+eseries_ipoib_default_hook_templates:
+  - 99-multihoming.j2 # This is required when configuring additional static IPs (for example cluster IPs) when multiple IB ports are in the same IPoIB subnet.
+# If the following options are specified, then Ansible will automatically reboot nodes when necessary for changes to take effect:
+eseries_common_allow_host_reboot: true
+eseries_common_reboot_test_command: "systemctl --state=active,exited | grep eseries_nvme_ib.service"</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/beegfs/images/note.svg" alt="Note">
+</td>
+<td class="content">
+En particulier pour les environnements de production, ne stockez pas de mots de passe en texte brut. Utilisez plutôt Ansible Vault (voir <a href="https://docs.ansible.com/ansible/latest/user_guide/vault.html" target="_blank" rel="noopener">"Cryptage de contenu avec Ansible Vault"</a>) ou le <code>--ask-become-pass</code> option lors de l&#8217;exécution du manuel de vente. Si le <code>ansible_ssh_user</code> est déjà <code>root</code>, ensuite, vous pouvez omettre le <code>ansible_become_password</code>.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Vous pouvez également configurer un nom pour le cluster haute disponibilité (HA) et spécifier un utilisateur pour les communications intra-cluster.</p>
+<div class="paragraph">
+<p>Si vous modifiez le schéma d&#8217;adressage IP privé, vous devez également mettre à jour le schéma par défaut <code>beegfs_ha_mgmtd_floating_ip</code>. Ceci doit correspondre à ce que vous configurez plus tard pour le groupe de ressources BeeGFS Management.</p>
+</div>
+<div class="paragraph">
+<p>Spécifiez un ou plusieurs e-mails qui doivent recevoir des alertes pour les événements du cluster à l&#8217;aide de <code>beegfs_ha_alert_email_list</code>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>### Cluster information
+beegfs_ha_firewall_configure: True
+eseries_beegfs_ha_disable_selinux: True
+eseries_selinux_state: disabled
+# The following variables should be adjusted depending on the desired configuration:
+beegfs_ha_cluster_name: hacluster                  # BeeGFS HA cluster name.
+beegfs_ha_cluster_username: hacluster              # BeeGFS HA cluster username.
+beegfs_ha_cluster_password: hapassword             # BeeGFS HA cluster username's password.
+beegfs_ha_cluster_password_sha512_salt: randomSalt # BeeGFS HA cluster username's password salt.
+beegfs_ha_mgmtd_floating_ip: 100.127.101.0         # BeeGFS management service IP address.
+# Email Alerts Configuration
+beegfs_ha_enable_alerts: True
+beegfs_ha_alert_email_list: ["email@example.com"]  # E-mail recipient list for notifications when BeeGFS HA resources change or fail.  Often a distribution list for the team responsible for managing the cluster.
+beegfs_ha_alert_conf_ha_group_options:
+      mydomain: “example.com”
+# The mydomain parameter specifies the local internet domain name. This is optional when the cluster nodes have fully qualified hostnames (i.e. host.example.com).
+# Adjusting the following parameters is optional:
+beegfs_ha_alert_timestamp_format: "%Y-%m-%d %H:%M:%S.%N" #%H:%M:%S.%N
+beegfs_ha_alert_verbosity: 3
+#  1) high-level node activity
+#  3) high-level node activity + fencing action information + resources (filter on X-monitor)
+#  5) high-level node activity + fencing action information + resources</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/beegfs/images/note.svg" alt="Note">
+</td>
+<td class="content">
+Tout en apparence redondant, <code>beegfs_ha_mgmtd_floating_ip</code> Est important lorsque vous faites évoluer le système de fichiers BeeGFS au-delà d&#8217;un seul cluster HA. Les clusters HA suivants sont déployés sans service de gestion BeeGFS et point supplémentaires sur le service de gestion fourni par le premier cluster.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Configurer un agent d&#8217;escrime. (Pour plus de détails, voir <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters" target="_blank" rel="noopener">"Configurer l&#8217;escrime dans un cluster Red Hat haute disponibilité"</a>.) Le résultat suivant montre des exemples de configuration d&#8217;agents d&#8217;escrime courants. Choisissez l&#8217;une de ces options.</p>
+<div class="paragraph">
+<p>Pour cette étape, gardez à l&#8217;esprit que :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Par défaut, l&#8217;escrime est activé, mais vous devez configurer un <em>agent</em> d&#8217;escrime.</p>
+</li>
+<li>
+<p>Le <code>&lt;HOSTNAME&gt;</code> spécifié dans le <code>pcmk_host_map</code> ou <code>pcmk_host_list</code> Doit correspondre au nom d&#8217;hôte dans l&#8217;inventaire Ansible.</p>
+</li>
+<li>
+<p>L&#8217;utilisation du cluster BeeGFS sans escrime n&#8217;est pas prise en charge, particulièrement en production. Cela permet de s&#8217;assurer que les services BeeGFS, y compris les dépendances de ressources comme les périphériques de bloc, basculent en raison d&#8217;un problème, il n&#8217;y a aucun risque d&#8217;accès simultané par plusieurs nœuds qui entraînent une corruption du système de fichiers ou tout autre comportement indésirable ou inattendu. Si l’escrime doit être désactivé, reportez-vous aux notes générales du guide de démarrage et de mise en place du rôle BeeGFS HA <code>beegfs_ha_cluster_crm_config_options["stonith-enabled"]</code> à faux dans <code>ha_cluster.yml</code>.</p>
+</li>
+<li>
+<p>Plusieurs dispositifs d&#8217;escrime au niveau des nœuds sont disponibles, et le rôle BeeGFS HA peut configurer n&#8217;importe quel agent d&#8217;escrime disponible dans le référentiel de package Red Hat HA. Si possible, utilisez un agent d&#8217;escrime qui fonctionne via l&#8217;alimentation sans coupure (UPS) ou l&#8217;unité de distribution de l&#8217;alimentation en rack (RPDU), Parce que certains agents d&#8217;escrime, tels que le contrôleur de gestion de la carte mère (BMC) ou d&#8217;autres dispositifs d&#8217;éclairage intégrés au serveur, peuvent ne pas répondre à la demande de clôture dans certains scénarios de panne.</p>
+<div class="literalblock">
+<div class="content">
+<pre>### Fencing configuration:
+# OPTION 1: To enable fencing using APC Power Distribution Units (PDUs):
+beegfs_ha_fencing_agents:
+ fence_apc:
+   - ipaddr: &lt;PDU_IP_ADDRESS&gt;
+     login: &lt;PDU_USERNAME&gt;
+     passwd: &lt;PDU_PASSWORD&gt;
+     pcmk_host_map: "&lt;HOSTNAME&gt;:&lt;PDU_PORT&gt;,&lt;PDU_PORT&gt;;&lt;HOSTNAME&gt;:&lt;PDU_PORT&gt;,&lt;PDU_PORT&gt;"
+# OPTION 2: To enable fencing using the Redfish APIs provided by the Lenovo XCC (and other BMCs):
+redfish: &amp;redfish
+  username: &lt;BMC_USERNAME&gt;
+  password: &lt;BMC_PASSWORD&gt;
+  ssl_insecure: 1 # If a valid SSL certificate is not available specify “1”.
+beegfs_ha_fencing_agents:
+  fence_redfish:
+    - pcmk_host_list: &lt;HOSTNAME&gt;
+      ip: &lt;BMC_IP&gt;
+      &lt;&lt;: *redfish
+    - pcmk_host_list: &lt;HOSTNAME&gt;
+      ip: &lt;BMC_IP&gt;
+      &lt;&lt;: *redfish
+# For details on configuring other fencing agents see https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters.</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Activez le réglage des performances recommandé dans le système d&#8217;exploitation Linux.</p>
+<div class="paragraph">
+<p>Si de nombreux utilisateurs trouvent les paramètres par défaut des paramètres de performance qui fonctionnent généralement bien, vous pouvez également modifier les paramètres par défaut d&#8217;une charge de travail donnée. Ainsi, ces recommandations sont incluses dans le rôle BeeGFS, mais ne sont pas activées par défaut pour s&#8217;assurer que les utilisateurs connaissent le réglage appliqué à leur système de fichiers.</p>
+</div>
+<div class="paragraph">
+<p>Pour activer le réglage des performances, spécifiez :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>### Performance Configuration:
+beegfs_ha_enable_performance_tuning: True</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Facultatif) vous pouvez régler les paramètres d&#8217;ajustement des performances dans le système d&#8217;exploitation Linux selon vos besoins.</p>
+<div class="paragraph">
+<p>Pour obtenir une liste complète des paramètres de réglage disponibles que vous pouvez régler, consultez la section Réglages de la performance par défaut du rôle BeeGFS HA dans <a href="https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_2/defaults/main.yml" target="_blank" rel="noopener">"E-Series site GitHub BeeGFS"</a>. Les valeurs par défaut peuvent être remplacées pour tous les nœuds du cluster dans ce fichier ou dans le <code>host_vars</code> fichier pour un nœud individuel.</p>
+</div>
+</li>
+<li>
+<p>Pour permettre une connectivité complète de 200 Go/HDR entre des nœuds de bloc et de fichier, utilisez le package Open Subnet Manager (OpenSM) de Mellanox Open Fabrics Enterprise distribution (MLNX_OFED). (La boîte de réception <code>opensm</code> package ne prend pas en charge la fonctionnalité de virtualisation nécessaire.) Bien que le déploiement à l&#8217;aide d&#8217;Ansible soit pris en charge, vous devez d&#8217;abord télécharger les packages souhaités vers le nœud de contrôle Ansible utilisé pour exécuter le rôle BeeGFS.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>À l&#8217;aide de <code>curl</code> Ou téléchargez les packages pour la version d&#8217;OpenSM répertoriée dans la section exigences technologiques du site web de Mellanox vers le <code>packages/</code> répertoire. Par exemple :</p>
+<div class="literalblock">
+<div class="content">
+<pre>curl -o packages/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm https://linux.mellanox.com/public/repo/mlnx_ofed/5.4-1.0.3.0/rhel8.4/x86_64/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
+
+curl -o packages/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm https://linux.mellanox.com/public/repo/mlnx_ofed/5.4-1.0.3.0/rhel8.4/x86_64/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Remplissez les paramètres suivants dans <code>group_vars/ha_cluster.yml</code> (réglez les colis si nécessaire) :</p>
+<div class="literalblock">
+<div class="content">
+<pre>### OpenSM package and configuration information
+eseries_ib_opensm_allow_upgrades: true
+eseries_ib_opensm_skip_package_validation: true
+eseries_ib_opensm_rhel_packages: []
+eseries_ib_opensm_custom_packages:
+  install:
+    - files:
+        add:
+          "packages/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm": "/tmp/"
+          "packages/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm": "/tmp/"
+    - packages:
+        add:
+          - /tmp/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
+          - /tmp/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
+  uninstall:
+    - packages:
+        remove:
+          - opensm
+          - opensm-libs
+      files:
+        remove:
+          - /tmp/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
+          - /tmp/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
+eseries_ib_opensm_options:
+  virt_enabled: "2"</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Configurer le <code>udev</code> Règle pour assurer un mappage cohérent des identificateurs de port InfiniBand logiques aux périphériques PCIe sous-jacents.</p>
+<div class="paragraph">
+<p>Le <code>udev</code> La règle doit être unique à la topologie PCIe de chaque plate-forme de serveur utilisée comme nœud de fichier BeeGFS.</p>
+</div>
+<div class="paragraph">
+<p>Utilisez les valeurs suivantes pour les nœuds de fichiers vérifiés :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>### Ensure Consistent Logical IB Port Numbering
+# OPTION 1: Lenovo SR665 PCIe address-to-logical IB port mapping:
+eseries_ipoib_udev_rules:
+  "0000:41:00.0": i1a
+  "0000:41:00.1": i1b
+  "0000:01:00.0": i2a
+  "0000:01:00.1": i2b
+  "0000:a1:00.0": i3a
+  "0000:a1:00.1": i3b
+  "0000:81:00.0": i4a
+  "0000:81:00.1": i4b
+
+# Note: At this time no other x86 servers have been qualified. Configuration for future qualified file nodes will be added here.</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Facultatif) mettre à jour l&#8217;algorithme de sélection de cible de métadonnées.</p>
+<div class="literalblock">
+<div class="content">
+<pre>beegfs_ha_beegfs_meta_conf_ha_group_options:
+  tuneTargetChooser: randomrobin</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/beegfs/images/note.svg" alt="Note">
+</td>
+<td class="content">
+Lors des tests de vérification, <code>randomrobin</code> Est généralement utilisé pour s&#8217;assurer que les fichiers de test étaient répartis de façon égale sur toutes les cibles de stockage BeeGFS pendant l&#8217;évaluation des performances (pour plus d&#8217;informations sur l&#8217;analyse comparative, consultez le site BeeGFS pour <a href="https://doc.beegfs.io/latest/advanced_topics/benchmark.html" target="_blank" rel="noopener">"Analyse comparative d&#8217;un système BeeGFS"</a>). Avec une utilisation réelle, il est possible que les cibles numérotées soient plus rapidement que les cibles numérotées plus élevées. Omission <code>randomrobin</code> et il suffit d&#8217;utiliser la valeur par défaut <code>randomized</code> la valeur a été indiquée pour fournir de bonnes performances tout en utilisant toujours toutes les cibles disponibles.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="étape-5-définir-la-configuration-pour-le-nœud-de-bloc-commun">Étape 5 : définir la configuration pour le nœud de bloc commun</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La configuration partagée pour les nœuds de bloc est définie dans un groupe appelé <code>eseries_storage_systems</code>. Les étapes de cette section créent la configuration qui doit être incluse dans le <code>group_vars/ eseries_storage_systems.yml</code> fichier.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Étapes</div>
+<ol class="arabic">
+<li>
+<p>Définissez la connexion Ansible sur local, indiquez le mot de passe système et spécifiez si les certificats SSL doivent être vérifiés. (Normalement, Ansible utilise SSH pour la connexion aux hôtes gérés, mais dans le cas des systèmes de stockage NetApp E-Series utilisés comme nœuds de bloc, les modules utilisent l&#8217;API REST pour la communication.) En haut du fichier, ajoutez ce qui suit :</p>
+<div class="literalblock">
+<div class="content">
+<pre>### eseries_storage_systems Ansible group inventory file.
+# Place all default/common variables for NetApp E-Series Storage Systems here:
+ansible_connection: local
+eseries_system_password: &lt;PASSWORD&gt;
+eseries_validate_certs: false</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/beegfs/images/note.svg" alt="Note">
+</td>
+<td class="content">
+La liste des mots de passe en texte clair n&#8217;est pas recommandée. Utilisez un coffre-fort Ansible ou fournissez le <code>eseries_system_password</code> Lors de l&#8217;exécution d&#8217;Ansible avec <code>--extra-vars</code>.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Pour assurer des performances optimales, installez les versions répertoriées pour les nœuds de bloc dans <a href="beegfs-technology-requirements.html">"Exigences techniques"</a>.</p>
+<div class="paragraph">
+<p>Téléchargez les fichiers correspondants à partir du <a href="https://mysupport.netapp.com/site/products/all/details/eseries-santricityos/downloads-tab" target="_blank" rel="noopener">"Site de support NetApp"</a>. Vous pouvez les mettre à niveau manuellement ou les inclure dans le <code>packages/</code> Répertoire du nœud de contrôle Ansible, puis remplissez les paramètres suivants dans <code>eseries_storage_systems.yml</code> Pour la mise à niveau avec Ansible :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># Firmware, NVSRAM, and Drive Firmware (modify the filenames as needed):
+eseries_firmware_firmware: "packages/RCB_11.70.2_6000_61b1131d.dlp"
+eseries_firmware_nvsram: "packages/N6000-872834-D06.dlp"</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Téléchargez et installez la dernière version du micrologiciel de lecteur disponible pour les lecteurs installés dans vos nœuds de bloc à partir du <a href="https://mysupport.netapp.com/NOW/download/tools/diskfw_eseries/" target="_blank" rel="noopener">"Site de support NetApp"</a>. Vous pouvez les mettre à niveau manuellement ou les inclure dans le <code>packages/</code> Répertoire du nœud de contrôle Ansible, puis remplissez les paramètres suivants dans <code>eseries_storage_systems.yml</code> Pour la mise à niveau avec Ansible :</p>
+<div class="literalblock">
+<div class="content">
+<pre>eseries_drive_firmware_firmware_list:
+  - "packages/&lt;FILENAME&gt;.dlp"
+eseries_drive_firmware_upgrade_drives_online: true</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/beegfs/images/note.svg" alt="Note">
+</td>
+<td class="content">
+Réglage <code>eseries_drive_firmware_upgrade_drives_online</code> à <code>false</code> Accélère la mise à niveau, mais ne doit pas être effectuée avant le déploiement de BeeGFS. En effet, ce paramètre nécessite l&#8217;arrêt de toutes les E/S des disques avant la mise à niveau afin d&#8217;éviter les erreurs d&#8217;application. Bien que la mise à niveau en ligne du micrologiciel des lecteurs avant la configuration des volumes soit toujours rapide, nous vous recommandons de toujours définir cette valeur sur <code>true</code> pour éviter tout problème par la suite.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Pour optimiser les performances, effectuez les modifications suivantes de la configuration globale :</p>
+<div class="literalblock">
+<div class="content">
+<pre># Global Configuration Defaults
+eseries_system_cache_block_size: 32768
+eseries_system_cache_flush_threshold: 80
+eseries_system_default_host_type: linux dm-mp
+eseries_system_autoload_balance: disabled
+eseries_system_host_connectivity_reporting: disabled
+eseries_system_controller_shelf_id: 99 # Required.</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pour optimiser le provisionnement et le comportement des volumes, spécifiez les paramètres suivants :</p>
+<div class="literalblock">
+<div class="content">
+<pre># Storage Provisioning Defaults
+eseries_volume_size_unit: pct
+eseries_volume_read_cache_enable: true
+eseries_volume_read_ahead_enable: false
+eseries_volume_write_cache_enable: true
+eseries_volume_write_cache_mirror_enable: true
+eseries_volume_cache_without_batteries: false
+eseries_storage_pool_usable_drives: "99:0,99:23,99:1,99:22,99:2,99:21,99:3,99:20,99:4,99:19,99:5,99:18,99:6,99:17,99:7,99:16,99:8,99:15,99:9,99:14,99:10,99:13,99:11,99:12"</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/beegfs/images/note.svg" alt="Note">
+</td>
+<td class="content">
+La valeur spécifiée pour <code>eseries_storage_pool_usable_drives</code> Est spécifique aux nœuds de bloc NetApp EF600 et contrôle l&#8217;ordre dans lequel les disques sont affectés aux nouveaux groupes de volumes. Cette commande permet de s&#8217;assurer que les E/S de chaque groupe sont réparties de manière homogène entre les canaux des disques back-end.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+    </article>
+    <!-- Page Container -->
+  </div>
+
+  <div style="clear: both"></div><!-- Main needs to have height --></div>
+
+        </main>
+
+        <footer class="n-footer">
+  <div class="n-footer__bottom">
+    <div class="n-container">
+      <div class="n-footer__bottom-left">
+        <div class="n-footer__copyright">
+          <ul class="n-footer__copyright-list">
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/us/legal/copyright.aspx">© 2022 NetApp, Inc.</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/terms-of-use/">Conditions générales</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/privacy-policy/">Privacy Policy</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/cookie-policy/">Cookie Policy</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a class="ot-sdk-show-settings">Paramètres de cookies</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="n-footer__bottom-right">
+        <div class="n-footer__copyright">
+          <ul class="n-footer__copyright-list">
+            <li class="n-footer__copyright-link">
+              <a target="_self" href="javascript:netapp_mailto()">Envoyer un avis à propos de cette page</a>
+            </li>
+          </ul>
+        </div>
+        <div class="n-footer__social-links">
+          <ul class="n-footer__social-link-list">
+            <li class="n-footer__social-link-list-item">
+              <a class="n-footer__social-link" data-ntap-social="follow-blog" href="https://blog.netapp.com"
+                target="_blank" title="blog" alt="blog">
+                <span class="n-footer__social-link-text">blog</span>
+                <svg class="n-icon-blog n-footer__social-link-icon" aria-labelledby="title">
+                  <title>blog@</title>
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="/fr-fr/beegfs/common/svg/sprite.svg#blog"></use>
+                </svg>
+              </a>
+            </li>
+            <li class="n-footer__social-link-list-item">
+              <a class="n-footer__social-link" data-ntap-social="follow-community" href="https://community.netapp.com/"
+                target="_blank" title="community" alt="community">
+                <span class="n-footer__social-link-text">community</span>
+                <svg class="n-icon-community n-footer__social-link-icon" aria-labelledby="title">
+                  <title>community@</title>
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="/fr-fr/beegfs/common/svg/sprite.svg#comments"></use>
+                </svg>
+              </a>
+            </li>
+            <li class="n-footer__social-link-list-item">
+              <a class="n-footer__social-link" data-ntap-social="follow-twitter" href="https://twitter.com/netapp"
+                target="_blank" title="twitter" alt="twitter">
+                <span class="n-footer__social-link-text">twitter</span>
+                <svg class="n-icon-twitter n-footer__social-link-icon" aria-labelledby="title">
+                  <title>twitter@</title>
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="/fr-fr/beegfs/common/svg/sprite.svg#twitter"></use>
+                </svg>
+              </a>
+            </li>
+            <li class="n-footer__social-link-list-item">
+              <a class="n-footer__social-link" data-ntap-social="follow-facebook" href="https://www.facebook.com/NetApp"
+                target="_blank" title="facebook" alt="facebook">
+                <span class="n-footer__social-link-text">facebook</span>
+                <svg class="n-icon-facebook n-footer__social-link-icon" aria-labelledby="title">
+                  <title>facebook@</title>
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="/fr-fr/beegfs/common/svg/sprite.svg#facebook"></use>
+                </svg>
+              </a>
+            </li>
+            <li class="n-footer__social-link-list-item">
+              <a class="n-footer__social-link" data-ntap-social="follow-linkedin"
+                href="https://www.linkedin.com/company/netapp" target="_blank" title="linkedin" alt="linkedin">
+                <span class="n-footer__social-link-text">linkedin</span>
+                <svg class="n-icon-linkedin n-footer__social-link-icon" aria-labelledby="title">
+                  <title>linkedin@</title>
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="/fr-fr/beegfs/common/svg/sprite.svg#linkedin"></use>
+                </svg>
+              </a>
+            </li>
+            <li class="n-footer__social-link-list-item">
+              <a class="n-footer__social-link" data-ntap-social="follow-youtube"
+                href="https://www.youtube.com/user/NetAppTV" target="_blank" title="youtube" alt="youtube">
+                <span class="n-footer__social-link-text">youtube</span>
+                <svg class="n-icon-youtube n-footer__social-link-icon" aria-labelledby="title">
+                  <title>youtube@</title>
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="/fr-fr/beegfs/common/svg/sprite.svg#youtube"></use>
+                </svg>
+              </a>
+            </li>
+            <li class="n-footer__social-link-list-item">
+              <a class="n-footer__social-link" data-ntap-social="follow-slideshare"
+                href="https://www.slideshare.net/NetApp" target="_blank" title="slideshare" alt="slideshare">
+                <span class="n-footer__social-link-text">slideshare</span>
+                <svg class="n-icon-slideshare n-footer__social-link-icon" aria-labelledby="title">
+                  <title>slideshare@</title>
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="/fr-fr/beegfs/common/svg/sprite.svg#slideshare"></use>
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+      </div><!-- Elasticsearch JS -->
+      <script type="text/javascript" src='/fr-fr/beegfs/js/bundle.js'></script>
+
+      <!-- Syntax Highlighting -->
+      <script type="text/javascript" src='/fr-fr/beegfs/js/prism.js'></script>
+      <script type="text/javascript" src='/fr-fr/beegfs/js/prism-curl.js'></script>
+    </div>
+    <script>
+      document.body.offsetWidth=1903;
+      cookieLaw = {}
+      cookieLaw.euCountry = "US";
+      cookieLaw.invoke = function(){return false;}
+    </script>
+    <script src='/fr-fr/beegfs/js/www-ntap.js'></script>
+    <script src='/fr-fr/beegfs/js/tabbed-blocks.js'></script>
+    <script src='/fr-fr/beegfs/js/sidebar.js'></script>
+  </body></html>
