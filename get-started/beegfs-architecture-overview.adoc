@@ -31,7 +31,7 @@ En réponse à ces défis, NetApp a conçu une architecture d'éléments de base
 
 Le seul changement matériel entre ces trois options est l'utilisation de lecteurs plus petits pour les métadonnées BeeGFS. Dans le cas contraire, toutes les modifications de configuration sont appliquées via le logiciel. En outre, avec Ansible comme moteur de déploiement, la configuration du profil souhaité pour un élément de base particulier simplifie les tâches de configuration.
 
-Pour plus de détails, voir  hardware design.
+Pour plus de détails, voir <<Conception matérielle vérifiée>>.
 
 
 

@@ -54,18 +54,22 @@ Les paramètres suivants ont été utilisés pour IOR avec le nombre de segments
 ....
 mpirun --allow-run-as-root --mca btl tcp -np 48 -map-by node -hostfile 10xnodes ior -b 1024k --posix.odirect -e -t 1024k -s 54613 -z -C -F -E -k
 ....
+.Un élément de base BeeGFS (gestion, métadonnées et stockage)
 La figure suivante montre les résultats du test IOR avec un seul élément de base BeeGFS (gestion, métadonnées et stockage).
 
 image:beegfs-design-image13.png[""]
 
+.Métadonnées BeeGFS + élément de base du stockage
 La figure suivante présente les résultats du test IOR avec un seul élément de base de stockage + métadonnées BeeGFS.
 
 image:beegfs-design-image14.png[""]
 
+.Élément de base BeeGFS uniquement pour le stockage
 La figure suivante montre les résultats du test IOR avec un seul élément de base BeeGFS Storage uniquement.
 
 image:beegfs-design-image15.png[""]
 
+.Trois éléments de base BeeGFS
 La figure suivante montre les résultats du test IOR avec trois éléments de base BeeGFS.
 
 image:beegfs-design-image16.png[""]
@@ -104,10 +108,12 @@ mpirun -h 10xnodes –map-by node np $processes mdtest -e 4k -w 4k -i 3 -I 16 -z
 ....
 Les performances des métadonnées ont été mesurées en premier avec un ou deux blocs de base de stockage + métadonnées afin de montrer l'évolution des performances en ajoutant des éléments de base supplémentaires.
 
+.Un seul élément de base de métadonnées BeeGFS + stockage
 Le diagramme suivant montre les résultats MDTest avec un bloc de construction BeeGFS + stockage.
 
 image:beegfs-design-image18.png[""]
 
+.Deux métadonnées BeeGFS + éléments de base du stockage
 Le diagramme suivant montre les résultats MDTest avec deux métadonnées BeeGFS + des modules de stockage.
 
 image:beegfs-design-image19.png[""]

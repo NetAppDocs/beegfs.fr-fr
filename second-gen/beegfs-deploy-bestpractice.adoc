@@ -108,6 +108,7 @@ NOTE: En plus de l'interface utilisée pour la gestion du système d'exploitatio
 * Adresses dans la plage `100.xxx.1.1` à `100.xxx.99.255` sont réservés aux clients.
 
 
+.Sous-réseau A : 100.127.0.0/16
 Le tableau suivant indique la plage pour le sous-réseau A : 100.127.0.0/16.
 
 |===
@@ -128,6 +129,7 @@ Le tableau suivant indique la plage pour le sous-réseau A : 100.127.0.0/16.
 
 | Clients BeeGFS | (varie selon le client) | 100.127.1.1 - 100.127.99.255 
 |===
+.Sous-réseau B : 100.128.0.0/16
 Le tableau suivant indique la plage pour le sous-réseau B : 100.128.0.0/16.
 
 |===

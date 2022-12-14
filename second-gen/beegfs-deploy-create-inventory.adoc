@@ -52,7 +52,7 @@ Définissez la configuration qui s'applique aux nœuds de fichiers individuels e
 
 . Sous `host_vars/`, Créez un fichier pour chaque noeud de fichier BeeGFS nommé `<HOSTNAME>.yml` Avec le contenu suivant, en portant une attention particulière aux notes concernant le contenu à remplir pour les adresses IP de cluster BeeGFS et les noms d'hôte se terminant par des nombres impairs et impairs.
 +
-Initialement, les noms d'interface de nœud de fichier correspondent à ce qui est répertorié ici (comme ib0 ou ibs1f0). Ces noms personnalisés sont configurés dans  4: Define configuration that should apply to all file nodes.
+Initialement, les noms d'interface de nœud de fichier correspondent à ce qui est répertorié ici (comme ib0 ou ibs1f0). Ces noms personnalisés sont configurés dans <<Étape 4 : définissez la configuration qui doit s'appliquer à tous les nœuds de fichiers>>.
 
 +
 ....
@@ -146,10 +146,12 @@ eseries_controller_nvme_ib_port:
 
 Vous pouvez définir une configuration commune à un groupe d'hôtes sous `group_vars` dans un nom de fichier correspondant au groupe. Cela empêche de répéter une configuration partagée à plusieurs endroits.
 
+.Description de la tâche
 Les hôtes peuvent se trouver dans plusieurs groupes et au moment de l'exécution, Ansible choisit les variables qui s'appliquent à un hôte donné en fonction de ses règles de priorité de variable. (Pour plus d'informations sur ces règles, consultez la documentation Ansible pour https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html["Utilisation de variables"^].)
 
 Les affectations hôte-groupe sont définies dans le fichier d'inventaire Ansible réel, créé à la fin de cette procédure.
 
+.Étape
 Dans Ansible, vous pouvez définir n'importe quelle configuration que vous souhaitez appliquer à tous les hôtes dans un groupe appelé `All`. Créez le fichier `group_vars/all.yml` avec le contenu suivant :
 
 ....
