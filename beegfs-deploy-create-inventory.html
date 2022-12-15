@@ -828,7 +828,7 @@
 <p class="page-details">
   
     
-    <time datetime="2022-11-16 22:00:42 +0000">11/16/2022</time>
+    <time datetime="2022-12-15 14:58:40 +0000">12/15/2022</time>
     
   
 
@@ -898,7 +898,7 @@
 <li>
 <p>Sous <code>host_vars/</code>, Créez un fichier pour chaque noeud de fichier BeeGFS nommé <code>&lt;HOSTNAME&gt;.yml</code> Avec le contenu suivant, en portant une attention particulière aux notes concernant le contenu à remplir pour les adresses IP de cluster BeeGFS et les noms d&#8217;hôte se terminant par des nombres impairs et impairs.</p>
 <div class="paragraph">
-<p>Initialement, les noms d&#8217;interface de nœud de fichier correspondent à ce qui est répertorié ici (comme ib0 ou ibs1f0). Ces noms personnalisés sont configurés dans  4: Define configuration that should apply to all file nodes.</p>
+<p>Initialement, les noms d&#8217;interface de nœud de fichier correspondent à ce qui est répertorié ici (comme ib0 ou ibs1f0). Ces noms personnalisés sont configurés dans <a href="Étape 4 : définissez la configuration qui doit s&.html#8217;appliquer à tous les nœuds de fichiers">Étape 4 : définissez la configuration qui doit s&.html</a>.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -1008,12 +1008,14 @@ eseries_controller_nvme_ib_port:
 <p>Vous pouvez définir une configuration commune à un groupe d&#8217;hôtes sous <code>group_vars</code> dans un nom de fichier correspondant au groupe. Cela empêche de répéter une configuration partagée à plusieurs endroits.</p>
 </div>
 <div class="paragraph">
+<div class="title">Description de la tâche</div>
 <p>Les hôtes peuvent se trouver dans plusieurs groupes et au moment de l&#8217;exécution, Ansible choisit les variables qui s&#8217;appliquent à un hôte donné en fonction de ses règles de priorité de variable. (Pour plus d&#8217;informations sur ces règles, consultez la documentation Ansible pour <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html" target="_blank" rel="noopener">"Utilisation de variables"</a>.)</p>
 </div>
 <div class="paragraph">
 <p>Les affectations hôte-groupe sont définies dans le fichier d&#8217;inventaire Ansible réel, créé à la fin de cette procédure.</p>
 </div>
 <div class="paragraph">
+<div class="title">Étape</div>
 <p>Dans Ansible, vous pouvez définir n&#8217;importe quelle configuration que vous souhaitez appliquer à tous les hôtes dans un groupe appelé <code>All</code>. Créez le fichier <code>group_vars/all.yml</code> avec le contenu suivant :</p>
 </div>
 <div class="literalblock">
