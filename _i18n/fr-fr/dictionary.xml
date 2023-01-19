@@ -669,17 +669,9 @@
   <block id="070e4137f478af27755d228dba080d41" category="cell">Taille des disques (RAID 6 8+2) groupes de volumes de stockage</block>
   <block id="785d80cc95b60fc3365e05e3ae013331" category="cell">Capacité de stockage (contenu de fichiers)</block>
   <block id="be3ca1ec15ca4657e5ca3ec84a561090" category="cell">1,92 TO</block>
-  <block id="b3d001728e8adb3f05f589ac92f74f0a" category="cell">1,797,120,000</block>
-  <block id="fefd735cb2121d34d8f975c4cca195db" category="cell">47,91 TO</block>
   <block id="71839d6e6fb59e239ad941d08b5e2519" category="cell">3,84 TO</block>
-  <block id="e9e99d07bbdcffb429da9dbfd9096692" category="cell">3,594,240,000</block>
-  <block id="82ace9685542f458c6ee0c7ed4223ebc" category="cell">95,84 TO</block>
   <block id="a98c228c0d8903ba6926546f64321cc4" category="cell">7,68 TO</block>
-  <block id="92c5dedeb0266d552efd70d90ed2a193" category="cell">7,557,120,000</block>
-  <block id="0a9502953839027f49cab071512da640" category="cell">201,51 TO</block>
   <block id="1f04a7c587f50d269f44d43229c966ac" category="cell">15,3 TO</block>
-  <block id="e7f4882484562f3729ee8d601f2dded3" category="cell">16,156,800,000</block>
-  <block id="4a4a2289f7f73e11c0d1524c657e4909" category="cell">430.84 TO</block>
   <block id="a966f153f6f429bbd39c3ac2390ef970" category="admonition">Lors du dimensionnement des métadonnées et des éléments de base de stockage, vous pouvez réduire les coûts en utilisant des disques plus petits pour les groupes de volumes de métadonnées et les groupes de volumes de stockage.</block>
   <block id="f9fb1e607e840d5610c34a9f15da540e" category="section-title">Dimensionnement de la capacité pour les éléments de base uniquement destinés au stockage</block>
   <block id="cd9db38cfde636fa7c304f8e67d8708d" category="paragraph">Le tableau suivant indique la règle générale de dimensionnement de la capacité pour les éléments de base uniquement liés au stockage.</block>
@@ -1068,16 +1060,6 @@
   <block id="da7f5c02044100badae24523f01941a2" category="sidebar">Définir des éléments de base BeeGFS</block>
   <block id="8025f3ce3e3e1dd003430788c4be8b5e" category="sidebar">Faire évoluer les clusters BeeGFS</block>
   <block id="e304a70d2f42f62cefb9b474f73a1e91" category="sidebar">Pourcentages de volume recommandés</block>
-  <block id="6c3aa57299c744740f84a63119dc81e6" category="sidebar">Utilisez NVA deuxième génération</block>
-  <block id="1afa74da05ca145d3418aad9af510109" category="sidebar">Design</block>
-  <block id="3b878279a04dc47d60932cb294d96259" category="sidebar">Présentation</block>
-  <block id="a010ec8776a6b938a2d13ff22c787a20" category="sidebar">Conception matérielle</block>
-  <block id="8335ea7b2998e81f942bcacfecd63a78" category="sidebar">Conception logicielle</block>
-  <block id="9fd18f658328ee903c083b8a79b8c6be" category="sidebar">Vérification</block>
-  <block id="507a3a88cebc46603ce2be8eaa924eee" category="sidebar">Déployez</block>
-  <block id="90d276687cc6ad8d3b72b9d9e953c581" category="sidebar">Découvrez Ansible</block>
-  <block id="50802d3e5a25b93d471686a10da03dd8" category="sidebar">Et des meilleures pratiques</block>
-  <block id="5d6f0f2ec8814a4c4e63b18ea908577b" category="sidebar">Configurer le client BeeGFS</block>
   <block id="aa00436c66c8456a1c9ef0a12178a4ab" category="paragraph-title">Sous-réseau A : 100.127.0.0/16</block>
   <block id="079e5887eeb92f6f17c9fa25fd464e2a" category="paragraph-title">Sous-réseau B : 100.128.0.0/16</block>
   <block id="015dd422187100bd2a53cae756db5bcd" category="paragraph-title">Un élément de base BeeGFS (gestion, métadonnées et stockage)</block>
@@ -1089,4 +1071,64 @@
   <block id="53c31a8ba69af9d096629948d271d34d" category="paragraph-title">Câblage pour exploiter la bande passante</block>
   <block id="bbe48fb854ea022537208eeeff822f91" category="paragraph-title">Description de la tâche</block>
   <block id="48c7c41b72e1d678923ce3571aa65b2d" category="paragraph-title">Étape</block>
+  <block id="02cf3373667b246c17c8d054c073a372" category="paragraph">Architectures dérivées avec variations dans les recommandations de déploiement :</block>
+  <block id="2e93d3c37349d17095fd0dca7d6fe097" category="inline-link-macro">Élément de base haute capacité</block>
+  <block id="8a43f7c3e77834cf43b5398c116033e3" category="list-text"><block ref="8a43f7c3e77834cf43b5398c116033e3" category="inline-link-macro-rx"></block></block>
+  <block id="119c6b2e3908d75335ad13f9fead045a" category="cell">1,938,577,200</block>
+  <block id="753b107ce954fb125f0557af947a86c5" category="cell">51,77 TO</block>
+  <block id="bb586a502f621b433b3966d68c887364" category="cell">3,880,388,400</block>
+  <block id="8b2e1597e74fb68a87ef415a1ce004fc" category="cell">103,55 TO</block>
+  <block id="9c0aa8a6ddcfe00cef8951f0edd99c58" category="cell">8,125,278,000</block>
+  <block id="b0baa6e5c027744d7e7f2a93d8686bf5" category="cell">28.74 TO</block>
+  <block id="edd8590257b34c7c6f57e06f28bb9460" category="cell">17,269,854,000</block>
+  <block id="0d9c02ec5b1f4c4a835073aa142d0b7f" category="cell">460.60 TO</block>
+  <block id="f8ed0cba5469cc89e05fa4d3025eca1b" category="summary">Les variations de conception d'un bloc de construction haute capacité.</block>
+  <block id="8b074fc693c7d8fd35c61de8fe2dee9a" category="doc">Élément de base haute capacité</block>
+  <block id="fb5708557d5e7c6d44ac55ef4c09a054" category="paragraph">La solution BeeGFS est conçue de façon très performante. Les clients recherchant des cas d'utilisation de grande capacité doivent observer les variations des caractéristiques de conception et de performances décrites ici.</block>
+  <block id="800f7da804cf784ad962d085fbc70486" category="section-title">Configuration matérielle et logicielle</block>
+  <block id="90f177623f1131fc7f45e82db6189a1b" category="paragraph">Les configurations matérielles et logicielles de l'élément de base haute capacité sont standard, mais les contrôleurs EF600 doivent être remplacés par des contrôleurs EF300, avec une option qui permet de connecter entre 1 et 7 tiroirs d'extension IOM avec 60 disques chacun pour chaque baie de stockage, un total de 2 à 14 tiroirs d'extension par module.</block>
+  <block id="467fccc62f2ea7630303f15d47a54aa7" category="paragraph">Les clients qui déploient un design d'éléments de base haute capacité n'utilisent probablement que la configuration de type élément de base, qui comprend la gestion BeeGFS, les métadonnées et les services de stockage pour chaque nœud. Pour garantir une rentabilité accrue, les nœuds de stockage haute capacité doivent provisionner des volumes de métadonnées sur les disques NVMe du boîtier de contrôleur EF300 et provisionner les volumes de stockage sur les disques NL-SAS des tiroirs d'extension.</block>
+  <block id="774f4231e5651061791e65cf90314897" category="paragraph"><block ref="774f4231e5651061791e65cf90314897" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="267aa4fef181a2097a06345c854cc106" category="paragraph">Ces recommandations de dimensionnement supposent que les blocs de base haute capacité sont configurés avec un groupe de volumes SSD NVMe 2+2 pour les métadonnées dans le boîtier EF300 de base et six groupes de volumes NL-SAS 8+2 par plateau d'extension IOM pour le stockage.</block>
+  <block id="963320465e8fcfa25188a669a43858c4" category="cell">Taille du disque (disques durs haute capacité)</block>
+  <block id="55fd8e839de07671a6869fad80279ab9" category="cell">Capacité par BB (1 plateau)</block>
+  <block id="001115a96afe0add22e654316239365a" category="cell">Capacité par BB (2 plateaux)</block>
+  <block id="b9781606af717d9b153714ca7a3a2d33" category="cell">Capacité par BB (3 plateaux)</block>
+  <block id="345ffe7c9ac213823037fbcdca8f4ef2" category="cell">Capacité par BB (4 plateaux)</block>
+  <block id="6b7e0bcfc566b639bc0d10bad9f871dd" category="cell">4 TO</block>
+  <block id="676efbc64df1b4909842616f91027d96" category="cell">43TB</block>
+  <block id="25c359cf674976f1bd282922ff6ed0e3" category="cell">878 TO</block>
+  <block id="1416acbb13ce37c62934fde6e37b3c6b" category="cell">1317 TO</block>
+  <block id="3aa071e61efaac2113f5fc251c03b688" category="cell">1756 TO</block>
+  <block id="0706c165b0123479cffaac9b374484f0" category="cell">8 TO</block>
+  <block id="76a91245e71b558dbe0040ea8b7b3c21" category="cell">2634 TO</block>
+  <block id="dd9fa1084ca34ce21c6b127bd37446b9" category="cell">3512 TO</block>
+  <block id="1191f788083da9194f8eef9400d10898" category="cell">10 TO</block>
+  <block id="6587b6d3747beeadda1eccb500e9771b" category="cell">1097 TO</block>
+  <block id="3a89d830e84dc7715fe902bb9adac448" category="cell">2195 TO</block>
+  <block id="1024776bf84a4c2469e49539ac248790" category="cell">3292 TO</block>
+  <block id="0af601e969fa263e021792cfd1dfd4af" category="cell">4390 TO</block>
+  <block id="aad11c7dd0feb18c08cb728eea0a8c46" category="cell">12 To</block>
+  <block id="0fc4914bd341e29e4eef438ff8c44bdb" category="cell">3951 TO</block>
+  <block id="4d63a00ef9361479d55d2914d7f75e28" category="cell">5268 TO</block>
+  <block id="324f218b8144e744b54eb58e0bf14eea" category="cell">16 TO</block>
+  <block id="af4d6969d11876b269a31ebb39d7c34e" category="cell">7024 TO</block>
+  <block id="7ba1b40b5eed0a67df50aa00c907f9ac" category="cell">18 TO</block>
+  <block id="23f86ea0b6ba63be94542d36e1d0ac20" category="cell">1975 TO</block>
+  <block id="01dbb09e4b3f7243c1cae305daf2972a" category="cell">5927 TO</block>
+  <block id="547259566f92db3383cbd2575b9d68c1" category="cell">7902 TO</block>
+  <block id="585389cefc924819e7ab6d5b7eba5f03" category="paragraph">Architectures dérivées avec des variations de conception et de performances :</block>
+  <block id="f45c646cffcf39011c125e7523fa9149" category="summary">Les variations de déploiement pour un élément de base haute capacité.</block>
+  <block id="fc6e06f3e4cfc328095f04c8f44c28f1" category="paragraph">Le guide de déploiement de la solution BeeGFS standard décrit les procédures et les recommandations pour répondre aux exigences des workloads de haute performance. Les clients cherchant à répondre aux besoins en capacité élevés doivent observer les variations du déploiement et les recommandations décrites ici.</block>
+  <block id="cbfb14f470701bf93424d757c624369a" category="section-title">Contrôleurs</block>
+  <block id="174e6193fff9ed7c9b1839367e007f13" category="paragraph">Pour les éléments de base haute capacité, les contrôleurs EF600 doivent être remplacés par des contrôleurs EF300, chacun avec une HIC Cascade installée pour l'extension SAS. Chaque nœud de bloc aura un nombre minimal de SSD NVMe dans le boîtier de la baie pour le stockage de métadonnées BeeGFS et sera relié à des tiroirs d'extension dotés de disques durs NL-SAS pour les volumes de stockage BeeGFS.</block>
+  <block id="1ec9226d3745f2995d2686d2450831c7" category="paragraph">La configuration du noeud fichier à noeud bloc reste la même.</block>
+  <block id="af932b84cc0c8562c0e572647564048f" category="section-title">Placement des disques</block>
+  <block id="f96a95c482225ca6a9b4c17bfa47d918" category="paragraph">Chaque nœud de bloc exige un minimum de 4 SSD NVMe pour le stockage de métadonnées BeeGFS. Ces lecteurs doivent être placés dans les emplacements les plus extérieurs du boîtier.</block>
+  <block id="778e10a0753cc201500f1209098b9b5f" category="paragraph"><block ref="778e10a0753cc201500f1209098b9b5f" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="fdd528ca6f274d102819b008b189961c" category="section-title">Bacs d'extension</block>
+  <block id="6627fde89324d2cbb6afd245e3d32d35" category="paragraph">L'élément de base haute capacité peut être dimensionné avec 1-7, 60 tiroirs d'extension de disque par matrice de stockage.</block>
+  <block id="80b4ce0c4b11e4d8c7c4a14614b871f7" category="inline-link-macro">Consultez la section câblage EF300 pour les tiroirs disques</block>
+  <block id="25ada85328148d5356ce4edd989b1f40" category="paragraph">Pour obtenir des instructions sur le câble de chaque bac d'extension, <block ref="8c170f7da852d665db7cd9113b2ed6bb" category="inline-link-macro-rx"></block>.</block>
+  <block id="0607ff4a53c90b270dd9fd9fce5c3d92" category="sidebar">Option haute capacité</block>
 </blocks>

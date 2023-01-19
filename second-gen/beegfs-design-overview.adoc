@@ -24,3 +24,8 @@ En savoir plus :
 * link:beegfs-design-solution-sizing-guidelines.html["Instructions de dimensionnement"]
 * link:beegfs-design-performance-tuning.html["Réglage des performances"]
 
+
+Architectures dérivées avec des variations de conception et de performances :
+
+* link:beegfs-design-high-capacity-building-block.html["Élément de base haute capacité"]
+

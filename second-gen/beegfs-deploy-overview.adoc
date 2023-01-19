@@ -74,3 +74,8 @@ NOTE: Les procédures de déploiement incluent plusieurs exemples où du texte d
 `beegfs_ha_ntp_server_pools:  # THIS IS AN EXAMPLE OF A COMMENT!
   - "pool 0.pool.ntp.org iburst maxsources 3"
   - "pool 1.pool.ntp.org iburst maxsources 3"`
+
+Architectures dérivées avec variations dans les recommandations de déploiement :
+
+* link:beegfs-design-high-capacity-building-block.html["Élément de base haute capacité"]
+

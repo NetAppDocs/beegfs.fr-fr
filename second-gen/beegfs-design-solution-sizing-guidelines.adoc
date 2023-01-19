@@ -49,16 +49,16 @@ Le tableau suivant indique le dimensionnement de la capacité recommandé pour l
 | Taille du disque (2+2 RAID 1) groupes de volumes de métadonnées | Capacité des métadonnées (nombre de fichiers) | Taille des disques (RAID 6 8+2) groupes de volumes de stockage | Capacité de stockage (contenu de fichiers) 
 
 
-| 1,92 TO | 1,797,120,000 | 1,92 TO | 47,91 TO 
+| 1,92 TO | 1,938,577,200 | 1,92 TO | 51,77 TO 
 
 
-| 3,84 TO | 3,594,240,000 | 3,84 TO | 95,84 TO 
+| 3,84 TO | 3,880,388,400 | 3,84 TO | 103,55 TO 
 
 
-| 7,68 TO | 7,557,120,000 | 7,68 TO | 201,51 TO 
+| 7,68 TO | 8,125,278,000 | 7,68 TO | 28.74 TO 
 
 
-| 15,3 TO | 16,156,800,000 | 15,3 TO | 430.84 TO 
+| 15,3 TO | 17,269,854,000 | 15,3 TO | 460.60 TO 
 |===
 
 NOTE: Lors du dimensionnement des métadonnées et des éléments de base de stockage, vous pouvez réduire les coûts en utilisant des disques plus petits pour les groupes de volumes de métadonnées et les groupes de volumes de stockage.

@@ -1,0 +1,43 @@
+---
+sidebar: sidebar 
+permalink: beegfs-deploy-high-capacity-building-block.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600, EF300, HDD, Expansion 
+summary: Les variations de déploiement pour un élément de base haute capacité. 
+---
+= Élément de base haute capacité
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Le guide de déploiement de la solution BeeGFS standard décrit les procédures et les recommandations pour répondre aux exigences des workloads de haute performance. Les clients cherchant à répondre aux besoins en capacité élevés doivent observer les variations du déploiement et les recommandations décrites ici.
+
+image:high-capacity-rack-diagram.png[""]
+
+
+
+== Contrôleurs
+
+Pour les éléments de base haute capacité, les contrôleurs EF600 doivent être remplacés par des contrôleurs EF300, chacun avec une HIC Cascade installée pour l'extension SAS. Chaque nœud de bloc aura un nombre minimal de SSD NVMe dans le boîtier de la baie pour le stockage de métadonnées BeeGFS et sera relié à des tiroirs d'extension dotés de disques durs NL-SAS pour les volumes de stockage BeeGFS.
+
+La configuration du noeud fichier à noeud bloc reste la même.
+
+
+
+== Placement des disques
+
+Chaque nœud de bloc exige un minimum de 4 SSD NVMe pour le stockage de métadonnées BeeGFS. Ces lecteurs doivent être placés dans les emplacements les plus extérieurs du boîtier.
+
+image:high-capacity-drive-slots-diagram.png[""]
+
+
+
+== Bacs d'extension
+
+L'élément de base haute capacité peut être dimensionné avec 1-7, 60 tiroirs d'extension de disque par matrice de stockage.
+
+Pour obtenir des instructions sur le câble de chaque bac d'extension, link:https://docs.netapp.com/us-en/e-series/install-hw-cabling/driveshelf-cable-task.html#cabling-ef300^["Consultez la section câblage EF300 pour les tiroirs disques"].

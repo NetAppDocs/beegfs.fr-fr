@@ -1,0 +1,55 @@
+---
+sidebar: sidebar 
+permalink: beegfs-design-high-capacity-building-block.html 
+keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600, EF300, HDD, Expansion 
+summary: 'Les variations de conception d"un bloc de construction haute capacité.' 
+---
+= Élément de base haute capacité
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+La solution BeeGFS est conçue de façon très performante. Les clients recherchant des cas d'utilisation de grande capacité doivent observer les variations des caractéristiques de conception et de performances décrites ici.
+
+
+
+== Configuration matérielle et logicielle
+
+Les configurations matérielles et logicielles de l'élément de base haute capacité sont standard, mais les contrôleurs EF600 doivent être remplacés par des contrôleurs EF300, avec une option qui permet de connecter entre 1 et 7 tiroirs d'extension IOM avec 60 disques chacun pour chaque baie de stockage, un total de 2 à 14 tiroirs d'extension par module.
+
+Les clients qui déploient un design d'éléments de base haute capacité n'utilisent probablement que la configuration de type élément de base, qui comprend la gestion BeeGFS, les métadonnées et les services de stockage pour chaque nœud. Pour garantir une rentabilité accrue, les nœuds de stockage haute capacité doivent provisionner des volumes de métadonnées sur les disques NVMe du boîtier de contrôleur EF300 et provisionner les volumes de stockage sur les disques NL-SAS des tiroirs d'extension.
+
+image:high-capacity-rack-diagram.png[""]
+
+
+
+== Instructions de dimensionnement
+
+Ces recommandations de dimensionnement supposent que les blocs de base haute capacité sont configurés avec un groupe de volumes SSD NVMe 2+2 pour les métadonnées dans le boîtier EF300 de base et six groupes de volumes NL-SAS 8+2 par plateau d'extension IOM pour le stockage.
+
+|===
+| Taille du disque (disques durs haute capacité) | Capacité par BB (1 plateau) | Capacité par BB (2 plateaux) | Capacité par BB (3 plateaux) | Capacité par BB (4 plateaux) 
+
+
+| 4 TO | 43TB | 878 TO | 1317 TO | 1756 TO 
+
+
+| 8 TO | 878 TO | 1756 TO | 2634 TO | 3512 TO 
+
+
+| 10 TO | 1097 TO | 2195 TO | 3292 TO | 4390 TO 
+
+
+| 12 To | 1317 TO | 2634 TO | 3951 TO | 5268 TO 
+
+
+| 16 TO | 1756 TO | 3512 TO | 5268 TO | 7024 TO 
+
+
+| 18 TO | 1975 TO | 3951 TO | 5927 TO | 7902 TO 
+|===
