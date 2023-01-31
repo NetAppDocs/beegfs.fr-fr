@@ -1,0 +1,68 @@
+---
+sidebar: sidebar 
+permalink: custom-architectures-setup-cable-hw.html 
+keywords: BeeGFS on NetApp, NetApp Custom Architectures, EF600 
+summary: Étapes nécessaires pour installer et câbler le matériel utilisé pour exécuter BeeGFS sur NetApp. 
+---
+= Installez et fixez les câbles
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Étapes nécessaires pour installer et câbler le matériel utilisé pour exécuter BeeGFS sur NetApp.
+
+
+
+== Planifier l'installation
+
+Chaque système de fichiers BeeGFS est composé d'un certain nombre de nœuds de fichiers exécutant des services BeeGFS à l'aide du stockage back-end fourni par un certain nombre de nœuds de blocs. Les nœuds de fichiers sont configurés en un ou plusieurs clusters haute disponibilité pour assurer la tolérance aux pannes des services BeeGFS. Chaque nœud de bloc est déjà une paire haute disponibilité actif-actif. Le nombre minimal de nœuds de fichiers pris en charge dans chaque cluster haute disponibilité est de trois, et le nombre maximum de nœuds de fichiers pris en charge dans chaque cluster est de dix. Les systèmes de fichiers BeeGFS peuvent évoluer au-delà de dix nœuds en déployant plusieurs clusters HA indépendants qui fonctionnent ensemble pour fournir un espace de noms de système de fichiers unique.
+
+Généralement, chaque cluster haute disponibilité est déployé sous la forme d'éléments de base, où un certain nombre de nœuds de fichiers (serveurs x86) sont directement connectés à un certain nombre de nœuds blocs (généralement des systèmes de stockage E-Series). Cette configuration crée un cluster asymétrique où les services BeeGFS peuvent uniquement s'exécuter sur certains nœuds de fichiers qui ont accès au stockage de bloc back-end utilisé pour les cibles BeeGFS. L'équilibre entre des nœuds de fichier à bloc dans chaque élément de base et le protocole de stockage utilisé pour les connexions directes dépend des exigences d'une installation précise.
+
+Une autre architecture de cluster haute disponibilité utilise une structure de stockage (également appelée réseau SAN) entre les nœuds de fichiers et de blocs pour établir un cluster symétrique. Cela permet aux services BeeGFS de s'exécuter sur n'importe quel nœud de fichiers d'un cluster HA particulier. En général, les clusters symétriques ne sont pas aussi économiques en raison du matériel SAN supplémentaire, cette documentation suppose l'utilisation d'un cluster asymétrique déployé en tant que série d'un ou plusieurs éléments de base.
+
+
+CAUTION: Assurez-vous que l'architecture de système de fichiers souhaitée pour un déploiement BeeGFS particulier est bien comprise avant de poursuivre l'installation.
+
+
+
+== Matériel en rack
+
+Lors de la planification de l'installation, il est important que tous les équipements de chaque élément de base soient montés en rack dans des unités adjacentes. Il est recommandé d'installer les nœuds de fichiers immédiatement au-dessus des nœuds de blocs dans chaque élément de base. Suivez la documentation du ou des modèles de fichier et link:https://docs.netapp.com/us-en/e-series/getting-started/getup-run-concept.html["bloc"^] les nœuds que vous utilisez lorsque vous installez des rails et du matériel dans le rack.
+
+Exemple d'un élément de base unique :
+
+image:../media/buildingblock.png["exemple d'élément de construction"]
+
+Exemple d'installation BeeGFS où il y a plusieurs éléments de base dans chaque cluster HA et plusieurs clusters HA dans le système de fichiers :
+
+image:../media/beegfs-design-image3-small.png["Exemple de déploiement BeeGFS"]
+
+
+
+== Nœud de bloc et fichier de câble
+
+En général, vous connecterons directement les ports HIC des nœuds de blocs E-Series à l'adaptateur Channel hôte désigné (pour les protocoles InfiniBand) ou aux ports d'adaptateur bus hôte (pour les protocoles Fibre Channel et autres) des nœuds de fichiers. La manière exacte d'établir ces connexions dépendra de l'architecture de système de fichiers souhaitée, voici un exemple link:beegfs-design-hardware-architecture.html["Basé sur l'architecture vérifiée NetApp, BeeGFS sur NetApp"^]:
+
+image:./directattachcable.png["Exemple de fichier BeeGFS pour bloquer le câblage de nœud"]
+
+
+
+== Nœuds de fichiers de câble vers le réseau client
+
+Chaque nœud de fichier aura un certain nombre de ports InfiniBand ou Ethernet désignés pour le trafic client BeeGFS. Selon l'architecture, chaque nœud de fichiers dispose d'une ou plusieurs connexions à un réseau client/de stockage hautes performances, avec possibilité de recourir à plusieurs commutateurs pour assurer la redondance et augmenter la bande passante. Voici un exemple de câblage client utilisant des commutateurs réseau redondants, où les ports en vert foncé et en vert clair sont connectés à des commutateurs distincts :
+
+image:./networkcable.png["Exemple de câblage client BeeGFS"]
+
+
+
+== Connexion réseau et alimentation de gestion
+
+Établissez toutes les connexions réseau nécessaires pour les réseaux intrabande et hors bande.
+
+Connectez tous les blocs d'alimentation en vous assurant que chaque nœud de fichier et de bloc dispose de connexions à plusieurs unités de distribution d'alimentation pour la redondance (si disponible).

@@ -16,6 +16,9 @@ summary: 'Termes et concepts qui s"appliquent à la solution BeeGFS sur NetApp.'
 [role="lead"]
 Les termes et concepts suivants s'appliquent à la solution BeeGFS sur NetApp.
 
+
+TIP: Voir la link:administer-clusters-overview.html["Administrer les clusters BeeGFS"] Pour plus de détails sur les termes et concepts spécifiques à l'interaction avec les clusters BeeGFS haute disponibilité (HA).
+
 [cols="25h,~"]
 |===
 | Durée | Description 
@@ -52,7 +55,7 @@ Systèmes de stockage NetApp FAS.
  a| 
 clients
  a| 
-Nœuds de serveur.
+Nœuds du cluster HPC exécutant des applications qui doivent utiliser le système de fichiers. Parfois également appelé nœuds de calcul ou nœuds GPU.
 
 
 
@@ -123,5 +126,12 @@ Compréhension du langage naturel.
 NVA
  a| 
 Le programme NetApp Verified Architecture (NVA) propose des configurations de référence et des conseils de dimensionnement pour des charges de travail et des cas d'utilisation spécifiques. Ces solutions sont testées en profondeur, conçues pour réduire les risques de déploiement et accélérer le délai de mise sur le marché.
+
+
+
+ a| 
+réseau de stockage/réseau client
+ a| 
+Réseau utilisé pour les clients pour communiquer avec le système de fichiers BeeGFS. Il s'agit souvent du même réseau utilisé pour l'interface MPI (Parallel message Passing interface) et d'autres communications d'applications entre les nœuds de cluster HPC.
 
 |===

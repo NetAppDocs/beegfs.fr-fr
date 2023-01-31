@@ -17,62 +17,142 @@ sidebar:
       url: "/whats-included.html"
     - title: Termes et concepts
       url: "/beegfs-terms.html"
-    - title: Générations de conception
-      url: "/beegfs-gens.html"
-    - title: Présentation de la solution
-      url: "/beegfs-solution-overview.html"
-    - title: Présentation de l'architecture
-      url: "/beegfs-architecture-overview.html"
-    - title: Exigences techniques
-      url: "/beegfs-technology-requirements.html"
-  - title: Examen du design de la solution
+  - title: Utilisez des architectures vérifiées
     entries:
-    - title: Présentation du design
-      url: "/beegfs-design-overview.html"
-    - title: Configuration matérielle
-      url: "/beegfs-design-hardware-architecture.html"
-    - title: Configuration logicielle
-      url: "/beegfs-design-software-architecture.html"
-    - title: Vérification de la conception
-      url: "/beegfs-design-solution-verification.html"
-    - title: Instructions de dimensionnement
-      url: "/beegfs-design-solution-sizing-guidelines.html"
-    - title: Réglage des performances
-      url: "/beegfs-design-performance-tuning.html"
-    - title: Option haute capacité
-      url: "/beegfs-design-high-capacity-building-block.html"
-  - title: Déploiement de la solution
-    entries:
-    - title: Présentation du déploiement
-      url: "/beegfs-deploy-overview.html"
-    - title: Découvrez l'inventaire Ansible
-      url: "/beegfs-deploy-learn-ansible.html"
-    - title: Passez en revue les bonnes pratiques
-      url: "/beegfs-deploy-bestpractice.html"
-    - title: Déployez le matériel
-      url: "/beegfs-deploy-hardware.html"
-    - title: Déployez des logiciels
+    - title: Présentation et configuration requise
       entries:
+      - title: Présentation de la solution
+        url: "/beegfs-solution-overview.html"
+      - title: Générations de conception
+        url: "/beegfs-gens.html"
+      - title: Présentation de l'architecture
+        url: "/beegfs-architecture-overview.html"
+      - title: Exigences techniques
+        url: "/beegfs-technology-requirements.html"
+    - title: Examen du design de la solution
+      entries:
+      - title: Présentation du design
+        url: "/beegfs-design-overview.html"
+      - title: Configuration matérielle
+        url: "/beegfs-design-hardware-architecture.html"
+      - title: Configuration logicielle
+        url: "/beegfs-design-software-architecture.html"
+      - title: Vérification de la conception
+        url: "/beegfs-design-solution-verification.html"
+      - title: Instructions de dimensionnement
+        url: "/beegfs-design-solution-sizing-guidelines.html"
+      - title: Réglage des performances
+        url: "/beegfs-design-performance-tuning.html"
+      - title: Option haute capacité
+        url: "/beegfs-design-high-capacity-building-block.html"
+    - title: Déploiement de la solution
+      entries:
+      - title: Présentation du déploiement
+        url: "/beegfs-deploy-overview.html"
+      - title: Découvrez l'inventaire Ansible
+        url: "/beegfs-deploy-learn-ansible.html"
+      - title: Passez en revue les bonnes pratiques
+        url: "/beegfs-deploy-bestpractice.html"
+      - title: Déployez le matériel
+        url: "/beegfs-deploy-hardware.html"
+      - title: Déployez des logiciels
+        entries:
+        - title: Configurez les nœuds de fichiers et de blocs
+          url: "/beegfs-deploy-setup-nodes.html"
+        - title: Réglez les paramètres du système en fonction des performances
+          url: beegfs-deploy-file-node-tuning.html
+        - title: Configurez le nœud de contrôle Ansible
+          url: "/beegfs-deploy-setting-up-an-ansible-control-node.html"
+        - title: Créer un inventaire Ansible
+          url: "/beegfs-deploy-create-inventory.html"
+        - title: Définir des éléments de base BeeGFS
+          url: "/beegfs-deploy-define-inventory.html"
+        - title: Déployez BeeGFS
+          url: "/beegfs-deploy-playbook.html"
+        - title: Configurer les clients BeeGFS
+          url: "/beegfs-deploy-configure-clients.html"
+      - title: Faire évoluer les clusters BeeGFS
+        url: "/beegfs-deploy-scale-building-blocks.html"
+      - title: Pourcentages de volume recommandés
+        url: "/beegfs-deploy-recommended-volume-percentages.html"
+      - title: Option haute capacité
+        url: "/beegfs-deploy-high-capacity-building-block.html"
+  - title: Utiliser des architectures personnalisées
+    entries:
+    - title: Présentation et configuration requise
+      url: "/custom-architectures-overview.html"
+    - title: Configuration initiale
+      entries:
+      - title: Installez et fixez les câbles
+        url: "/custom-architectures-setup-cable-hw.html"
       - title: Configurez les nœuds de fichiers et de blocs
-        url: "/beegfs-deploy-setup-nodes.html"
-      - title: Réglez les paramètres du système en fonction des performances
-        url: beegfs-deploy-file-node-tuning.html
+        url: "/custom-architectures-setup-nodes.html"
       - title: Configurez le nœud de contrôle Ansible
-        url: "/beegfs-deploy-setting-up-an-ansible-control-node.html"
-      - title: Créer un inventaire Ansible
-        url: "/beegfs-deploy-create-inventory.html"
-      - title: Définir des éléments de base BeeGFS
-        url: "/beegfs-deploy-define-inventory.html"
-      - title: Déployez BeeGFS
-        url: "/beegfs-deploy-playbook.html"
-      - title: Configurer les clients BeeGFS
-        url: "/beegfs-deploy-configure-clients.html"
-    - title: Faire évoluer les clusters BeeGFS
-      url: "/beegfs-deploy-scale-building-blocks.html"
-    - title: Pourcentages de volume recommandés
-      url: "/beegfs-deploy-recommended-volume-percentages.html"
-    - title: Option haute capacité
-      url: "/beegfs-deploy-high-capacity-building-block.html"
+        url: "/custom-architectures-setup-ansible-control-node.html"
+    - title: Définissez le système de fichiers BeeGFS
+      entries:
+      - title: Présentation d'Ansible Inventory
+        url: "/custom-architectures-inventory-overview.html"
+      - title: Planifiez le système de fichiers
+        url: "/custom-architectures-plan-file-system.html"
+      - title: Définir les nœuds de fichier et de bloc
+        entries:
+        - title: Configurez des nœuds de fichiers individuels
+          url: "/custom-architectures-inventory-configure-file-nodes.html"
+        - title: Configurez les nœuds de blocs individuels
+          url: "/custom-architectures-inventory-configure-block-nodes.html"
+        - title: Spécifiez la configuration de nœud de fichier commune
+          url: "/custom-architectures-inventory-common-file-node-configuration.html"
+        - title: Spécifiez une configuration de nœud de bloc commune
+          url: "/custom-architectures-inventory-common-block-node-configuration.html"
+      - title: Définir les services BeeGFS
+        entries:
+        - title: Service de gestion BeeGFS
+          url: "/custom-architectures-inventory-beegfs-management.html"
+        - title: Services de métadonnées BeeGFS
+          url: "/custom-architectures-inventory-beegfs-metadata.html"
+        - title: Services de stockage BeeGFS
+          url: "/custom-architectures-inventory-beegfs-storage.html"
+      - title: Mapper les services BeeGFS sur les nœuds de fichiers
+        url: "/custom-architectures-inventory-map-services-to-file-nodes.html"
+    - title: Déployez le système de fichiers BeeGFS
+      entries:
+      - title: Présentation du PlayBook Ansible
+        url: "/custom-architectures-deploy-playbook-overview.html"
+      - title: Déployez le cluster BeeGFS HA
+        url: "/custom-architectures-deploy-ha-cluster.html"
+      - title: Déploiement de clients BeeGFS
+        url: "/custom-architectures-deploy-beegfs-clients.html"
+      - title: Vérifier le déploiement BeeGFS
+        url: "/custom-architectures-deploy-verify.html"
+  - title: Gérer des clusters BeeGFS
+    entries:
+    - title: Présentation, concepts clés et terminologie
+      url: "/administer-clusters-overview.html"
+    - title: Quand utiliser Ansible par rapport aux pièces
+      url: "/administer-clusters-ansible-pcs.html"
+    - title: Vérifiez l'état du cluster
+      url: "/administer-clusters-examine-state.html"
+    - title: Reconfigurez et mettez à jour
+      entries:
+      - title: Reconfigurer le cluster HA et BeeGFS
+        url: "/administer-clusters-reconfigure.html"
+      - title: Mettre à jour le cluster HA et BeeGFS
+        url: "/administer-clusters-update.html"
+    - title: Entretien et maintenance
+      entries:
+      - title: Services de basculement/rétablissement
+        url: "/administer-clusters-failover-failback.html"
+      - title: Placer le cluster en mode maintenance
+        url: "/administer-clusters-maintenance-mode.html"
+      - title: Arrêtez et démarrez le cluster
+        url: "/administer-clusters-stop-start-cluster.html"
+      - title: Remplacer les nœuds de fichiers
+        url: "/administer-clusters-replace-file-nodes.html"
+      - title: Développez ou réduisez le cluster
+        url: "/administer-clusters-expand-shrink-cluster.html"
+    - title: Résoudre les problèmes
+      url: "/administer-clusters-troubleshoot.html"
   - title: Mentions légales
     url: "/legal-notices.html"
 product-family:

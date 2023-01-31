@@ -51,7 +51,7 @@ subscription-manager repo-override --repo=rhel-8-for-x86_64-highavailability-rpm
 ....
 . Mettez à jour tous les micrologiciels de l'HCA ConnectX-6 avec la version recommandée dans link:beegfs-technology-requirements.html["Exigences technologiques"].
 +
-Cette mise à jour peut être effectuée en téléchargeant et en exécutant une version de l'outil mlxup qui regroupe le micrologiciel recommandé. Vous pouvez télécharger cet outil à partir de https://www.mellanox.com/support/firmware/mlxup-mft["Mlxup - Utilitaire de mise à jour et de requête"^].
+Cette mise à jour peut être effectuée en téléchargeant et en exécutant une version de l'outil mlxup qui regroupe le micrologiciel recommandé. Vous pouvez télécharger cet outil à partir de https://network.nvidia.com/support/firmware/mlxup-mft/["Mlxup - Utilitaire de mise à jour et de requête"^] (link:https://docs.nvidia.com/networking/display/MLXUPFWUTILITY/mlxup+-+Firmware+Utility+User+Guide["guide de l'utilisateur"^]).
 
 
 

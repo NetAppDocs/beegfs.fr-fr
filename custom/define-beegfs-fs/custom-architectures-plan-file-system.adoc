@@ -1,0 +1,83 @@
+---
+sidebar: sidebar 
+permalink: custom-architectures-plan-file-system.html 
+keywords: BeeGFS on NetApp, NetApp Custom Architectures, EF600 
+summary: 'Planifiez le déploiement du système de fichiers avant de créer l"inventaire Ansible.' 
+---
+= Planifiez le système de fichiers
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Planifiez le déploiement du système de fichiers avant de créer l'inventaire Ansible.
+
+
+
+== Présentation
+
+Avant de déployer le système de fichiers, vous devez définir les adresses IP, les ports et autres configurations requis par tous les nœuds de fichiers, les nœuds de bloc et les services BeeGFS s'exécutant dans le cluster. La configuration exacte varie en fonction de l'architecture du cluster, mais cette section définit les meilleures pratiques et les étapes à suivre généralement applicables.
+
+
+
+== Étapes
+
+. Si vous utilisez un protocole de stockage IP (iser, iSCSI, NVMe/IB ou NVMe/RoCE) pour connecter les nœuds de fichiers aux nœuds de bloc, remplissez la fiche suivante pour chaque élément de base. Chaque connexion directe dans un seul bloc de construction doit disposer d'un sous-réseau unique et ne doit pas se chevaucher avec les sous-réseaux utilisés pour la connectivité client-serveur.
++
+|===
+
+
+| Nœud de fichier | Port IB | Adresse IP | Nœud de bloc | Port IB | IP physique | Adresse IP virtuelle (pour EF600 avec HDR IB uniquement) 
+
+
+| <HOSTNAME> | <PORT> | <IP/SUBNET> | <HOSTNAME> | <PORT> | <IP/SUBNET> | <IP/SUBNET> 
+|===
++
+
+NOTE: Si les nœuds de fichier et de bloc de chaque module sont directement connectés, vous pouvez souvent réutiliser les mêmes adresses IP/schéma pour plusieurs éléments de base.
+
+. Que vous utilisiez InfiniBand ou RDMA over Converged Ethernet (RoCE) pour le réseau de stockage, remplissez la fiche suivante pour déterminer les plages IP qui seront utilisées pour les services de cluster HA, les services de fichiers BeeGFS et les clients pour communiquer :
++
+|===
+| Objectif | Port InfiniBand | Adresse IP ou plage 
+
+
+| IP(s) de cluster BeeGFS | <INTERFACE(s)> | <RANGE> 
+
+
+| Gestion BeeGFS | <INTERFACE(s)> | <IP(s)> 
+
+
+| Métadonnées BeeGFS | <INTERFACE(s)> | <RANGE> 
+
+
+| Stockage BeeGFS | <INTERFACE(s)> | <RANGE> 
+
+
+| Clients BeeGFS | <INTERFACE(s)> | <RANGE> 
+|===
++
+.. Si vous utilisez un seul sous-réseau IP, une seule feuille de calcul est nécessaire. Sinon, remplissez également la feuille de calcul du second sous-réseau.
+
+
+. En fonction de ce qui précède, pour chaque élément de base du cluster, remplissez la feuille de travail suivante définissant les services BeeGFS qu'il exécutera. Pour chaque service, spécifiez le ou les nœuds de fichiers préférés/secondaires, le port réseau, les adresses IP flottantes, l'affectation de zone NUMA (si nécessaire) et le ou les nœuds de bloc qui seront utilisés pour ses cibles. Reportez-vous aux directives suivantes lorsque vous remplissez la fiche :
++
+.. Spécifiez les services BeeGFS comme l'un ou l'autre `mgmt.yml`, `meta_<ID>.yml`, ou `storage_<ID>.yml` Où ID représente un nombre unique pour tous les services BeeGFS de ce type dans ce système de fichiers. Cette convention simplifie le renvoi à cette feuille de calcul dans les sections suivantes tout en créant des fichiers pour configurer chaque service.
+.. Les ports pour les services BeeGFS ne doivent être uniques qu'à travers un élément de construction particulier. Assurez-vous que les services ayant le même numéro de port ne peuvent jamais être exécutés sur le même nœud de fichier pour éviter les conflits de ports.
+.. Si nécessaire, les services peuvent utiliser des volumes de plusieurs nœuds de blocs et/ou pool de stockage (et tous les volumes ne doivent pas être détenus par le même contrôleur). Plusieurs services peuvent également partager la même configuration de nœud de bloc et/ou de pool de stockage (des volumes individuels seront définis dans une section ultérieure).
++
+|===
+| Service BeeGFS (nom de fichier) | Nœuds de fichiers | Port | Adresses IP flottantes | Zone NUMA | Nœud de bloc | Pool de stockage | Contrôleur propriétaire 
+
+
+| <SERVICE TYPE>_<ID>.yml | <PREFERRED FILE NODE> <SECONDARY FILE NODE(s)> | <PORT> | <INTERFACE>:<IP/SUBNET> <INTERFACE>:<IP/SUBNET> | <NUMA NODE/ZONE> | <BLOCK NODE> | <STORAGE POOL/VOLUME GROUP> | <A OR B> 
+|===
+
+
+
+
+Pour plus de détails sur les conventions standard, les meilleures pratiques et les exemples de feuilles de travail remplis, reportez-vous au link:beegfs-deploy-bestpractice.html["et des meilleures pratiques"^] et link:beegfs-deploy-define-inventory.html["Définir des éléments de base BeeGFS"^] Sections BeeGFS sur l'architecture vérifiée NetApp.

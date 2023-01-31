@@ -1,0 +1,78 @@
+---
+sidebar: sidebar 
+permalink: administer-clusters-replace-file-nodes.html 
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, replace 
+summary: 'Remplacement d"un noeud de fichier si le serveur d"origine est défectueux.' 
+---
+= Remplacer les nœuds de fichiers
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Remplacement d'un noeud de fichier si le serveur d'origine est défectueux.
+
+
+
+== Présentation
+
+Voici un aperçu des étapes nécessaires au remplacement d'un noeud de fichier dans le cluster. Ces étapes présupposent que le nœud de fichier a échoué en raison d'un problème matériel et a été remplacé par un nouveau nœud de fichier identique.
+
+
+
+== Étapes :
+
+. Remplacez physiquement le nœud de fichiers et restaurez tout le câblage vers le nœud de bloc et le réseau de stockage.
+. Réinstallez le système d'exploitation sur le nœud de fichier, y compris l'ajout d'abonnements Red Hat.
+. Configurez la mise en réseau BMC et la gestion sur le nœud de fichiers.
+. Mettez à jour l'inventaire Ansible si le nom d'hôte, l'IP, les mappages de l'interface PCIe vers l'interface logique ou tout autre élément modifié concernant le nouveau nœud de fichier. En général, cette opération n'est pas nécessaire si le nœud a été remplacé par le même matériel serveur et que vous utilisez la configuration réseau d'origine.
++
+.. Par exemple, si le nom d'hôte a changé, créez (ou renommez) le fichier d'inventaire du nœud (`host_vars/<NEW_NODE>.yml``) Puis dans le fichier d'inventaire Ansible (`inventory.yml`), remplacer le nom de l'ancien nœud par le nouveau nom de nœud :
++
+[source, console]
+----
+all:
+    ...
+    children:
+    ha_cluster:
+        children:
+        mgmt:
+            hosts:
+            node_h1_new:   # Replaced "node_h1" with "node_h1_new"
+            node_h2:
+----
+
+
+. Depuis un des autres nœuds du cluster, supprimer l'ancien nœud : `pcs cluster node remove <HOSTNAME>`.
++
+
+IMPORTANT: NE PAS POURSUIVRE AVANT D'EXÉCUTER CETTE ÉTAPE.
+
+. Sur le nœud de contrôle Ansible :
++
+.. Supprimez l'ancienne clé SSH avec :
++
+[source, console]
+----
+`ssh-keygen -R <HOSTNAME_OR_IP>`
+----
+.. Configurez SSH sans mot de passe sur le nœud remplacer par :
++
+[source, console]
+----
+ssh-copy-id <USER>@<HOSTNAME_OR_IP>
+----
+
+
+. Exécutez à nouveau le PlayBook Ansible pour configurer le nœud et l'ajouter au cluster :
++
+[source, console]
+----
+ansible-playbook -i <inventory>.yml <playbook>.yml
+----
+. A ce stade, exécuter `pcs status` et vérifiez que le nœud remplacé est maintenant répertorié et que les services sont en cours d'exécution.
+

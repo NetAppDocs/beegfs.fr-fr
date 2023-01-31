@@ -1,0 +1,53 @@
+---
+sidebar: sidebar 
+permalink: administer-clusters-maintenance-mode.html 
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, maintenance 
+summary: 'Empêcher le cluster de haute disponibilité de réagir accidentellement aux changements prévus dans l"environnement.' 
+---
+= Placer le cluster en mode maintenance
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Empêcher le cluster de haute disponibilité de réagir accidentellement aux changements prévus dans l'environnement.
+
+
+
+== Présentation
+
+Le fait de mettre le cluster en mode maintenance désactive toute la surveillance des ressources et empêche Pacemaker de déplacer ou de gérer des ressources dans le cluster. Toutes les ressources restent exécutées sur leurs nœuds d'origine, peu importe la condition de panne temporaire qui empêcherait leur accès. Voici quelques scénarios recommandés/utiles :
+
+* Maintenance du réseau pouvant interrompre temporairement les connexions entre les nœuds de fichiers et les services BeeGFS.
+* Mises à niveau des nœuds de blocs.
+* Mises à jour du système d'exploitation de nœud de fichiers, du noyau ou d'autres modules.
+
+
+En général, la seule raison de placer manuellement le cluster en mode de maintenance est d'éviter que le système ne réagisse à des modifications externes de l'environnement. Si un nœud individuel du cluster nécessite une réparation physique, n'utilisez pas le mode de maintenance et placez simplement ce nœud en veille après la procédure ci-dessus. Notez que le changement d'Ansible place automatiquement le cluster en mode de maintenance pour faciliter la plupart des opérations de maintenance logicielle, y compris les mises à niveau et les modifications de configuration.
+
+
+
+== Étapes
+
+Pour vérifier si le cluster est en mode maintenance, exécutez :
+
+[source, console]
+----
+pcs property show maintenance-mode
+----
+Cela renvoie la valeur FALSE lorsque le cluster fonctionne normalement. Pour activer le mode maintenance, exécutez :
+
+[source, console]
+----
+pcs property set maintenance-mode=true
+----
+Vous pouvez vérifier en exécutant l'état pcs et en vous assurant que toutes les ressources affichent « (non géré) ». Pour mettre le cluster hors mode maintenance, exécutez :
+
+[source, console]
+----
+pcs property set maintenance-mode=false
+----

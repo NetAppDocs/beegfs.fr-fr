@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: whats-included.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
-summary: 'Ce site inclut des informations spécifiques à la solution NetApp Verified Architecture (NVA) pour BeeGFS sur NetApp.' 
+summary: Ce site explique comment déployer et gérer BeeGFS sur NetApp. 
 ---
 = Ce qui est inclus dans ce site
 :hardbreaks:
@@ -14,12 +14,4 @@ summary: 'Ce site inclut des informations spécifiques à la solution NetApp Ver
 
 
 [role="lead"]
-Ce site fournit des informations spécifiques à la deuxième génération de l'architecture vérifiée NetApp (NVA) pour BeeGFS sur NetApp.
-
-Ce site comprend les informations suivantes :
-
-* Considérations relatives à la conception de l'architecture utilisées pour déterminer l'équipement, le câblage et les configurations spécifiques nécessaires pour prendre en charge l'architecture. Pour plus d'informations, voir link:beegfs-design-overview.html["Présentation du design"].
-* Instructions de déploiement à l'aide de serveurs de fichiers BeeGFS (nœuds de fichiers) validés reliés à des systèmes de stockage bloc (nœuds de blocs). Pour plus d'informations, voir link:beegfs-deploy-overview.html["Présentation du déploiement"].
-
-
-Ce site propose _NOT_ des informations de conception et de déploiement pour la première génération de la solution. Pour obtenir le contenu complet de la génération précédente, reportez-vous à la section link:https://www.netapp.com/pdf.html?item=/media/25445-nva-1156-design.pdf["NetApp EF-Series ai avec NVIDIA DGX A100 et BeeGFS"^].
+Ce site explique comment déployer et gérer BeeGFS sur NetApp à la fois sur les architectures vérifiées NetApp (NVA) et sur les architectures personnalisées. Les designs NVA sont minutieusement testés et fournissent aux clients des configurations de référence et des conseils de dimensionnement afin de réduire les risques de déploiement et d'accélérer la mise sur le marché. NetApp prend également en charge les architectures BeeGFS sous forme de matériel NetApp, ce qui offre à vos clients et partenaires la flexibilité nécessaire à la conception de systèmes de fichiers pour répondre à un large éventail d'exigences. Ces deux approches exploitent Ansible pour le déploiement, et offrent une approche de type appliance pour gérer BeeGFS à n'importe quelle échelle sur un éventail flexible de matériel.

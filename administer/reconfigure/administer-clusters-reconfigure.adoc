@@ -1,0 +1,65 @@
+---
+sidebar: sidebar 
+permalink: administer-clusters-reconfigure.html 
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, Ansible, pcs 
+summary: Utilisez Ansible pour reconfigurer le cluster. 
+---
+= Reconfigurer le cluster HA et BeeGFS
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Utilisez Ansible pour reconfigurer le cluster.
+
+
+
+== Présentation
+
+Généralement, la reconfiguration de tout aspect du cluster BeeGFS HA doit être effectuée par la mise à jour de votre inventaire Ansible et la ré-exécution de `ansible-playbook` commande. Cela inclut la mise à jour des alertes, la modification de la configuration de l'escrime permanent ou l'ajustement de la configuration du service BeeGFS. Ces réglages sont effectués à l'aide du `group_vars/ha_cluster.yml` un fichier et une liste complète d'options se trouvent dans le link:custom-architectures-inventory-common-file-node-configuration.html["Spécifiez la configuration de nœud de fichier commun"^] section.
+
+Pour plus d'informations sur les options de configuration que les administrateurs doivent connaître lors des opérations de maintenance ou de maintenance du cluster, consultez ci-dessous.
+
+
+
+== Comment désactiver et activer la fonction de fencing
+
+Par défaut, l'escrime est activé/requis lors de la configuration du cluster. Dans certains cas, il peut être souhaitable de désactiver temporairement l'escrime pour s'assurer que les nœuds ne s'arrêtent pas accidentellement lors de certaines opérations de maintenance (par exemple, la mise à niveau du système d'exploitation). Bien que cette fonction puisse être désactivée manuellement, les administrateurs doivent en être conscients des compromis.
+
+
+
+=== OPTION 1 : désactivez l'escrime avec Ansible (recommandé).
+
+Lorsque l'escrime est désactivé à l'aide d'Ansible, l'action en cas d'échec du moniteur BeeGFS passe de « clôture » à « veille ». Cela signifie que si le moniteur BeeGFS détecte une défaillance, il tente de placer le nœud en veille et de basculer tous les services BeeGFS. En dehors du dépannage/test actif, ceci est généralement plus souhaitable que l'option 2. L'inconvénient est que si une ressource ne s'arrête pas sur le nœud d'origine, elle sera bloquée pour commencer ailleurs (c'est pourquoi une clôture est généralement nécessaire pour les grappes de production).
+
+. Dans votre inventaire Ansible à `groups_vars/ha_cluster.yml` ajoutez la configuration suivante :
++
+[source, console]
+----
+beegfs_ha_cluster_crm_config_options:
+    stonith-enabled: False
+----
+. Exécutez à nouveau le manuel de vente Ansible afin d'appliquer les modifications apportées au cluster.
+
+
+
+
+=== OPTION 2 : désactivez manuellement l'escrime.
+
+Dans certains cas, vous pouvez désactiver temporairement l'escrime sans qu'il soit nécessaire de réexécuter Ansible, afin de faciliter le dépannage ou le test du cluster.
+
+
+WARNING: Dans cette configuration, si le moniteur BeeGFS détecte une défaillance, le cluster tente d'arrêter le groupe de ressources correspondant. Il NE déclenchera PAS un basculement complet ni ne tentera de redémarrer ou de déplacer le groupe de ressources affecté vers un autre hôte. Pour restaurer le système, traitez les problèmes avant de l'exécuter `pcs resource cleanup` ou placez manuellement le nœud en veille.
+
+Étapes :
+
+. Pour déterminer si l'escrime (stonith) est globalement activé ou désactivé : `pcs property show stonith-enabled`
+. Pour désactiver la séquence d'escrime : `pcs property set stonith-enabled=false`
+. Pour activer la séquence d'escrime : `pcs property set stonith-enabled=true`
+
+
+Remarque : ce paramètre sera remplacé lors de l'exécution suivante du PlayBook Ansible.
