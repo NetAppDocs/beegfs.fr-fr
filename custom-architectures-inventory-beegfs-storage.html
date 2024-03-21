@@ -1,0 +1,2144 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head class="at-element-marker">
+  <title>Définissez le service de stockage BeeGFS</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
+  <meta http-equiv="language" content="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Définissez le service de stockage BeeGFS" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://docs.netapp.com/fr-fr/beegfs/custom-architectures-inventory-beegfs-storage.html" />
+	<meta property="og:description" content="Les services BeeGFS sont configurés à l"aide de variables de groupe (Group_var)." />
+  <meta property="og:image" content="https://docs.netapp.com/fr-fr/beegfs/images/logo-tophat-social.png" />
+  <meta property="og:image:alt" content="NetApp Logo" />
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="encoding" content="utf-8">
+  <meta http-equiv="nss-type" content="Product Documentation"/>
+  <meta http-equiv="nss-subtype" content="User Guide"/><meta name="description" content="Les services BeeGFS sont configurés à l"aide de variables de groupe (Group_var).">
+  <meta name="keywords" content=" BeeGFS on NetApp, NetApp Custom Architectures, EF600"><!-- Icons -->
+  <link rel="icon" href="/fr-fr/beegfs/images/favicon.ico" type="image/x-icon">
+
+  <!-- RSS Feed --><!-- CSS Definitions: NetApp CSS should be defined after generic css -->
+
+
+  <!-- Combined CSS -->
+  <link rel="stylesheet" type="text/css" href="/fr-fr/beegfs/css/ie-netappdocs.css">
+
+  
+  <link rel="stylesheet" href="/fr-fr/beegfs/css/ie-landing-page.css" type="text/css">
+  <link rel="stylesheet" href="/fr-fr/beegfs/css/ie-tabbed-blocks.css" type="text/css">
+  <!-- Canonical url -->
+  <link rel="canonical" href="https://docs.netapp.com/fr-fr/beegfs/custom-architectures-inventory-beegfs-storage.html" />
+  <link rel="alternate" hreflang="x-default" href="https://docs.netapp.com/us-en/beegfs/custom-architectures-inventory-beegfs-storage.html" />
+  <link rel="alternate" hreflang="fr" href="https://docs.netapp.com/fr-fr/beegfs/custom-architectures-inventory-beegfs-storage.html" />
+  <link rel="alternate" hreflang="en" href="https://docs.netapp.com/us-en/beegfs/custom-architectures-inventory-beegfs-storage.html" />
+  <link rel="alternate" hreflang="ja" href="https://docs.netapp.com/ja-jp/beegfs/custom-architectures-inventory-beegfs-storage.html" />
+  <link rel="alternate" hreflang="ko" href="https://docs.netapp.com/ko-kr/beegfs/custom-architectures-inventory-beegfs-storage.html" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://docs.netapp.com/zh-cn/beegfs/custom-architectures-inventory-beegfs-storage.html" />
+  <link rel="alternate" hreflang="zh-Hant" href="https://docs.netapp.com/zh-tw/beegfs/custom-architectures-inventory-beegfs-storage.html" />
+  <link rel="alternate" hreflang="de" href="https://docs.netapp.com/de-de/beegfs/custom-architectures-inventory-beegfs-storage.html" />
+  <link rel="alternate" hreflang="es" href="https://docs.netapp.com/es-es/beegfs/custom-architectures-inventory-beegfs-storage.html" />
+  <link rel="alternate" hreflang="it" href="https://docs.netapp.com/it-it/beegfs/custom-architectures-inventory-beegfs-storage.html" />
+  <!-- Top level site integrations -->
+<script type="text/javascript" src="https://cdn.cookielaw.org/consent/72570c5c-fe30-465f-b0e0-b77f7fb4ae34/OtAutoBlock.js"></script>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-document-language="true" data-domain-script="72570c5c-fe30-465f-b0e0-b77f7fb4ae34"></script>
+    <script type="text/javascript">function OptanonWrapper() { }</script>
+    <script type="text/plain" class="optanon-category-C0002" src="https://assets.adobedtm.com/60287eadf1ee/c284da483c83/launch-e9ff3acac59f.min.js"></script>
+    <script class="optanon-category-C0001">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.setAttributeNode(d.createAttribute('data-ot-ignore'));j.setAttribute('class','optanon-category-C0001');j.async=true;
+        j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl+'';f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-MD73T9M');</script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  
+  <script>
+    $(document).ready(function() {
+      const MASTHEAD_OFFSET = 65;
+      const SECTIONS = $("main h2, main h3");
+      // PAGE NAV - Init
+      if (SECTIONS.length == 0) {
+        // remove if there is no elements
+        /*
+        $("#ie-right-navbar").remove();
+        $("#ie-right-navbar-collapse").remove();
+        */
+      } else {
+        $(".page-nav-title").css('display', 'block');
+        for (var i = 0; i < SECTIONS.length; i++) {
+          var sectionId = $(SECTIONS[i]).attr('id');
+          var sectionName = $(SECTIONS[i]).text();
+          var subClass = $(SECTIONS[i]).is("h3") ? ' page-nav__sublink' : '';
+          $("#page-menu").append('<li class="page-nav-item"><a href="#' + sectionId + '" class="page-nav__link' + subClass + '">' + sectionName + '</a></li>');
+        }
+      }
+    });
+  </script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+  <!-- Used for Product Family Page Sidebar Visibility --><!-- Used to import Promise for IE. Required for SearchKit -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"></script><script src='/fr-fr/beegfs/js/na-search.js'></script><script src='/fr-fr/beegfs/js/ie-clouddocs.js'></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><script>
+    /*
+      $(document).ready(function() {
+          $("#tg-sb-link").click(function() {
+              $("#tg-sb-sidebar").toggle();
+              $("#tg-sb-content").toggleClass('col-md-9');
+              $("#tg-sb-content").toggleClass('col-md-12');
+              $("#tg-sb-icon").toggleClass('fa-toggle-on');
+              $("#tg-sb-icon").toggleClass('fa-toggle-off');
+          });
+      });
+      */
+  </script>
+  <script src='/fr-fr/beegfs/js/custom-dropdown.js'></script>
+  <script src='/fr-fr/beegfs/js/FileSaver.min.js'></script>
+  <script src='/fr-fr/beegfs/js/jszip-utils.min.js'></script>
+  <script src='/fr-fr/beegfs/js/jszip.min.js'></script><script src='/fr-fr/beegfs/js/ie-pdf-ux.js'></script></head>
+
+
+  <body class role="document" data-flavor="">
+    <div class="skip-to-main">
+      <a href="#main" >Skip to main content</a>
+    </div><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MD73T9M"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div id="page" class="">
+      <div id="ie-phone-menu" class=""></div>
+      <div id="ie-content-wrap" class="">
+        <nav id="ie-new-header">
+    <ul>
+        <li id="ie-phone-menu-button">
+            <a href="#">
+                <image id="" src="/fr-fr/beegfs/images/hamburger.svg" alt="menu" />
+            </a>
+        </li>
+
+        <li>
+            <a href="https://www.netapp.com/fr">
+                <image id="ie-header-logo" src="/fr-fr/beegfs/images/netapp_logo.svg" alt="netapp" />
+            </a>
+        </li>
+        <li id="ie-header-docs">
+            <a href="https://www.netapp.com/fr/support-and-training/documentation/">Documents</a>
+        </li>
+
+        <!-- Empty container to push header left with or without lang selector -->
+        <li id="empty-container" style="margin-left: auto">
+        </li>
+        <!-- Start Language Selector --><li id="ie-language-dropdown">
+            <div id="language-dropdown" class="custom-dropdown custom-dropdown-lang">
+                <div class="custom-dropdown-select custom-dropdown-select-lang">
+                    <img src="/fr-fr/beegfs/images/language_white_24dp.svg" class="n-globe__icon" />
+                    <span class="lang-name">Français</span>
+                    <img src="/fr-fr/beegfs/images/dropdown-arrow.svg" alt="" class="custom-icon chevrondown header invisible" />
+                    <img src="/fr-fr/beegfs/images/dropdown-arrow.svg" alt="" class="custom-icon chevronup header" />
+                    </button>
+                </div>
+
+                <ul class="custom-dropdown-menu"><li>
+                        <a href="https://docs.netapp.com/fr-fr/beegfs/custom-architectures-inventory-beegfs-storage.html"
+                            target="_self"><span translate="no" class="notranslate">Français</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/us-en/beegfs/custom-architectures-inventory-beegfs-storage.html"
+                            target="_self"><span translate="no" class="notranslate">English</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/ja-jp/beegfs/custom-architectures-inventory-beegfs-storage.html"
+                            target="_self"><span translate="no" class="notranslate">日本語</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/ko-kr/beegfs/custom-architectures-inventory-beegfs-storage.html"
+                            target="_self"><span translate="no" class="notranslate">한국어</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/zh-cn/beegfs/custom-architectures-inventory-beegfs-storage.html"
+                            target="_self"><span translate="no" class="notranslate">简体中文</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/zh-tw/beegfs/custom-architectures-inventory-beegfs-storage.html"
+                            target="_self"><span translate="no" class="notranslate">繁體中文</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/de-de/beegfs/custom-architectures-inventory-beegfs-storage.html"
+                            target="_self"><span translate="no" class="notranslate">Deutsch</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/es-es/beegfs/custom-architectures-inventory-beegfs-storage.html"
+                            target="_self"><span translate="no" class="notranslate">Español</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/it-it/beegfs/custom-architectures-inventory-beegfs-storage.html"
+                            target="_self"><span translate="no" class="notranslate">Italiano</span></a>
+                    </li></ul>
+            </div>
+            </li>
+        <!-- End Language Selector -->
+
+
+        <li id="ie-allnetapp">
+            <div id="allnetapp-dropdown" class="custom-dropdown custom-dropdown-allnetapp">
+                <div class="custom-dropdown-select custom-dropdown-select-allnetapp">
+                    <img src="/fr-fr/beegfs/images/apps_white_24dp.svg" alt="" class="allnetapp-icon" />
+                    <span class="allnetapp-name">Tout NetApp</span>
+                    <img src="/fr-fr/beegfs/images/dropdown-arrow.svg" alt="" class="custom-icon chevrondown header invisible" />
+                    <img src="/fr-fr/beegfs/images/dropdown-arrow.svg" alt="" class="custom-icon chevronup header" />
+                    </button>
+                </div>
+
+                <ul class="custom-dropdown-menu allnetapp-dropdown">
+                    <li>
+                        <a href="https://bluexp.netapp.com/fr/"
+                            target="_self"><span translate="no" class="notranslate">BlueXP</span></a>
+                    </li>
+                    <li>
+                        <a href="https://mysupport.netapp.com/site/"
+                            target="_self"><span translate="no" class="notranslate">Support</span></a>
+                    </li>
+                    <li>
+                        <a href="https://kb.netapp.com/"
+                            target="_self"><span translate="no" class="notranslate">Base de connaissances</span></a>
+                    </li>
+                    <li>
+                        <a href="https://www.netapp.com/fr/support-and-training/netapp-learning-services/"
+                            target="_self"><span translate="no" class="notranslate">Formation</span></a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+
+    </ul>
+</nav>
+
+        <main id="n-main-content" class="n-main-content">
+          <!-- Start Documentation Content -->
+<div class="ie-main">
+
+<div id="ie-new-sidebar-collapse" style="display: none">
+    <img id="sidebar-expand" class="ie-searchbox-icon" src="/fr-fr/beegfs/images/double_arrow.svg" alt="" />
+</div>
+<div id="ie-new-sidebar">
+    <div id="ie-product-identity-lockup">
+        <div id="sidebar-collapse" class="">
+            <img src="/fr-fr/beegfs/images/double_arrow.svg" alt="" />
+        </div>
+        <div id="ie-breadcrumb" class="">
+  <ul class="ie-breadcrumb">
+    <li class="">
+      <a href="https://docs.netapp.com">Tous les documents</a>
+    </li>
+    
+    
+
+    
+    <li class="">
+      <a href="https://docs.netapp.com/fr-fr/e-series-family/">
+        E-Series
+      </a>
+    </li>
+    
+  </ul>
+  
+  <div class="ie-product-name" >
+    <!--<a href="/fr-fr/beegfs/">-->
+      BeeGFS on NetApp with E-Series Storage
+    <!--</a>-->
+  </div>
+</div>
+
+            
+
+        
+        
+
+<div id="ie-searchbox" class="ie-searchbox-sidebar ">
+    <img class="ie-searchbox-icon" src="/fr-fr/beegfs/images/loupe.svg" alt=""/>
+    <div id="react-search" 
+        data-search-html="/fr-fr/beegfs/search.html" 
+        data-type="widget"
+        data-placeholder="Rechercher dans la documentation"
+        data-no-results-found="Aucun résultat trouvé pour : {query}"
+        data-did-you-mean="Rechercher {suggestion}."
+        data-no-results-found-did-you-mean="Aucun résultat n'a été trouvé pour {query}. Voulez-vous dire {suggestion} ?"
+        data-results-found="{hitCount} résultats"
+        data-error-message="Une erreur s'est produite. Merci de réessayer."
+        data-error-reset="Réinitialiser la recherche"
+        data-sk-es-pf-indexes="" 
+        data-flavor="">
+    </div>
+</div>
+        
+    </div>
+    <div id="ie-new-toc"><script>
+  let sidebarAccordion = true;
+
+  /* specific css rules for Mac */
+  if(navigator.platform.match('Mac') !== null) {
+    document.body.setAttribute('class', 'OSX');
+  }
+
+</script>
+
+<div id="ie-sidebar-container">
+  <ul id="ie-sidebar-list" ><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="BeeGFS sur les documents NetApp"
+      data-li-level="1#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/index.html" 
+    ><a class="ie-sidebar-menuitem-1 " href="/fr-fr/beegfs/index.html">
+        BeeGFS sur les documents NetApp
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Commencez"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/fr-fr/beegfs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/fr-fr/beegfs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Commencez</div>-->
+         Commencez
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Ce qui est inclus dans ce site"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/whats-included.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/fr-fr/beegfs/whats-included.html">
+        Ce qui est inclus dans ce site
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Termes et concepts"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-terms.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/fr-fr/beegfs/beegfs-terms.html">
+        Termes et concepts
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Utilisez des architectures vérifiées"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/fr-fr/beegfs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/fr-fr/beegfs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Utilisez des architectures vérifiées</div>-->
+         Utilisez des architectures vérifiées
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation et configuration requise"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/fr-fr/beegfs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/fr-fr/beegfs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Présentation et configuration requise</div>-->
+         Présentation et configuration requise
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation de la solution"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-solution-overview.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-solution-overview.html">
+        Présentation de la solution
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Générations de conception"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-gens.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-gens.html">
+        Générations de conception
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation de l'architecture"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-architecture-overview.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-architecture-overview.html">
+        Présentation de l'architecture
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Exigences techniques"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-technology-requirements.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-technology-requirements.html">
+        Exigences techniques
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Examen du design de la solution"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/fr-fr/beegfs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/fr-fr/beegfs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Examen du design de la solution</div>-->
+         Examen du design de la solution
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation du design"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-design-overview.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-design-overview.html">
+        Présentation du design
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configuration matérielle"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-design-hardware-architecture.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-design-hardware-architecture.html">
+        Configuration matérielle
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configuration logicielle"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-design-software-architecture.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-design-software-architecture.html">
+        Configuration logicielle
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Vérification de la conception"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-design-solution-verification.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-design-solution-verification.html">
+        Vérification de la conception
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Instructions de dimensionnement"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-design-solution-sizing-guidelines.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-design-solution-sizing-guidelines.html">
+        Instructions de dimensionnement
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Réglage des performances"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-design-performance-tuning.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-design-performance-tuning.html">
+        Réglage des performances
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Option haute capacité"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-design-high-capacity-building-block.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-design-high-capacity-building-block.html">
+        Option haute capacité
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Déploiement de la solution"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/fr-fr/beegfs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/fr-fr/beegfs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Déploiement de la solution</div>-->
+         Déploiement de la solution
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation du déploiement"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-deploy-overview.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-deploy-overview.html">
+        Présentation du déploiement
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Découvrez l'inventaire Ansible"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-deploy-learn-ansible.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-deploy-learn-ansible.html">
+        Découvrez l'inventaire Ansible
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Passez en revue les bonnes pratiques"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-deploy-bestpractice.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-deploy-bestpractice.html">
+        Passez en revue les bonnes pratiques
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Déployez le matériel"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-deploy-hardware.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-deploy-hardware.html">
+        Déployez le matériel
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Déployez des logiciels"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/fr-fr/beegfs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/fr-fr/beegfs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Déployez des logiciels</div>-->
+         Déployez des logiciels
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configurez les nœuds de fichiers et de blocs"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-deploy-setup-nodes.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/fr-fr/beegfs/beegfs-deploy-setup-nodes.html">
+        Configurez les nœuds de fichiers et de blocs
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Réglez les paramètres du système en fonction des performances"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="beegfs-deploy-file-node-tuning.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/fr-fr/beegfs/beegfs-deploy-file-node-tuning.html">
+        Réglez les paramètres du système en fonction des performances
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configurez le nœud de contrôle Ansible"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-deploy-setting-up-an-ansible-control-node.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/fr-fr/beegfs/beegfs-deploy-setting-up-an-ansible-control-node.html">
+        Configurez le nœud de contrôle Ansible
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Créer un inventaire Ansible"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-deploy-create-inventory.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/fr-fr/beegfs/beegfs-deploy-create-inventory.html">
+        Créer un inventaire Ansible
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Définir des éléments de base BeeGFS"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-deploy-define-inventory.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/fr-fr/beegfs/beegfs-deploy-define-inventory.html">
+        Définir des éléments de base BeeGFS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Déployez BeeGFS"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-deploy-playbook.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/fr-fr/beegfs/beegfs-deploy-playbook.html">
+        Déployez BeeGFS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configurer les clients BeeGFS"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-deploy-configure-clients.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/fr-fr/beegfs/beegfs-deploy-configure-clients.html">
+        Configurer les clients BeeGFS
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Faire évoluer les clusters BeeGFS"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-deploy-scale-building-blocks.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-deploy-scale-building-blocks.html">
+        Faire évoluer les clusters BeeGFS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Pourcentages de volume recommandés"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-deploy-recommended-volume-percentages.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-deploy-recommended-volume-percentages.html">
+        Pourcentages de volume recommandés
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Option haute capacité"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/beegfs-deploy-high-capacity-building-block.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/beegfs-deploy-high-capacity-building-block.html">
+        Option haute capacité
+      </a></li></ul></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Utiliser des architectures personnalisées"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/fr-fr/beegfs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/fr-fr/beegfs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Utiliser des architectures personnalisées</div>-->
+         Utiliser des architectures personnalisées
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation et configuration requise"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-overview.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/fr-fr/beegfs/custom-architectures-overview.html">
+        Présentation et configuration requise
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configuration initiale"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/fr-fr/beegfs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/fr-fr/beegfs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Configuration initiale</div>-->
+         Configuration initiale
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Installez et fixez les câbles"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-setup-cable-hw.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/custom-architectures-setup-cable-hw.html">
+        Installez et fixez les câbles
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configurez les nœuds de fichiers et de blocs"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-setup-nodes.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/custom-architectures-setup-nodes.html">
+        Configurez les nœuds de fichiers et de blocs
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configurez le nœud de contrôle Ansible"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-setup-ansible-control-node.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/custom-architectures-setup-ansible-control-node.html">
+        Configurez le nœud de contrôle Ansible
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Définissez le système de fichiers BeeGFS"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/fr-fr/beegfs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/fr-fr/beegfs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Définissez le système de fichiers BeeGFS</div>-->
+         Définissez le système de fichiers BeeGFS
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation d'Ansible Inventory"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-inventory-overview.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/custom-architectures-inventory-overview.html">
+        Présentation d'Ansible Inventory
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Planifiez le système de fichiers"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-plan-file-system.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/custom-architectures-plan-file-system.html">
+        Planifiez le système de fichiers
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Définir les nœuds de fichier et de bloc"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/fr-fr/beegfs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/fr-fr/beegfs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Définir les nœuds de fichier et de bloc</div>-->
+         Définir les nœuds de fichier et de bloc
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configurez des nœuds de fichiers individuels"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-inventory-configure-file-nodes.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/fr-fr/beegfs/custom-architectures-inventory-configure-file-nodes.html">
+        Configurez des nœuds de fichiers individuels
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Configurez les nœuds de blocs individuels"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-inventory-configure-block-nodes.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/fr-fr/beegfs/custom-architectures-inventory-configure-block-nodes.html">
+        Configurez les nœuds de blocs individuels
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Spécifiez la configuration de nœud de fichier commune"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-inventory-common-file-node-configuration.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/fr-fr/beegfs/custom-architectures-inventory-common-file-node-configuration.html">
+        Spécifiez la configuration de nœud de fichier commune
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Spécifiez une configuration de nœud de bloc commune"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-inventory-common-block-node-configuration.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/fr-fr/beegfs/custom-architectures-inventory-common-block-node-configuration.html">
+        Spécifiez une configuration de nœud de bloc commune
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Définir les services BeeGFS"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/fr-fr/beegfs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/fr-fr/beegfs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Définir les services BeeGFS</div>-->
+         Définir les services BeeGFS
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Service de gestion BeeGFS"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-inventory-beegfs-management.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/fr-fr/beegfs/custom-architectures-inventory-beegfs-management.html">
+        Service de gestion BeeGFS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Services de métadonnées BeeGFS"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-inventory-beegfs-metadata.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/fr-fr/beegfs/custom-architectures-inventory-beegfs-metadata.html">
+        Services de métadonnées BeeGFS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Services de stockage BeeGFS"
+      data-li-level="4#" 
+      class="  ie-sidebar-selected    "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-inventory-beegfs-storage.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/fr-fr/beegfs/custom-architectures-inventory-beegfs-storage.html">
+        Services de stockage BeeGFS
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Mapper les services BeeGFS sur les nœuds de fichiers"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-inventory-map-services-to-file-nodes.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/custom-architectures-inventory-map-services-to-file-nodes.html">
+        Mapper les services BeeGFS sur les nœuds de fichiers
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Déployez le système de fichiers BeeGFS"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/fr-fr/beegfs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/fr-fr/beegfs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Déployez le système de fichiers BeeGFS</div>-->
+         Déployez le système de fichiers BeeGFS
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation du PlayBook Ansible"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-deploy-playbook-overview.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/custom-architectures-deploy-playbook-overview.html">
+        Présentation du PlayBook Ansible
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Déployez le cluster BeeGFS HA"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-deploy-ha-cluster.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/custom-architectures-deploy-ha-cluster.html">
+        Déployez le cluster BeeGFS HA
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Déploiement de clients BeeGFS"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-deploy-beegfs-clients.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/custom-architectures-deploy-beegfs-clients.html">
+        Déploiement de clients BeeGFS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Vérifier le déploiement BeeGFS"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/custom-architectures-deploy-verify.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/custom-architectures-deploy-verify.html">
+        Vérifier le déploiement BeeGFS
+      </a></li></ul></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Gérer des clusters BeeGFS"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/fr-fr/beegfs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/fr-fr/beegfs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Gérer des clusters BeeGFS</div>-->
+         Gérer des clusters BeeGFS
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Présentation, concepts clés et terminologie"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/administer-clusters-overview.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/fr-fr/beegfs/administer-clusters-overview.html">
+        Présentation, concepts clés et terminologie
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Quand utiliser Ansible par rapport aux pièces"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/administer-clusters-ansible-pcs.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/fr-fr/beegfs/administer-clusters-ansible-pcs.html">
+        Quand utiliser Ansible par rapport aux pièces
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Vérifiez l'état du cluster"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/administer-clusters-examine-state.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/fr-fr/beegfs/administer-clusters-examine-state.html">
+        Vérifiez l'état du cluster
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Reconfigurez et mettez à jour"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/fr-fr/beegfs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/fr-fr/beegfs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Reconfigurez et mettez à jour</div>-->
+         Reconfigurez et mettez à jour
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Reconfigurer le cluster HA et BeeGFS"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/administer-clusters-reconfigure.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/administer-clusters-reconfigure.html">
+        Reconfigurer le cluster HA et BeeGFS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Mettre à jour le cluster HA et BeeGFS"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/administer-clusters-update.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/administer-clusters-update.html">
+        Mettre à jour le cluster HA et BeeGFS
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Entretien et maintenance"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/fr-fr/beegfs/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/fr-fr/beegfs/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Entretien et maintenance</div>-->
+         Entretien et maintenance
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Services de basculement/rétablissement"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/administer-clusters-failover-failback.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/administer-clusters-failover-failback.html">
+        Services de basculement/rétablissement
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Placer le cluster en mode maintenance"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/administer-clusters-maintenance-mode.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/administer-clusters-maintenance-mode.html">
+        Placer le cluster en mode maintenance
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Arrêtez et démarrez le cluster"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/administer-clusters-stop-start-cluster.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/administer-clusters-stop-start-cluster.html">
+        Arrêtez et démarrez le cluster
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Remplacer les nœuds de fichiers"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/administer-clusters-replace-file-nodes.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/administer-clusters-replace-file-nodes.html">
+        Remplacer les nœuds de fichiers
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Développez ou réduisez le cluster"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/administer-clusters-expand-shrink-cluster.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/fr-fr/beegfs/administer-clusters-expand-shrink-cluster.html">
+        Développez ou réduisez le cluster
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Résoudre les problèmes"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/administer-clusters-troubleshoot.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/fr-fr/beegfs/administer-clusters-troubleshoot.html">
+        Résoudre les problèmes
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Mentions légales"
+      data-li-level="1#" 
+      class="   "
+      dale-page-url="/custom-architectures-inventory-beegfs-storage.html" 
+      dale-entry-url="/legal-notices.html" 
+    ><a class="ie-sidebar-menuitem-1 " href="/fr-fr/beegfs/legal-notices.html">
+        Mentions légales
+      </a></li></ul>
+</div>
+<script>
+
+  $(".ie-sidebar-button").click(function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    expandedLI = $('li.ie-sidebar-expand')
+
+    const li = $(this).closest("li");
+
+    const parentsLI = $(li).parents('li');
+
+    expandedLI.map(element => {
+      if (sidebarAccordion && !li.hasClass('ie-sidebar-expand') && jQuery.inArray(expandedLI[element], parentsLI) == -1) {
+        $(expandedLI[element]).toggleClass('ie-sidebar-expand');
+        $(expandedLI[element]).children("ul").animate({ height: 'toggle' }, 400, function () {
+          $(li).children("ul").toggleClass('ie-sidebar-open');
+
+        })
+      }
+
+    })
+
+    $(li).toggleClass('ie-sidebar-expand');
+    $(li).children("ul").animate({ height: 'toggle' }, 400, function () {
+      $(li).children("ul").toggleClass('ie-sidebar-open');
+    })
+  });
+
+
+  
+    $("li.ie-sidebar-selected").parents('ul').toggleClass("ie-sidebar-open");
+    $("li.ie-sidebar-selected").toggleClass("ie-sidebar-expand")
+    $("ul.ie-sidebar-open").parent().toggleClass("ie-sidebar-expand");
+    $("li.ie-sidebar-selected").children('ul').toggleClass("ie-sidebar-open")
+  
+  
+</script>
+    </div>
+</div>
+<script>
+
+    
+    let sidebarScrollTopPosition = 0;
+    $("#ie-new-toc").on("scroll", function () {
+        if (sidebarScrollTopPosition == 0) {
+            $.cookie("sidebarScroll", $("#ie-new-toc").scrollTop(), {
+                path: "/fr-fr/beegfs"
+            });
+        }
+
+        if ($("#ie-new-toc").scrollTop() > 0) {
+            $('#ie-product-identity-lockup').addClass('ie-addShadow');
+        } else {
+            $('#ie-product-identity-lockup').removeClass('ie-addShadow');
+        }
+    });
+
+    $(function () {
+        if ($.cookie("sidebarScroll")) {
+            $("#ie-new-toc").scrollTop($.cookie("sidebarScroll"));
+        }
+    });
+
+    function setSidebarBottom() {
+        const footerGap = PXinViewport($(".n-footer"));
+        document.getElementById("ie-new-sidebar").style.bottom = Math.max(0, footerGap) + "px";
+    }
+
+    window.onscroll = () => {
+        setSidebarBottom();
+    };
+
+    $("#sidebar-collapse").click(function (e) {
+        const sidebarWidth = $("#ie-new-sidebar").width() - $("#ie-new-sidebar-collapse").width();
+        e.preventDefault();
+        const width = $(".ie-content-pane").width();
+        const marginLeft = parseInt($(".ie-content-pane").css('marginLeft'));
+
+        if ($.cookie("sidebarScroll")) {
+            sidebarScrollTopPosition = $.cookie("sidebarScroll");
+        }
+
+        $("#ie-new-sidebar").animate({ width: 'toggle' }, 350, function () {
+            $("#ie-new-sidebar-collapse").show();
+            $("#ie-new-sidebar").removeClass("open")
+            $("#ie-new-sidebar").addClass("close")
+            $("#ie-new-sidebar").removeAttr("style")
+        });
+        $(".ie-content-pane").animate({ width: (width + sidebarWidth), marginLeft: (marginLeft - sidebarWidth) }, 350, function () {
+            resizeContent()
+        })
+
+    });
+    $("#sidebar-expand").click(function (e) {
+        const sidebarWidth = $("#ie-new-sidebar").width() - $("#ie-new-sidebar-collapse").width();
+        e.preventDefault();
+        const width = $(".ie-content-pane").width();
+        const marginLeft = parseInt($(".ie-content-pane").css('marginLeft'));
+
+        $("#ie-new-sidebar").animate({ width: 'toggle' }, 250, function () {
+            $('#ie-new-sidebar').css('display', 'flex');
+            $("#ie-new-sidebar-collapse").hide();
+            $("#ie-new-sidebar").removeClass("close")
+            $("#ie-new-sidebar").addClass("open")
+            setSidebarBottom();
+
+            if (sidebarScrollTopPosition != 0) {
+                $.cookie("sidebarScroll", sidebarScrollTopPosition, {
+                    path: "/fr-fr/beegfs"
+                })
+                $("#ie-new-toc").scrollTop(sidebarScrollTopPosition);
+                sidebarScrollTopPosition = 0;
+            }
+        });
+        $(".ie-content-pane").animate({ width: (width - sidebarWidth), 'marginLeft': (marginLeft + sidebarWidth) }, 250, function () {
+            resizeContent()
+        })
+    });
+    function resizeContent() {
+        const sidebarWidth = $("#ie-new-sidebar").width() - $("#ie-new-sidebar-collapse").width();
+        const rightNavbarVisible =  $("#ie-right-navbar").css('display') && $("#ie-right-navbar").css('display') != 'none';
+        const sidebarVisible = $("#ie-new-sidebar").css('display') != 'none';
+        const rightNavbarWidth = $("#ie-right-navbar").width();
+        const rightNavbarCollapseWidth = $("#ie-right-navbar-collapse").width();
+        const rightNavbarCollapseVisible = $("#ie-right-navbar-collapse").css('display') && $("#ie-right-navbar-collapse").css('display') != 'none';
+        
+        if (rightNavbarVisible && sidebarVisible) {
+            $(".ie-content-pane").width(`calc(100% - ${sidebarWidth + rightNavbarWidth}px)`)
+            $(".ie-content-pane").css('marginLeft', `${sidebarWidth}px`)
+        } else if (sidebarVisible) {
+            $(".ie-content-pane").css('marginLeft', `${sidebarWidth}px`)
+            if (rightNavbarCollapseVisible) {
+                $(".ie-content-pane").width(`calc(100% - ${sidebarWidth + rightNavbarCollapseWidth}px)`)
+            } else {
+                $(".ie-content-pane").width(`calc(100% - ${$("#ie-new-sidebar").width()}px)`)
+            }
+
+        } else if (rightNavbarVisible) {
+            $(".ie-content-pane").css('marginLeft', `${$("#ie-new-sidebar-collapse").width()}px`)
+            $(".ie-content-pane").width(`calc(100% - ${rightNavbarWidth}px)`)
+        } else {
+            $(".ie-content-pane").css('marginLeft', `${$("#ie-new-sidebar-collapse").width()}px`)
+            if (rightNavbarCollapseVisible) {
+                $(".ie-content-pane").width(`calc(100% - ${rightNavbarCollapseWidth}px)`);
+            } else {
+                $(".ie-content-pane").width(`calc(100% - ${$("#ie-new-sidebar-collapse").width()}px) `);
+            }
+            
+        }
+    }
+    $(window).on("resize load", function () {
+        setSidebarBottom();
+        resizeContent()
+    });
+
+
+</script>
+
+<div class="ie-content-pane ie-component-detail-content ie-component-detail-content--show-code">
+    <!-- Begin of page container --><article class="page-content" id="main">
+      <!-- include utility.html -->
+      <div class="ie-info-disclaimer">
+    <span>
+      <div class="ie-info-disclaimer-container">
+        <div class="ie-info-disclaimer-icon">
+          <img src="/fr-fr/beegfs/images/notification-icons.svg" class="luci-icon" alt="" />
+        </div>
+        <div class="ie-info-disclaimer-content">
+          <span> La version française est une traduction automatique. La version anglaise prévaut sur la française en cas de divergence. </span>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+    </span>
+  </div><div class="ie-component-detail-heading-wrap">
+  <h1 class="ie-component-detail-heading">Définissez le service de stockage BeeGFS</h1>
+</div>
+
+<div id="ie-byline">
+  
+<div class="page-details">
+    
+        
+            <time datetime="2023-01-31 13:59:49 +0000">01/31/2023</time>
+        
+    
+    
+        <span>Contributeurs
+        </span>
+    
+    
+</div>
+<div class="page-controls">
+    <div id="contribute-dropdown" class="custom-dropdown custom-dropdown-contrib" >
+        <div class="custom-dropdown-select custom-dropdown-select-contrib">
+        <span class="contrib-name"><img src="/fr-fr/beegfs/images/discuss-sm.svg" alt="" class="github-icon" />Suggérer des modifications</span>
+        <img src="/fr-fr/beegfs/images/dropdown-arrow.svg" alt="" class="custom-icon chevrondown invisible" />
+        <img src="/fr-fr/beegfs/images/dropdown-arrow.svg" alt="" class="custom-icon chevronup" />
+        </div>
+        <ul class="custom-dropdown-menu suggested-changes-dropdown"><li>
+                <a target="_blank" href="https://github.com/NetAppDocs/beegfs.fr-fr/issues/new?template=new-from-page.yml&page-url=https://docs.netapp.com/fr-fr/beegfs/custom-architectures-inventory-beegfs-storage.html&page-title=Définissez le service de stockage BeeGFS" class="page-nav-contribute-link" role="button">Demander des modifications de la documentation</a>
+            </li><li> 
+                <a target="_blank" href="https://github.com/NetAppDocs/beegfs/blob/main/custom/define-beegfs-fs/define-services/custom-architectures-inventory-beegfs-storage.adoc" class="page-nav-contribute-link" role="button">Modifier cette page</a>
+            </li><li><a target="_blank" href="https://docs.netapp.com/us-en/contribute/" class="page-nav-contribute-link"  >En savoir plus sur les contributions</a></li>
+        </ul>
+    </div>
+    <div id="pdf-control-container">
+        <div class="n-pdf-header">
+            <a id="toggleButtonPdf" class="n-pdf-button" type="button">
+                <img class="adobe-icon" src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>PDF<img src="/fr-fr/beegfs/images/dropdown-arrow.svg" class="custom-icon" alt="" />
+            </a>
+        </div>
+        <div class="n-pdf-body-container">
+            <ul id="toggleContainerPdf" class="n-pdf-body" style="display:none;"><li class="pdf-ux-container">
+                    
+                    
+                    
+                    <a target="_blank" class="pdf-download-link" href="/fr-fr/beegfs/pdfs/fullsite-sidebar/BeeGFS_sur_NetApp_avec_E_Series_Storage.pdf" >
+                    <img src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>Un fichier PDF de toute la documentation</a>
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Commencez.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Commencez
+          </a>
+          
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Utilisez_des_architectures_vérifiées.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Utilisez des architectures vérifiées
+          </a>
+          
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Présentation_et_configuration_requise.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Présentation et configuration requise
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Examen_du_design_de_la_solution.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Examen du design de la solution
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Déploiement_de_la_solution.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Déploiement de la solution
+          </a>
+          
+
+
+
+
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Déployez_des_logiciels.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Déployez des logiciels
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Utiliser_des_architectures_personnalisées.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Utiliser des architectures personnalisées
+          </a>
+          
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Configuration_initiale.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Configuration initiale
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Définissez_le_système_de_fichiers_BeeGFS.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Définissez le système de fichiers BeeGFS
+          </a>
+          
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Définir_les_nœuds_de_fichier_et_de_bloc.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Définir les nœuds de fichier et de bloc
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Définir_les_services_BeeGFS.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Définir les services BeeGFS
+          </a>
+          
+
+
+
+
+    <ul class="subfolders" id="pdf-remove" style="display:none;"><li class="active"></li></ul>
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Déployez_le_système_de_fichiers_BeeGFS.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Déployez le système de fichiers BeeGFS
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Gérer_des_clusters_BeeGFS.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Gérer des clusters BeeGFS
+          </a>
+          
+
+
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Reconfigurez_et_mettez_à_jour.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Reconfigurez et mettez à jour
+          </a>
+          
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/fr-fr/beegfs/pdfs/sidebar/Entretien_et_maintenance.pdf" 
+            
+          >
+            <img src="/fr-fr/beegfs/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Entretien et maintenance
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+</li></ul>
+            <div class="zip-pdf-link-container" style="display: none;">   
+                <a href="#" id="zipPdf">
+                <img src="/fr-fr/beegfs/images/pdf-zip.png" alt="" width="16" height="16"/>
+                <pre>Plusieurs fichiers PDF<span class="zip-size"></span></pre>
+                </a><div id="zip-link-popup" class="hide">
+    <div class="inner-modal">
+        <div class="downloading-progress">
+            <div class="spinner"></div>
+            <h1>Creating your file...</h1>
+            <div>This may take a few minutes. Thanks for your patience.</div>
+            <button class="cancel-download-btn" type="button">Cancel</button>
+        </div>
+        <div class="download-complete hide">
+            <div class="done-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>
+            </div>
+            <div>Your file is ready</div>
+            <button class="cancel-download-btn" type="button">OK</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(".cancel-download-btn").click(function(){
+        $("#zip-link-popup").addClass("hide");
+        $("#zip-link-popup .downloading-progress").removeClass("hide");
+        $("#zip-link-popup .download-complete").addClass("hide");
+    });
+</script></div>
+        </div>
+    </div>        
+<script>
+$("#toggleContainerPdf li.active:last-child").parents('ul.subfolders').toggle('display');
+$("#toggleButtonPdf").on('click', function(e){ 
+    e.stopPropagation();
+    $("#toggleContainerPdf").toggle('display');
+    $(".n-pdf-body-container .zip-pdf-link-container").toggle('display');
+});
+
+//hide is by clicking outside pdfcontainer
+$(document).on('click', function (e) {
+    if ($('#toggleContainerPdf').is(':visible') && !$('.n-pdf-body-container').is(e.target) && !$('.n-pdf-body-container').has(e.target).length)  {
+        
+        $("#toggleContainerPdf").toggle('display');
+        $(".n-pdf-body-container .zip-pdf-link-container").toggle('display');
+        $("#toggleButtonPdf").removeClass("active");
+    }
+});
+</script>
+<script>
+    function getPdfLocation() {
+        const pdfLocation = window.scrollX + document.querySelector('#pdf-control-container').getBoundingClientRect().left
+        if (pdfLocation < 450) {
+            $(".n-pdf-body-container").addClass("block")
+        } else {
+            $(".n-pdf-body-container").removeClass("block")
+        }
+    
+    }
+    $( window ).on( "resize", function() {
+        getPdfLocation()
+} );
+</script>
+<script>
+    const pdfButtonWidth =  $(".n-pdf-header").width();
+    const pdfMenuWidth = $(".n-pdf-body-container").width();
+    $(".n-pdf-body-container").css('margin-left', `calc(${pdfButtonWidth - pdfMenuWidth}px)`);
+</script>
+</div>
+
+    
+
+</div>
+
+
+
+
+<div class="content-to-index">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p>Les services BeeGFS sont configurés à l'aide de variables de groupe (Group_var).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="présentation">Présentation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Cette section décrit la définition du service de stockage BeeGFS. Au moins un service de ce type doit exister dans le(s) cluster(s) haute disponibilité pour un système de fichiers particulier. La configuration de ce service inclut la définition des éléments suivants :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Le type de service (stockage).</p>
+</li>
+<li>
+<p>Définition de toute configuration qui ne doit s'appliquer qu'à ce service BeeGFS.</p>
+</li>
+<li>
+<p>Configuration d'une ou plusieurs adresses IP flottantes (interfaces logiques) sur lesquelles ce service peut être atteint.</p>
+</li>
+<li>
+<p>Spécifier où/comment le ou les volumes doivent être stockés pour ce service (cibles de stockage BeeGFS).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="étapes">Étapes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Référencement du <a href="custom-architectures-plan-file-system.html" target="_blank" rel="noopener">"Planifiez le système de fichiers"</a> créez un fichier à <code>group_vars/stor_&lt;ID&gt;.yml</code> pour chaque service de stockage du cluster, puis remplissez-les comme suit :</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Indiquez ce fichier représente la configuration d'un service de stockage BeeGFS :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">beegfs_service: storage</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Définissez toute configuration qui doit s'appliquer uniquement à ce service BeeGFS. Au minimum, vous devez spécifier le port TCP et UDP de votre choix, mais tout paramètre de configuration pris en charge à partir de <code>beegfs-storage.conf</code> peut également être inclus. Remarque les paramètres suivants sont configurés automatiquement/ailleurs et ne doivent pas être spécifiés ici : <code>sysMgmtdHost</code>, <code>storeStorageDirectory</code>, <code>connAuthFile</code>, <code>connDisableAuthentication</code>, <code>connInterfacesFile</code>, et <code>connNetFilterFile</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">beegfs_ha_beegfs_storage_conf_resource_group_options:
+  connStoragePortTCP: &lt;TCP PORT&gt;
+  connStoragePortUDP: &lt;UDP PORT&gt;
+  tuneBindToNumaZone: &lt;NUMA ZONE&gt; # Recommended if using file nodes with multiple CPU sockets.</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Configurez une ou plusieurs adresses IP flottantes que les autres services et clients utiliseront pour se connecter à ce service (cela définit automatiquement le BeeGFS <code>connInterfacesFile</code> option) :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">floating_ips:
+  - &lt;INTERFACE&gt;:&lt;IP/SUBNET&gt; # Primary interface. Ex. i1b:100.127.101.1/16
+  - &lt;INTERFACE&gt;:&lt;IP/SUBNET&gt; # Secondary interface(s) as needed.</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Vous pouvez également spécifier un ou plusieurs sous-réseaux IP autorisés qui peuvent être utilisés pour les communications sortantes (cela va automatiquement définir BeeGFS <code>connNetFilterFile</code> option) :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">filter_ip_ranges:
+  - &lt;SUBNET&gt;/&lt;MASK&gt; # Ex. 192.168.10.0/24</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Spécifiez la ou les cibles de stockage BeeGFS où ce service stockera les données conformément aux directives suivantes (ceci configurera également automatiquement l' <code>storeStorageDirectory</code> option) :</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Le même nom de pool de stockage ou de groupe de volumes peut être utilisé pour plusieurs services/cibles BeeGFS, tout simplement s'assurer d'utiliser la même chose <code>name</code>, <code>raid_level</code>, <code>criteria_*</code>, et <code>common_*</code> configuration pour chaque service (les volumes répertoriés doivent être différents).</p>
+</li>
+<li>
+<p>La taille des volumes doit être indiquée comme pourcentage du groupe pool/volumes de stockage et le total ne doit pas dépasser 100 pour tous les services/volumes utilisant un pool/groupe de volumes spécifique. Remarque lors de l'utilisation de disques SSD, il est recommandé de laisser de l'espace libre dans le groupe de volumes afin d'optimiser les performances des disques SSD et la durée de vie (cliquez sur <a href="beegfs-deploy-recommended-volume-percentages.html" target="_blank" rel="noopener">"ici"</a> pour en savoir plus).</p>
+</li>
+<li>
+<p>Cliquez sur <a href="https://github.com/netappeseries/santricity/tree/release-1.3.1/roles/nar_santricity_host#role-variables" target="_blank" rel="noopener">"ici"</a> pour obtenir la liste complète des options de configuration disponibles pour le <code>eseries_storage_pool_configuration</code>. Notez certaines options telles que <code>state</code>, <code>host</code>, <code>host_type</code>, <code>workload_name</code>, et <code>workload_metadata</code> des noms de volume et de volume sont générés automatiquement et ne doivent pas être spécifiés ici.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">beegfs_targets:
+  &lt;BLOCK_NODE&gt;: # The name of the block node as found in the Ansible inventory. Ex: ictad22a01
+    eseries_storage_pool_configuration:
+      - name: &lt;NAME&gt; # Ex: beegfs_s1_s2
+        raid_level: &lt;LEVEL&gt; # One of: raid1, raid5, raid6, raidDiskPool
+        criteria_drive_count: &lt;DRIVE COUNT&gt; # Ex. 4
+        common_volume_configuration:
+          segment_size_kb: &lt;SEGMENT SIZE&gt; # Ex. 128
+        volumes:
+          - size: &lt;PERCENT&gt; # Percent of the pool or volume group to allocate to this volume. Ex. 1
+            owning_controller: &lt;CONTROLLER&gt; # One of: A, B
+        # Multiple storage targets are supported / typical:
+          - size: &lt;PERCENT&gt; # Percent of the pool or volume group to allocate to this volume. Ex. 1
+            owning_controller: &lt;CONTROLLER&gt; # One of: A, B</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Cliquez sur <a href="https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/group_vars/stor_01.yml" target="_blank" rel="noopener">"ici"</a> Exemple de fichier d'inventaire complet représentant un service de stockage BeeGFS.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+    </article>
+    <!-- Page Container -->
+  </div>
+
+  
+  <!-- Start Page Toolbar -->
+<div id="ie-right-navbar-collapse" class="close">
+  <img id="navbar-expand" class="ie-searchbox-icon" src="/fr-fr/beegfs/images/double_arrow.svg" alt="" />
+</div>
+<div id="ie-right-navbar" class="open">
+  <div id="right-navbar-collapse">
+    <img src="/fr-fr/beegfs/images/double_arrow.svg" alt="" />
+  </div>
+  <div class="page-nav-container">
+    <nav class="page-nav-fixed">
+      <div class="page-nav-title">Sur cette page</div>
+      <div class="page-nav-links">
+        <ul class="page-nav-inner" id="page-menu"></ul>
+      </div>
+    </nav>
+  </div>
+</div>
+
+
+<script>
+  resizeContent();
+  function setRightBarHeight() {
+    var h = 0;
+
+    // header 1
+    h += PXinViewport($('.n-footer'));
+    h += PXinViewport($('#ie-new-header'));
+
+    if ($('#ie-right-navbar').length) {
+      $('#ie-right-navbar').css({ height: `calc(100vh - ${h}px)` });
+    }
+    if ($('.page-nav-links').length) {
+      h += 98;
+      $('.page-nav-links').css({ height: `calc(100vh - ${h}px)` });
+    }
+  }
+
+  $(document).ready(function () {
+    // PAGE NAV - Click
+    const MASTHEAD_OFFSET = 65;
+    const SECTIONS = $("main h2, main h3");
+    let calculateActiveSection = false;
+    setTimeout(() => {
+      calculateActiveSection = true;
+    }, 100)
+
+    $(".page-nav__link").click(function (event) {
+      calculateActiveSection = false;
+      $(".page-nav__link").removeClass('page-nav__link--active');
+      var target = $(event.target);
+      target.addClass('page-nav__link--active');
+      location.hash = event.target.hash;
+      setTimeout(() => {
+        calculateActiveSection = true;
+      }, 100)
+
+    });
+
+    // PAGE NAV - Scroll
+    $(window).on('resize scroll', function () {
+      if (calculateActiveSection) {
+        var activeSection = getActiveSection(SECTIONS, MASTHEAD_OFFSET);
+        if (activeSection) {
+          var activeHref = $(activeSection).attr('id');
+          $(".page-nav__link").removeClass('page-nav__link--active');
+          $("#page-menu a[href=#" + activeHref + "]").addClass('page-nav__link--active');
+          if (location.hash != "#" + activeHref) {
+            if (history.replaceState) {
+              history.replaceState(null, null, "#" + activeHref);
+            }
+          }
+        }
+      }
+    });
+
+    $(".n-pdf-button").click(function () {
+      $(this).toggleClass("active");
+    });
+
+    $.fn.isVisibleAndInViewport = function () {
+      var elementTop = $(this).offset().top;
+      var elementBottom = elementTop + $(this).outerHeight();
+
+      var viewportTop = $(window).scrollTop();
+      var viewportBottom = viewportTop + $(window).height();
+
+      return elementBottom > viewportTop && elementTop < viewportBottom && $(this).is(":visible");
+    };
+
+
+    $(window).on('resize scroll', function () {
+      setRightBarHeight();
+    });
+
+    $(window).trigger('resize');
+
+
+  });
+
+  $("#right-navbar-collapse").click(function (e) {
+    const rightNavbarWidth = $("#ie-right-navbar").width() - $("#ie-right-navbar-collapse").width();
+    e.preventDefault();
+    const width = $(".ie-content-pane").width();
+
+    $("#ie-right-navbar").animate({ width: 'toggle' }, 350, function () {
+      $("#ie-right-navbar-collapse").removeClass("close")
+      $("#ie-right-navbar-collapse").addClass("open")
+      $("#ie-right-navbar").removeClass("open")
+      $("#ie-right-navbar").addClass("close")
+    });
+    $(".ie-content-pane").animate({ width: (width + rightNavbarWidth) }, 350, function () {
+      resizeContent()
+      setSidebarBottom();
+    })
+
+  });
+  $("#navbar-expand").click(function (e) {
+    const rightNavbarWidth = $("#ie-right-navbar").width() - $("#ie-right-navbar-collapse").width();
+    e.preventDefault();
+    const width = $(".ie-content-pane").width();
+    $("#ie-right-navbar").animate({ width: 'toggle' }, 250, function () {
+      $("#ie-right-navbar-collapse").removeClass("open")
+      $("#ie-right-navbar-collapse").addClass("close")
+      $("#ie-right-navbar").removeClass("close")
+      $("#ie-right-navbar").addClass("open")
+      setRightBarHeight();
+      setSidebarBottom();
+    });
+    $(".ie-content-pane").animate({ width: (width - rightNavbarWidth) }, 250, function () {
+      resizeContent()
+    })
+  });
+
+  function navbarResize() {
+    const rightNavbarResized = $("#ie-right-navbar-collapse").hasClass('resized');
+    if (window.innerWidth < 1024) {
+      $("#ie-right-navbar").removeClass("open")
+      $("#ie-right-navbar").addClass("close")
+      $("#ie-right-navbar").removeAttr("style")
+      $("#ie-right-navbar-collapse").removeClass("close")
+      $("#ie-right-navbar-collapse").addClass("open")
+      $("#ie-right-navbar-collapse").addClass("resized")
+    } else {
+      if (rightNavbarResized) {
+        $('#ie-right-navbar').removeClass('close');
+        $('#ie-right-navbar').addClass('open');
+        $("#ie-right-navbar-collapse").removeClass("resized")
+        $("#ie-right-navbar-collapse").removeClass("open")
+        $("#ie-right-navbar-collapse").addClass("close")
+      }
+    }
+    resizeContent()
+  }
+  navbarResize();
+  $(window).on('resize load', function () {
+    navbarResize()
+  });
+
+  function getActiveSection(sections, offset) {
+    var scrollPosition = $(window).scrollTop() + offset + 5;
+    var activeSection;
+    for (var i = 0; i < sections.length; i++) {
+      var el = $(sections[i]);
+      var activePosition = el.offset().top;
+      if (activePosition > scrollPosition) {
+        break;
+      }
+
+      activeSection = sections[i];
+    }
+
+    return activeSection;
+  }
+
+  $("a[href*=#]:not([href=#])").click(function () {
+    setTimeout(() => {
+      $(window).trigger('scroll');
+    }, 105)
+  })
+
+  const hashOnLoad = location.href.split("#")[1];
+  setTimeout(function () {
+    if (hashOnLoad) {
+      $(".page-nav__link").removeClass('page-nav__link--active');
+      $("#page-menu a[href=#" + hashOnLoad + "]").addClass('page-nav__link--active');
+    }
+  }, 100)
+
+</script>
+
+
+  <div style="clear: both"></div><!-- Main needs to have height --></div>
+
+        </main>
+
+        <footer class="n-footer">
+  <div class="n-footer__bottom">
+    <div class="n-container">
+        <div class="n-footer__left">
+          <li class="n-footer__copyright-link">
+                    <a href="https://www.netapp.com/company/legal/copyright/">© 2024 NetApp, Inc.</a>
+          </li>
+        </div>
+        <div class="n-footer__center">
+          <ul class="n-footer__copyright-list">
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/terms-of-use/">Conditions d'utilisation</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/privacy-policy/">Déclaration de confidentialité</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/cookie-policy/">Déclaration sur les cookies</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a class="ot-sdk-show-settings">Paramètres des cookies</a>
+            </li>
+          </ul>
+       </div>
+        <div class="n-footer__right">
+              <li class="n-footer__copyright-link">
+                <a target="_self" href="javascript:netapp_mailto()">Envoyer des commentaires à propos de cette page</a>
+              </li>
+        </div>
+     </div>
+  </div>
+</footer>
+
+      </div><!-- Elasticsearch JS -->
+      <script type="text/javascript" src='/fr-fr/beegfs/js/bundle.js'></script>
+
+      <!-- Syntax Highlighting -->
+      <script type="text/javascript" src='/fr-fr/beegfs/js/prism.js'></script>
+      <script type="text/javascript" src='/fr-fr/beegfs/js/prism-curl.js'></script>
+    </div>
+    <script>
+      document.body.offsetWidth=1903;
+      cookieLaw = {}
+      cookieLaw.euCountry = "US";
+      cookieLaw.invoke = function(){return false;}
+    </script>
+    <script src='/fr-fr/beegfs/js/ie-tabbed-blocks.js'></script>
+    <script src='/fr-fr/beegfs/js/ie-sidebar.js'></script>
+  </body>
+
+</html>
