@@ -20,7 +20,7 @@ Suivez les bonnes pratiques pour déployer la solution BeeGFS sur NetApp.
 
 == Conventions standard
 
-Lors du montage physique et de la création du fichier d'inventaire Ansible, respecter les conventions standard suivantes (pour plus d'informations, voir link:beegfs-deploy-beegfs-general-config.html["Créez l'inventaire Ansible"]).
+Lors du montage physique et de la création du fichier d'inventaire Ansible, respecter les conventions standard suivantes (pour plus d'informations, voir link:beegfs-deploy-create-inventory.html["Créez l'inventaire Ansible"]).
 
 * Les noms d'hôte de nœud de fichiers sont numérotés séquentiellement (h01-HN), les chiffres inférieurs se trouvant en haut du rack et les chiffres plus élevés en bas.
 +
