@@ -58,8 +58,8 @@ Pour atteindre les performances attendues, chaque nœud de fichier doit remplir 
 
 *Divers:*
 
-* Deux disques SATA 1 To 7200 tr/min (ou comparables) configurés en RAID 1 pour le système d'exploitation.
-* Adaptateur 10GbE OCP 3.0 (ou équivalent) pour la gestion du système d'exploitation intrabande.
+* Deux disques SATA de 1 To 7200 tr/min (comparables ou supérieurs) configurés en RAID 1 pour le système d'exploitation.
+* Port 1GbE (ou supérieur) pour la gestion des systèmes d'exploitation intrabande.
 * 1GbE BMC avec Redfish API pour la gestion de serveurs hors bande.
 * Deux blocs d'alimentation et ventilateurs de performances remplaçables à chaud.
 * Les câbles InfiniBand optiques Mellanox doivent être pris en charge si nécessaire pour atteindre les commutateurs InfiniBand de stockage.
