@@ -23,7 +23,7 @@ Les profils de configuration incluent les éléments suivants :
 * Un élément de base BeeGFS uniquement pour le stockage.
 
 
-Les éléments de base ont été reliés à deux switchs Mellanox Quantum InfiniBand (MQM8700). Dix clients BeeGFS étaient également connectés aux commutateurs InfiniBand et utilisés pour exécuter des utilitaires de banc d'essai synthétiques.
+Les éléments de base ont été reliés à deux commutateurs NVIDIA Quantum InfiniBand (MQM8700). Dix clients BeeGFS étaient également connectés aux commutateurs InfiniBand et utilisés pour exécuter des utilitaires de banc d'essai synthétiques.
 
 La figure suivante montre la configuration BeeGFS utilisée pour valider la solution BeeGFS sur NetApp.
 
@@ -137,8 +137,8 @@ NOTE: Il y a un problème connu (voir https://github.com/netappeseries/beegfs/bl
 
 
 
-== Validation du superPOD et du BasePOD NVIDIA DGX A100
+== Validation de NVIDIA DGX SuperPOD et BasePOD
 
-NetApp a validé une solution de stockage pour NVIDIA DGX A100 SuperPOD à l'aide d'un système de fichiers BeeGFS constitué de trois éléments de base avec les métadonnées plus le profil de configuration du stockage appliqué. L'effort de qualification a participé au test de la solution décrite par cette architecture NVA avec vingt serveurs GPU DGX A100 exécutant plusieurs bancs d'essai de stockage, d'apprentissage machine et d'apprentissage profond. Tout le stockage certifié pour une utilisation dans le superPOD DGX A100 de NVIDIA est automatiquement certifié pour une utilisation dans les architectures NVIDIA BasePOD.
+NetApp a validé une solution de stockage pour NVIDIA DGX A100 SuperPOD à l'aide d'un système de fichiers BeeGFS constitué de trois éléments de base avec les métadonnées plus le profil de configuration du stockage appliqué. L'effort de qualification a participé au test de la solution décrite par cette architecture NVA avec vingt serveurs GPU DGX A100 exécutant plusieurs bancs d'essai de stockage, d'apprentissage machine et d'apprentissage profond. Basée sur la validation établie avec le DGX A100 SuperPOD de NVIDIA, la solution BeeGFS sur NetApp a été approuvée pour les systèmes DGX SuperPOD H100, H200 et B200. Cette extension repose sur le respect des bancs d'essai et des exigences système précédemment établis et validés avec le système NVIDIA DGX A100
 
 Pour plus d'informations, voir https://www.netapp.com/pdf.html?item=/media/72718-nva-1167-DESIGN.pdf["NVIDIA DGX SuperPOD avec NetApp"^] et https://www.nvidia.com/en-us/data-center/dgx-basepod/["NVIDIA DGX BasePOD"^].

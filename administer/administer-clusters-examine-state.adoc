@@ -30,13 +30,13 @@ Courez `pcs status` Sur n'importe quel nœud de cluster où les services de clus
 
 [source, console]
 ----
-[root@ictad22h01 ~]# pcs status
+[root@beegfs_01 ~]# pcs status
 Cluster name: hacluster
 Cluster Summary:
   * Stack: corosync
-  * Current DC: ictad22h01 (version 2.0.5-9.el8_4.3-ba59be7122) - partition with quorum
+  * Current DC: beegfs_01 (version 2.0.5-9.el8_4.3-ba59be7122) - partition with quorum
   * Last updated: Fri Jul  1 13:37:18 2022
-  * Last change:  Fri Jul  1 13:23:34 2022 by root via cibadmin on ictad22h01
+  * Last change:  Fri Jul  1 13:23:34 2022 by root via cibadmin on beegfs_01
   * 6 nodes configured
   * 235 resource instances configured
 ----
@@ -45,9 +45,9 @@ La section ci-dessous liste les nœuds du cluster :
 [source, console]
 ----
 Node List:
-  * Node ictad22h06: standby
-  * Online: [ ictad22h01 ictad22h02 ictad22h04 ictad22h05 ]
-  * OFFLINE: [ ictad22h03 ]
+  * Node beegfs_06: standby
+  * Online: [ beegfs_01 beegfs_02 beegfs_04 beegfs_05 ]
+  * OFFLINE: [ beegfs_03 ]
 ----
 Cela indique notamment tous les nœuds en veille ou hors ligne. Les nœuds en veille font toujours partie du cluster, mais sont marqués comme non éligibles pour l'exécution des ressources. Les nœuds hors ligne indiquent que les services du cluster ne s'exécutent pas sur ce nœud, soit en raison d'un arrêt manuel, soit en raison du redémarrage ou de l'arrêt du nœud.
 
@@ -61,12 +61,12 @@ La section suivante affiche la liste de toutes les ressources du cluster et leur
 [source, console]
 ----
 Full List of Resources:
-  * mgmt-monitor	(ocf::eseries:beegfs-monitor):	 Started ictad22h01
+  * mgmt-monitor	(ocf::eseries:beegfs-monitor):	 Started beegfs_01
   * Resource Group: mgmt-group:
-    * mgmt-FS1	(ocf::eseries:beegfs-target):	 Started ictad22h01
-    * mgmt-IP1	(ocf::eseries:beegfs-ipaddr2):	 Started ictad22h01
-    * mgmt-IP2	(ocf::eseries:beegfs-ipaddr2):	 Started ictad22h01
-    * mgmt-service	(systemd:beegfs-mgmtd):	 Started ictad22h01
+    * mgmt-FS1	(ocf::eseries:beegfs-target):	 Started beegfs_01
+    * mgmt-IP1	(ocf::eseries:beegfs-ipaddr2):	 Started beegfs_01
+    * mgmt-IP2	(ocf::eseries:beegfs-ipaddr2):	 Started beegfs_01
+    * mgmt-service	(systemd:beegfs-mgmtd):	 Started beegfs_01
 [...]
 ----
 Tout comme les nœuds, un texte supplémentaire s'affiche en regard de l'état de la ressource entre parenthèses s'il y a des problèmes avec la ressource. Par exemple, si Pacemaker demande un arrêt de ressource et qu'il ne s'effectue pas dans le temps alloué, Pacemaker tente de verrouiller le nœud. Si l'escrime est désactivé ou que l'opération d'escrime échoue, l'état de la ressource sera `FAILED <HOSTNAME> (blocked)` Et Pacemaker ne pourra pas démarrer sur un autre nœud.

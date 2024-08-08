@@ -16,8 +16,6 @@ summary: 'La solution BeeGFS sur NetApp associe le système de fichiers parallè
 [role="lead"]
 La solution BeeGFS sur NetApp associe le système de fichiers parallèle BeeGFS aux systèmes de stockage NetApp EF600 à une infrastructure fiable, évolutive et économique qui s'adapte aux besoins des workloads les plus exigeants.
 
-Cette conception tire parti de la densité des performances fournie par les débits réseau et matériel de stockage et de serveur d'entreprise les plus récents, Ils requièrent des nœuds de fichiers dotés de deux processeurs AMD EPYC 7003 « Milan », ainsi que la prise en charge de PCIe 4.0 avec des connexions directes via une InfiniBand de 200 Go (HDR) pour des nœuds de bloc offrant une connectivité NVMe de bout en bout et NVMeOF via le protocole NVMe/IB.
-
 
 
 == Programme NVA
@@ -26,10 +24,17 @@ La solution BeeGFS sur NetApp fait partie du programme NVA (NetApp Verified Arch
 
 
 
+== Présentation de la conception
+
+La solution BeeGFS sur NetApp est une architecture modulaire qui peut être configurée pour de nombreux workloads exigeants. Que ce soit pour gérer de nombreux fichiers de petite taille, des opérations de fichiers volumineux ou une charge de travail hybride, le système de fichiers peut être personnalisé pour répondre à ces besoins. Grâce à une structure matérielle à deux niveaux, la haute disponibilité est intégrée. Elle permet un basculement indépendant sur plusieurs couches matérielles et garantit des performances prévisibles, même en cas de dégradation partielle du système. Le système de fichiers BeeGFS permet de créer un environnement haute performance et évolutif sur différentes distributions Linux. Il offre aux clients un seul namespace de stockage facilement accessible. Pour en savoir plus, consultez le link:beegfs-architecture-overview.html["présentation de l'architecture"].
+
+
+
 == Cas d'utilisation
 
 Les utilisations suivantes s'appliquent à la solution BeeGFS sur NetApp :
 
+* Systèmes NVIDIA DGX SuperPOD équipés de DGX avec DGX A100, H100, H200 et B200 GPU.
 * L'intelligence artificielle (IA), comprenant le machine learning (ML), le deep learning (DL), le traitement du langage naturel à grande échelle (NLP) et la compréhension du langage naturel (NLU). Pour plus d'informations, voir https://www.netapp.com/blog/beefs-for-ai-fact-vs-fiction/["BeeGFS pour l'IA : faits plutôt que fiction"^].
 * Informatique hautes performances (HPC), y compris les applications accélérées par MPI (interface de transmission de messages) et d'autres techniques informatiques distribuées. Pour plus d'informations, voir https://www.netapp.com/blog/beegfs-for-ai-ml-dl/["Pourquoi BeeGFS va bien au-delà de l'HPC"^].
 * Charges de travail applicatives caractérisées par :
@@ -54,26 +59,3 @@ Voici les principaux avantages de BeeGFS sur NetApp :
 * Haute disponibilité dotée d'une architecture de disques partagés qui assure la durabilité et la disponibilité des données.
 * Prise en charge des fonctionnalités modernes de gestion et d'orchestration des workloads à l'aide de conteneurs et de Kubernetes. Pour plus d'informations, voir https://www.netapp.com/blog/kubernetes-meet-beegfs/["Kubernetes et BeeGFS : un récit d'investissement pérenne"^].
 
-
-
-
-== Architecture HAUTE DISPONIBILITÉ
-
-BeeGFS sur NetApp étend les fonctionnalités de la version BeeGFS Enterprise en créant une solution entièrement intégrée avec du matériel NetApp qui offre une architecture haute disponibilité (HA) de disque partagé.
-
-
-NOTE: L'édition communautaire BeeGFS peut être utilisée gratuitement. Cependant, l'édition entreprise exige l'achat d'un contrat d'abonnement de support professionnel auprès d'un partenaire comme NetApp. L'édition entreprise permet d'utiliser plusieurs fonctions supplémentaires, notamment la résilience, l'application de quotas et les pools de stockage.
-
-La figure suivante compare les architectures haute disponibilité sans partage et à disque partagé.
-
-image:../media/beegfs-design-image1.png[""]
-
-Pour plus d'informations, voir https://www.netapp.com/blog/high-availability-beegfs/["Annonce de la haute disponibilité pour BeeGFS prise en charge par NetApp"^].
-
-
-
-== Ansible
-
-BeeGFS sur NetApp est fourni et déployé à l'aide d'Ansible Automation, qui est hébergé sur GitHub et Ansible Galaxy (la collection BeeGFS est disponible sur https://galaxy.ansible.com/netapp_eseries/beegfs["Galaxy Ansible"^] et https://github.com/netappeseries/beegfs/["NetApp E-Series GitHub"^]). Bien qu'Ansible soit principalement testé avec le matériel utilisé pour assembler les éléments de base BeeGFS, vous pouvez le configurer de sorte qu'il s'exécute sur presque tous les serveurs x86 à l'aide d'une distribution Linux prise en charge.
-
-Pour plus d'informations, voir https://www.netapp.com/blog/deploying-beegfs-eseries/["Déploiement de BeeGFS avec E-Series Storage"^].

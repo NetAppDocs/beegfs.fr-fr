@@ -17,18 +17,23 @@ summary: 'Chaque module se compose de deux nœuds de fichiers x86 validés direc
 Chaque module comprend deux nœuds de fichiers x86 validés directement connectés à deux nœuds de bloc à l'aide de câbles InfiniBand HDR (200 Go).
 
 
-NOTE: Chaque élément de base inclut deux nœuds de fichiers BeeGFS, un minimum de deux éléments de base est requis pour établir le quorum dans le cluster de basculement. Bien qu'il soit possible de configurer un cluster à deux nœuds, certaines limites à cette configuration permettent d'empêcher le basculement de se produire dans certains scénarios. Si un cluster à deux nœuds est nécessaire, il est également possible d'intégrer un troisième périphérique comme Tiebreaker, bien qu'il ne soit pas couvert dans cette procédure de déploiement.
+NOTE: Un minimum de deux éléments de base est requis pour établir le quorum dans le cluster de basculement. Un cluster à deux nœuds présente des limites qui peuvent empêcher un basculement réussi. Vous pouvez configurer un cluster à deux nœuds en incorporant un troisième périphérique comme disjoncteur d'attache ; cependant, cette documentation ne décrit pas cette conception.
 
-Sauf mention contraire, les étapes suivantes sont identiques pour chaque élément de base du cluster, que ce soit pour exécuter des métadonnées et des services de stockage BeeGFS ou des services de stockage uniquement.
+Les étapes suivantes sont identiques pour chaque élément du cluster, qu'il soit utilisé pour exécuter les métadonnées et les services de stockage BeeGFS ou uniquement des services de stockage, sauf indication contraire.
 
 .Étapes
-. Configurez chaque nœud de fichier BeeGFS avec quatre adaptateurs de canal hôte (HCA) à double port PCIe 4.0 ConnectX-6 en mode InfiniBand et installez-les dans les emplacements PCIe 2, 3, 5 et 6.
+. Configurez chaque nœud de fichiers BeeGFS avec quatre adaptateurs HCA (Host Channel Adapters) à l'aide des modèles spécifiés dans le link:beegfs-technology-requirements.html["Exigences techniques"]. Insérez les HCA dans les connecteurs PCIe de votre nœud de fichiers conformément aux spécifications ci-dessous :
++
+** *Lenovo ThinkSystem SR665 V3 Server:* utilisez les emplacements PCIe 1, 2, 4 et 5.
+** *Lenovo ThinkSystem SR665 Server:* utilisez les emplacements PCIe 2, 3, 5 et 6.
+
+
 . Configurez chaque nœud de bloc BeeGFS avec une carte d'interface hôte (HIC) à deux ports 200 Go et installez la HIC dans chacun de ses deux contrôleurs de stockage.
 +
-Placez les éléments de base de façon à ce que les deux nœuds de fichier BeeGFS se trouvent au-dessus des nœuds de bloc BeeGFS. La figure suivante montre la configuration matérielle correcte pour le bloc de construction BeeGFS (vue arrière).
+Placez les éléments de base de façon à ce que les deux nœuds de fichier BeeGFS se trouvent au-dessus des nœuds de bloc BeeGFS. La figure suivante présente la configuration matérielle correcte pour l'élément de base BeeGFS utilisant les serveurs Lenovo ThinkSystem SR665 V3 comme nœuds de fichiers (vue arrière).
 
 +
-image:../media/buildingblock.png[""]
+image:../media/buildingblock-sr665v3.png[""]
 
 +
 
@@ -43,17 +48,20 @@ image:../media/driveslots.png[""]
 
 
 
-. Pour câbler les nœuds de fichier et de bloc, utilisez des câbles en cuivre à connexion directe 1 m InfiniBand HDR de 200 Go, de sorte qu'ils correspondent à la topologie illustrée dans la figure ci-dessous.
+. Connectez les nœuds de bloc et de fichier à l'aide de link:beegfs-technology-requirements.html#block-file-cables["Câbles en cuivre à connexion directe InfiniBand 200 Gbit/s HDR"]la , de manière à ce qu'ils correspondent à la topologie illustrée dans la figure suivante.
 +
-image:../media/directattachcable.png[""]
+image:../media/directattachcable-sr665v3.png[""]
 
 +
 
 NOTE: Les nœuds répartis entre plusieurs éléments de base ne sont jamais directement connectés. Chaque élément de base doit être considéré comme une unité autonome et toute communication entre les éléments de base se fait par le biais de commutateurs réseau.
 
-. Utilisez des câbles en cuivre à connexion directe 2 m (ou la longueur appropriée) InfiniBand HDR de 200 Go pour raccorder les ports InfiniBand restants de chaque nœud de fichiers aux commutateurs InfiniBand qui seront utilisés pour le réseau de stockage.
+. Connectez les ports InfiniBand restants du nœud de fichiers au commutateur InfiniBand du réseau de stockage en utilisant le link:beegfs-technology-requirements.html#file-switch-cables["Câbles InfiniBand de 2 M."] commutateur de stockage InfiniBand spécifique à votre commutateur de stockage InfiniBand.
 +
-Si des commutateurs InfiniBand redondants sont utilisés, reliez les ports surlignés en vert clair dans la figure suivante aux différents commutateurs.
+Lorsque vous utilisez des câbles de séparation pour connecter le commutateur de stockage à des nœuds de fichiers, un câble doit être branché à partir du commutateur et se connecter aux ports indiqués en vert clair. Un autre câble de séparation doit être branché à l'extérieur du commutateur et se connecter aux ports indiqués en vert foncé.
+
++
+En outre, pour les réseaux de stockage avec commutateurs redondants, les ports indiqués en vert clair doivent se connecter à un commutateur, tandis que les ports en vert foncé doivent se connecter à un autre commutateur.
 
 +
 image:../media/networkcable.png[""]

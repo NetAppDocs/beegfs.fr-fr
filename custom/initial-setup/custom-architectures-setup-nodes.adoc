@@ -52,7 +52,7 @@ Utilisez RedHat Subscription Manager pour enregistrer et abonner le système afi
 Activez le référentiel Red Hat contenant les packages requis pour la haute disponibilité :
 
 ....
-subscription-manager repo-override --repo=rhel-8-for-x86_64-highavailability-rpms --add=enabled:1
+subscription-manager repo-override --repo=rhel-9-for-x86_64-highavailability-rpms --add=enabled:1
 ....
 
 

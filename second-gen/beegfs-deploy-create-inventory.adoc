@@ -23,8 +23,7 @@ Pour définir la configuration des nœuds de fichiers et de blocs, vous créez u
 Définissez la configuration qui s'applique à tous les blocs de construction, quel que soit le profil de configuration que vous pouvez appliquer individuellement.
 
 .Avant de commencer
-* Utilisez un système de contrôle source tel que BitBucket ou Git pour stocker le contenu du répertoire contenant les fichiers d'inventaire et de PlayBook Ansible.
-* Créer un `.gitignore` Fichier qui spécifie les fichiers que Git doit ignorer. Cela évite de stocker des fichiers volumineux dans Git.
+* Choisissez un schéma d'adressage de sous-réseau pour votre déploiement. En raison des avantages répertoriés dans le link:beegfs-design-software-architecture.html#beegfs-network-configuration["architecture logicielle"], il est recommandé d'utiliser un schéma d'adressage de sous-réseau unique.
 
 
 .Étapes
@@ -61,7 +60,7 @@ eseries_ipoib_interfaces:  # Used to configure BeeGFS cluster IP addresses.
   - name: i1b
     address: 100.127.100. <NUMBER_FROM_HOSTNAME>/16
   - name: i4b
-    address: 100.128.100. <NUMBER_FROM_HOSTNAME>/16
+    address: 100.127.100. <NUMBER_FROM_HOSTNAME>/16
 beegfs_ha_cluster_node_ips:
   - <MANAGEMENT_IP>
   - <i1b_BEEGFS_CLUSTER_IP>
@@ -176,10 +175,13 @@ La configuration partagée pour les nœuds de fichiers est définie dans un grou
 ansible_ssh_user: root
 ansible_become_password: <PASSWORD>
 eseries_ipoib_default_hook_templates:
-  - 99-multihoming.j2 # This is required when configuring additional static IPs (for example cluster IPs) when multiple IB ports are in the same IPoIB subnet.
+  - 99-multihoming.j2   # This is required for single subnet deployments, where static IPs containing multiple IB ports are in the same IPoIB subnet. i.e: cluster IPs, multirail, single subnet, etc.
 # If the following options are specified, then Ansible will automatically reboot nodes when necessary for changes to take effect:
 eseries_common_allow_host_reboot: true
-eseries_common_reboot_test_command: "systemctl --state=active,exited | grep eseries_nvme_ib.service"
+eseries_common_reboot_test_command: "! systemctl status eseries_nvme_ib.service || systemctl --state=exited | grep eseries_nvme_ib.service"
+eseries_ib_opensm_options:
+  virt_enabled: "2"
+  virt_max_ports_in_process: "0"
 ....
 +
 
@@ -221,7 +223,7 @@ beegfs_ha_alert_verbosity: 3
 
 NOTE: Tout en apparence redondant, `beegfs_ha_mgmtd_floating_ip` Est important lorsque vous faites évoluer le système de fichiers BeeGFS au-delà d'un seul cluster HA. Les clusters HA suivants sont déployés sans service de gestion BeeGFS et point supplémentaires sur le service de gestion fourni par le premier cluster.
 
-. Configurer un agent d'escrime. (Pour plus de détails, voir https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters["Configurer l'escrime dans un cluster Red Hat haute disponibilité"^].) Le résultat suivant montre des exemples de configuration d'agents d'escrime courants. Choisissez l'une de ces options.
+. Configurer un agent d'escrime. (Pour plus de détails, voir https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters["Configurer l'escrime dans un cluster Red Hat haute disponibilité"^].) Le résultat suivant présente des exemples de configuration des agents de clôture courants. Choisissez l'une de ces options.
 +
 Pour cette étape, gardez à l'esprit que :
 
@@ -253,7 +255,7 @@ beegfs_ha_fencing_agents:
     - pcmk_host_list: <HOSTNAME>
       ip: <BMC_IP>
       <<: *redfish
-# For details on configuring other fencing agents see https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters.
+# For details on configuring other fencing agents see https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/configuring_and_managing_high_availability_clusters/assembly_configuring-fencing-configuring-and-managing-high-availability-clusters.
 ....
 
 
@@ -271,45 +273,17 @@ beegfs_ha_enable_performance_tuning: True
 ....
 . (Facultatif) vous pouvez régler les paramètres d'ajustement des performances dans le système d'exploitation Linux selon vos besoins.
 +
-Pour obtenir une liste complète des paramètres de réglage disponibles que vous pouvez régler, consultez la section Réglages de la performance par défaut du rôle BeeGFS HA dans https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_2/defaults/main.yml["E-Series site GitHub BeeGFS"^]. Les valeurs par défaut peuvent être remplacées pour tous les nœuds du cluster dans ce fichier ou dans le `host_vars` fichier pour un nœud individuel.
+Pour obtenir une liste complète des paramètres de réglage disponibles que vous pouvez ajuster, consultez la section Réglages par défaut des performances du rôle haute disponibilité BeeGFS dans la section https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_4/defaults/main.yml["E-Series site GitHub BeeGFS"^]. Les valeurs par défaut peuvent être remplacées pour tous les nœuds du cluster dans ce fichier ou pour le `host_vars` fichier d'un nœud individuel.
 
-. Pour permettre une connectivité complète de 200 Go/HDR entre des nœuds de bloc et de fichier, utilisez le package Open Subnet Manager (OpenSM) de Mellanox Open Fabrics Enterprise distribution (MLNX_OFED). (La boîte de réception `opensm` package ne prend pas en charge la fonctionnalité de virtualisation nécessaire.) Bien que le déploiement à l'aide d'Ansible soit pris en charge, vous devez d'abord télécharger les packages souhaités vers le nœud de contrôle Ansible utilisé pour exécuter le rôle BeeGFS.
+. Pour permettre une connectivité 200 Go/HDR complète entre les nœuds de bloc et de fichier, utilisez le progiciel Open Subnet Manager (OpenSM) de NVIDIA Open Fabrics Enterprise distribution (MLNX_OFED). La version MLNX_OFED de la présente link:beegfs-technology-requirements.html#file-node-requirements["configuration requise pour le nœud de fichiers"] est fournie avec les packages OpenSM recommandés. Bien que le déploiement à l'aide d'Ansible soit pris en charge, vous devez d'abord installer le pilote MLNX_OFED sur tous les nœuds de fichiers.
 +
-.. À l'aide de `curl` Ou téléchargez les packages pour la version d'OpenSM répertoriée dans la section exigences technologiques du site web de Mellanox vers le `packages/` répertoire. Par exemple :
-+
-....
-curl -o packages/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm https://linux.mellanox.com/public/repo/mlnx_ofed/5.4-1.0.3.0/rhel8.4/x86_64/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
-
-curl -o packages/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm https://linux.mellanox.com/public/repo/mlnx_ofed/5.4-1.0.3.0/rhel8.4/x86_64/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
-....
 .. Remplissez les paramètres suivants dans `group_vars/ha_cluster.yml` (réglez les colis si nécessaire) :
 +
 ....
 ### OpenSM package and configuration information
-eseries_ib_opensm_allow_upgrades: true
-eseries_ib_opensm_skip_package_validation: true
-eseries_ib_opensm_rhel_packages: []
-eseries_ib_opensm_custom_packages:
-  install:
-    - files:
-        add:
-          "packages/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm": "/tmp/"
-          "packages/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm": "/tmp/"
-    - packages:
-        add:
-          - /tmp/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
-          - /tmp/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
-  uninstall:
-    - packages:
-        remove:
-          - opensm
-          - opensm-libs
-      files:
-        remove:
-          - /tmp/opensm-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
-          - /tmp/opensm-libs-5.9.0.MLNX20210617.c9f2ade-0.1.54103.x86_64.rpm
 eseries_ib_opensm_options:
   virt_enabled: "2"
+  virt_max_ports_in_process: "0"
 ....
 
 
@@ -323,7 +297,18 @@ Utilisez les valeurs suivantes pour les nœuds de fichiers vérifiés :
 +
 ....
 ### Ensure Consistent Logical IB Port Numbering
-# OPTION 1: Lenovo SR665 PCIe address-to-logical IB port mapping:
+# OPTION 1: Lenovo SR665 V3 PCIe address-to-logical IB port mapping:
+eseries_ipoib_udev_rules:
+  "0000:01:00.0": i1a
+  "0000:01:00.1": i1b
+  "0000:41:00.0": i2a
+  "0000:41:00.1": i2b
+  "0000:81:00.0": i3a
+  "0000:81:00.1": i3b
+  "0000:a1:00.0": i4a
+  "0000:a1:00.1": i4b
+
+# OPTION 2: Lenovo SR665 PCIe address-to-logical IB port mapping:
 eseries_ipoib_udev_rules:
   "0000:41:00.0": i1a
   "0000:41:00.1": i1b
@@ -333,8 +318,6 @@ eseries_ipoib_udev_rules:
   "0000:a1:00.1": i3b
   "0000:81:00.0": i4a
   "0000:81:00.1": i4b
-
-# Note: At this time no other x86 servers have been qualified. Configuration for future qualified file nodes will be added here.
 ....
 . (Facultatif) mettre à jour l'algorithme de sélection de cible de métadonnées.
 +
@@ -375,10 +358,10 @@ Téléchargez les fichiers correspondants à partir du https://mysupport.netapp.
 +
 ....
 # Firmware, NVSRAM, and Drive Firmware (modify the filenames as needed):
-eseries_firmware_firmware: "packages/RCB_11.70.2_6000_61b1131d.dlp"
-eseries_firmware_nvsram: "packages/N6000-872834-D06.dlp"
+eseries_firmware_firmware: "packages/RCB_11.80GA_6000_64cc0ee3.dlp"
+eseries_firmware_nvsram: "packages/N6000-880834-D08.dlp"
 ....
-. Téléchargez et installez la dernière version du micrologiciel de lecteur disponible pour les lecteurs installés dans vos nœuds de bloc à partir du https://mysupport.netapp.com/NOW/download/tools/diskfw_eseries/["Site de support NetApp"^]. Vous pouvez les mettre à niveau manuellement ou les inclure dans le `packages/` Répertoire du nœud de contrôle Ansible, puis remplissez les paramètres suivants dans `eseries_storage_systems.yml` Pour la mise à niveau avec Ansible :
+. Téléchargez et installez le dernier micrologiciel de lecteur disponible pour les lecteurs installés sur vos nœuds de bloc à partir du https://mysupport.netapp.com/site/downloads/firmware/e-series-disk-firmware["Site de support NetApp"^]. Vous pouvez les mettre à niveau manuellement ou les inclure dans `packages/` le répertoire du nœud de contrôle Ansible, puis remplir les paramètres suivants dans `eseries_storage_systems.yml` pour la mise à niveau à l'aide d'Ansible :
 +
 ....
 eseries_drive_firmware_firmware_list:

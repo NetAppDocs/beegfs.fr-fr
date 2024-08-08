@@ -37,7 +37,7 @@ Lors de la planification de l'installation, il est important que tous les équip
 
 Exemple d'un élément de base unique :
 
-image:../media/buildingblock.png["exemple d'élément de construction"]
+image:../media/buildingblock-sr665v3.png["exemple d'élément de construction"]
 
 Exemple d'installation BeeGFS où il y a plusieurs éléments de base dans chaque cluster HA et plusieurs clusters HA dans le système de fichiers :
 

@@ -47,7 +47,7 @@ Dans la figure suivante, notez que :
 image:../media/beegfs-design-image6.png[""]
 
 
-NOTE: Pour les réseaux de stockage avec commutateurs redondants, les ports indiqués en vert clair doivent se connecter à un commutateur et les ports en vert foncé à un autre commutateur.
+NOTE: Lors de l'utilisation de câbles de séparation pour connecter le commutateur de stockage aux nœuds de fichiers, un câble doit se brancher et se connecter aux ports indiqués en vert clair. Un autre câble doit se brancher et se connecter aux ports indiqués en vert foncé. En outre, pour les réseaux de stockage avec commutateurs redondants, les ports indiqués en vert clair doivent se connecter à un commutateur, tandis que les ports en vert foncé doivent se connecter à un autre commutateur.
 
 La configuration de câblage illustrée dans la figure permet à chaque service BeeGFS de :
 
@@ -57,7 +57,7 @@ La configuration de câblage illustrée dans la figure permet à chaque service 
 
 
 .Câblage pour exploiter la bande passante
-Pour exploiter la bande passante bidirectionnelle PCIe complète, vérifiez que un port de chaque adaptateur InfiniBand se connecte à la structure de stockage, et que l'autre port est connecté à un nœud de bloc. La vitesse maximale théorique d'un port InfiniBand HDR est de 25 Gbit/s (ne tenant pas compte de la signalisation et des autres frais généraux). La bande passante unidirectionnelle maximale d'un slot PCIe 4.0 x16 est de 32 Gbit/s, ce qui crée un goulot d'étranglement potentiel lors de l'implémentation de nœuds de fichiers intégrant des adaptateurs InfiniBand à double port qui peuvent théoriquement gérer 50 Gbit/s de bande passante.
+Pour exploiter la bande passante bidirectionnelle PCIe complète, vérifiez que un port de chaque adaptateur InfiniBand se connecte à la structure de stockage, et que l'autre port est connecté à un nœud de bloc.
 
 La figure suivante montre la conception de câblage utilisée pour exploiter la bande passante bidirectionnelle PCIe complète.
 

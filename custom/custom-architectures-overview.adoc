@@ -86,11 +86,11 @@ Il est également recommandé d'installer SSH sans mot de passe depuis le nœud 
 
 === Nœuds de fichiers BeeGFS
 
-Les nœuds de fichiers doivent exécuter RedHat 8.4 et avoir accès au référentiel HA contenant les packages requis (stimulateur, corosync, clôture-agents-tous, agents-ressources). Par exemple, la commande suivante peut être exécutée pour activer le référentiel approprié sur RedHat 8 :
+Les nœuds de fichiers doivent exécuter RedHat 9.3 et avoir accès au référentiel HA contenant les packages requis (stimulateur, corosync, clôture-agents-tous, agents-ressources). Par exemple, la commande suivante peut être exécutée pour activer le référentiel approprié sur RedHat 9 :
 
 [source, bash]
 ----
-subscription-manager repo-override repo=rhel-8-for-x86_64-highavailability-rpms --add=enabled:1
+subscription-manager repo-override repo=rhel-9-for-x86_64-highavailability-rpms --add=enabled:1
 ----
 
 

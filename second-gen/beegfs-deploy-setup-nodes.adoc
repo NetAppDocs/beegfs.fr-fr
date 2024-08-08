@@ -22,7 +22,7 @@ Si la plupart des tâches de configuration logicielle sont automatisées au moye
 
 . Configurez la mise en réseau sur le contrôleur de gestion de la carte mère (BMC) de chaque serveur.
 +
-Pour savoir comment configurer le réseau pour les nœuds de fichiers validés du serveur Lenovo SR665, consultez le https://thinksystem.lenovofiles.com/help/index.jsp?topic=%2F7D2W%2Fset_the_network_connection.html["Documentation Lenovo ThinkSystem"^].
+Pour savoir comment configurer la mise en réseau pour les nœuds de fichiers Lenovo SR665 V3 validés, consultez le https://pubs.lenovo.com/sr665-v3/["Documentation Lenovo ThinkSystem"^].
 
 +
 
@@ -35,7 +35,7 @@ Vous configurez les paramètres système à l'aide de la configuration UEFI (anc
 +
 Pour savoir comment configurer les paramètres système des nœuds de fichiers Lenovo SR665 validés, reportez-vous à la section link:beegfs-deploy-file-node-tuning.html["Réglez les paramètres du système en fonction des performances"].
 
-. Installez Red Hat 8.4 et configurez le nom d'hôte et le port réseau utilisés pour gérer le système d'exploitation, y compris la connectivité SSH à partir du nœud de contrôle Ansible.
+. Installez Red Hat 9.3 et configurez le nom d'hôte et le port réseau utilisés pour gérer le système d'exploitation, y compris la connectivité SSH à partir du nœud de contrôle Ansible.
 +
 Ne configurez pas d'adresses IP sur l'un des ports InfiniBand pour le moment.
 
@@ -43,15 +43,15 @@ Ne configurez pas d'adresses IP sur l'un des ports InfiniBand pour le moment.
 
 NOTE: Bien qu'il ne soit pas strictement nécessaire, les sections suivantes présument que les noms d'hôte sont numérotés séquentiellement (comme h1-HN) et font référence aux tâches qui doivent être effectuées sur les hôtes impairs et pairs.
 
-. Utilisez RedHat Subscription Manager pour enregistrer et abonner le système afin de permettre l'installation des packages requis dans les référentiels Red Hat officiels et de limiter les mises à jour vers la version prise en charge de Red Hat : `subscription-manager release --set=8.4`. Pour obtenir des instructions, reportez-vous à la section https://access.redhat.com/solutions/253273["Comment enregistrer et souscrire un système RHEL"^] et  https://access.redhat.com/solutions/2761031["Comment limiter les mises à jour"^].
+. Utilisez RedHat Subscription Manager pour enregistrer et abonner le système afin de permettre l'installation des packages requis à partir des référentiels Red Hat officiels et de limiter les mises à jour à la version prise en charge de Red Hat: `subscription-manager release --set=9.3`. Pour obtenir des instructions, voir https://access.redhat.com/solutions/253273["Comment enregistrer et souscrire un système RHEL"^] et  https://access.redhat.com/solutions/2761031["Comment limiter les mises à jour"^].
 . Activez le référentiel Red Hat contenant les packages requis pour la haute disponibilité.
 +
 ....
-subscription-manager repo-override --repo=rhel-8-for-x86_64-highavailability-rpms --add=enabled:1
+subscription-manager repo-override --repo=rhel-9-for-x86_64-highavailability-rpms --add=enabled:1
 ....
-. Mettez à jour tous les micrologiciels de l'HCA ConnectX-6 avec la version recommandée dans link:beegfs-technology-requirements.html["Exigences technologiques"].
+. Mettez à jour tous les micrologiciels HCA à la version recommandée dans link:beegfs-technology-requirements.html["Exigences technologiques"].
 +
-Cette mise à jour peut être effectuée en téléchargeant et en exécutant une version de l'outil mlxup qui regroupe le micrologiciel recommandé. Vous pouvez télécharger cet outil à partir de https://network.nvidia.com/support/firmware/mlxup-mft/["Mlxup - Utilitaire de mise à jour et de requête"^] (link:https://docs.nvidia.com/networking/display/MLXUPFWUTILITY/mlxup+-+Firmware+Utility+User+Guide["guide de l'utilisateur"^]).
+Cette mise à jour peut être effectuée en téléchargeant et en exécutant une version de l'outil mlxup qui regroupe le micrologiciel recommandé. Vous pouvez télécharger cet outil à partir de https://network.nvidia.com/support/firmware/mlxup-mft/["Mlxup - Utilitaire de mise à jour et de requête"^] (link:https://docs.nvidia.com/networking/display/mlxupfwutility["guide de l'utilisateur"^]).
 
 
 

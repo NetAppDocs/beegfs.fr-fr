@@ -24,14 +24,14 @@ Lors du montage physique et de la création du fichier d'inventaire Ansible, res
 
 * Les noms d'hôte de nœud de fichiers sont numérotés séquentiellement (h01-HN), les chiffres inférieurs se trouvant en haut du rack et les chiffres plus élevés en bas.
 +
-Par exemple, la convention de dénomination `[location][row][rack]hN` ressemble à : `ictad22h01`.
+Par exemple, la convention de dénomination `[location][row][rack]hN` ressemble à : `beegfs_01`.
 
 * Chaque nœud de bloc comprend deux contrôleurs de stockage, chacun avec son propre nom d'hôte.
 +
 Un nom de baie de stockage est utilisé pour désigner l'ensemble du système de stockage en mode bloc dans le cadre d'un inventaire Ansible. Les noms de matrice de stockage doivent être numérotés de façon séquentielle (a01 - an), et les noms d'hôte des contrôleurs individuels sont dérivés de cette convention de nommage.
 
 +
-Par exemple, un nœud de bloc nommé `ictad22a01` en général, des noms d'hôte peuvent être configurés pour chaque contrôleur comme `ictad22a01-a` et `ictad22a01-b`, Mais être mentionné dans un inventaire Ansible comme `ictad22a01`.
+Par exemple, un nœud de bloc nommé `ictad22a01` généralement peut avoir des noms d'hôte configurés pour chaque contrôleur comme et , mais être référencé dans un inventaire Ansible comme `ictad22a01-a` `ictad22a01-b` `netapp_01`.
 
 * Les nœuds de fichiers et de blocs du même bloc de construction partagent le même schéma de numérotation et sont adjacents les uns aux autres dans le rack, les deux nœuds de fichiers étant situés en haut et les deux nœuds de bloc directement en dessous.
 +
@@ -87,9 +87,7 @@ NOTE: Ce schéma d'adressage adhère à la règle suivante : le troisième octet
 |===
 
 
-=== Schéma d'adressage IPoIB BeeGFS client-serveur (deux sous-réseaux)
-
-Pour permettre aux clients BeeGFS d'utiliser deux ports InfiniBand, deux sous-réseaux IPoIB sont requis avec la moitié des services de serveur BeeGFS configurés avec une adresse IP préférée sur chaque sous-réseau pour s'assurer que les clients utilisent deux ports InfiniBand pour maximiser la redondance et le débit possible vers le système de fichiers.
+=== Schémas d'adressage IPoIB client-serveur BeeGFS
 
 Chaque nœud de fichier exécute plusieurs services BeeGFS Server (gestion, métadonnées ou stockage). Pour permettre à chaque service de basculer de manière indépendante vers l'autre nœud de fichiers, chaque service est configuré avec des adresses IP uniques qui peuvent basculer entre les deux nœuds (parfois appelées interfaces logiques ou LIF).
 
@@ -104,9 +102,51 @@ NOTE: En plus de l'interface utilisée pour la gestion du système d'exploitatio
 
 * Le service BeeGFS Management est toujours à `xxx.yyy.101.0` ou `xxx.yyy.102.0`.
 * Les services de métadonnées de BeeGFS sont toujours à `xxx.yyy.101.zzz` ou `xxx.yyy.102.zzz`.
-* Les services de stockage BeeGFS sont toujours à `xxx.yyy.103.zzz` ou `xxx.yyy.103.zzz`.
+* Les services de stockage BeeGFS sont toujours en `xxx.yyy.103.zzz` ou `xxx.yyy.104.zzz`.
 * Adresses dans la plage `100.xxx.1.1` à `100.xxx.99.255` sont réservés aux clients.
 
+
+
+
+==== Schéma d'adressage de sous-réseau unique IPoIB
+
+Ce guide de déploiement utilisera un schéma de sous-réseau unique compte tenu des avantages répertoriés dans le link:beegfs-design-software-architecture.html#beegfs-network-configuration["architecture logicielle"].
+
+.Sous-réseau : 100.127.0.0/16
+Le tableau suivant fournit la plage pour un sous-réseau unique : 100.127.0.0/16.
+
+|===
+| Objectif | Port InfiniBand | Adresse IP ou plage 
+
+
+| Cluster BeeGFS IP | i1b ou i4b | 100.127.100.1 - 100.127.100.255 
+
+
+.2+| Gestion BeeGFS | i1b | 100.127.101.0 
+
+
+| i2b | 100.127.102.0 
+
+
+.2+| Métadonnées BeeGFS | i1b ou i3b | 100.127.101.1 - 100.127.101.255 
+
+
+| i2b ou i4b | 100.127.102.1 - 100.127.102.255 
+
+
+.2+| Stockage BeeGFS | i1b ou i3b | 100.127.103.1 - 100.127.103.255 
+
+
+| i2b ou i4b | 100.127.104.1 - 100.127.104.255 
+
+
+| Clients BeeGFS | (varie selon le client) | 100.127.1.1 - 100.127.99.255 
+|===
+
+
+==== IPoIB deux schémas d'adressage de sous-réseau
+
+Un schéma d'adressage à deux sous-réseaux n'est plus recommandé, mais peut encore être implémenté. Reportez-vous aux tableaux ci-dessous pour connaître les deux schémas de sous-réseau recommandés.
 
 .Sous-réseau A : 100.127.0.0/16
 Le tableau suivant indique la plage pour le sous-réseau A : 100.127.0.0/16.

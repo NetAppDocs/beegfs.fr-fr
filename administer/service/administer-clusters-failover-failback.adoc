@@ -97,23 +97,23 @@ pcs resource relocate run
 
 Si vous souhaitez modifier de manière permanente le nœud de fichier favori pour un service BeeGFS, ajustez l'inventaire Ansible de sorte que le nœud préféré soit répertorié en premier et exécutez à nouveau le PlayBook Ansible.
 
-Par exemple dans cet exemple `inventory.yml` File, ictad22h01 est le nœud de fichier préféré pour exécuter le service de gestion BeeGFS :
+Par exemple, dans cet exemple de `inventory.yml` fichier, beegfs_01 est le nœud de fichiers préféré pour exécuter le service de gestion BeeGFS :
 
 [source, yaml]
 ----
         mgmt:
           hosts:
-            ictad22h01:
-            ictad22h02:
+            beegfs_01:
+            beegfs_02:
 ----
-Inverser l'ordre ferait que les services de gestion seraient préférés sur ictad22h02:
+Inverser l'ordre ferait que les services de gestion seraient préférés sur beegfs_02:
 
 [source, yaml]
 ----
         mgmt:
           hosts:
-            ictad22h02:
-            ictad22h01:
+            beegfs_02:
+            beegfs_01:
 ----
 
 
@@ -128,7 +128,7 @@ Si vous devez déplacer un service individuel vers un autre nœud de fichiers :
 pcs resource move <SERVICE>-monitor <HOSTNAME>
 ----
 
-WARNING: Ne spécifiez pas les ressources individuelles ou le groupe de ressources. Spécifiez toujours le nom du moniteur pour le service BeeGFS que vous souhaitez déplacer. Par exemple, pour déplacer le service de gestion BeeGFS vers ictad22h02 exécutez : `pcs resource move mgmt-monitor ictad22h02`. Ce processus peut être répété afin de déplacer un ou plusieurs services hors de leurs nœuds préférés. Vérifiez à l'aide de `pcs status` les services ont été transférés/démarrés sur le nouveau nœud.
+WARNING: Ne spécifiez pas les ressources individuelles ou le groupe de ressources. Spécifiez toujours le nom du moniteur pour le service BeeGFS que vous souhaitez déplacer. Par exemple, pour déplacer le service de gestion BeeGFS vers beegfs_02, exécutez : `pcs resource move mgmt-monitor beegfs_02`. Ce processus peut être répété afin de déplacer un ou plusieurs services hors de leurs nœuds préférés. Vérifiez à l'aide des `pcs status` services qui ont été déplacés/démarrés sur le nouveau nœud.
 
 Pour déplacer un service BeeGFS vers son nœud préféré, effacez d'abord les contraintes de ressources temporaires (en répétant cette étape comme nécessaire pour plusieurs services) :
 

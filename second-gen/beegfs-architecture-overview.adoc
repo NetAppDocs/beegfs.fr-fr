@@ -55,47 +55,59 @@ Les quatre services principaux fonctionnent sur un large éventail de distributi
 
 
 
+== Architecture HAUTE DISPONIBILITÉ
+
+BeeGFS sur NetApp étend les fonctionnalités de la version BeeGFS Enterprise en créant une solution entièrement intégrée avec du matériel NetApp qui offre une architecture haute disponibilité (HA) de disque partagé.
+
+
+NOTE: L'édition communautaire BeeGFS peut être utilisée gratuitement. Cependant, l'édition entreprise exige l'achat d'un contrat d'abonnement de support professionnel auprès d'un partenaire comme NetApp. L'édition entreprise permet d'utiliser plusieurs fonctions supplémentaires, notamment la résilience, l'application de quotas et les pools de stockage.
+
+La figure suivante compare les architectures haute disponibilité sans partage et à disque partagé.
+
+image:../media/beegfs-design-image1.png[""]
+
+Pour plus d'informations, voir https://www.netapp.com/blog/high-availability-beegfs/["Annonce de la haute disponibilité pour BeeGFS prise en charge par NetApp"^].
+
+
+
 == Nœuds vérifiés
 
-La solution BeeGFS sur NetApp inclut les nœuds vérifiés suivants : le système de stockage NetApp EF600 (nœud bloc) et le serveur Lenovo ThinkSystem SR665 (nœud de fichier).
+La solution BeeGFS sur NetApp a vérifié les nœuds répertoriés ci-dessous.
+
+[cols="10%,20%,70%"]
+|===
+| Nœud | Sous-jacent | Détails 
 
 
-
-=== Nœud bloc : système de stockage EF600
-
-La baie 100 % Flash NetApp EF600 assure un accès aux données cohérent en temps quasi réel avec un nombre illimité de workloads. Pour alimenter rapidement et en continu les données des applications d'IA et HPC, les systèmes de stockage EF600 fournissent jusqu'à 2 millions d'IOPS en lecture cache, des temps de réponse inférieurs à 100 microsecondes et un débit de lecture séquentielle de 42 Gbit/s dans un seul boîtier.
+| Bloc | Système de stockage EF600 de NetApp | Une baie de stockage 2U 100 % NVMe haute performance conçue pour les workloads exigeants 
 
 
+.2+| Fichier | Serveur Lenovo ThinkSystem SR665 V3 | Serveur 2U à deux sockets avec PCIe 5.0, deux processeurs AMD EPYC 9124. Pour plus d'informations sur le Lenovo SR665 V3, reportez-vous à la section https://lenovopress.lenovo.com/lp1608-thinksystem-sr665-v3-server["Site Web de Lenovo"^]. 
 
-=== Nœud de fichier : serveur Lenovo ThinkSystem SR665
 
-Le SR665 est un serveur 2U à deux sockets doté de la technologie PCIe 4.0. Lorsqu'elle est configurée pour répondre aux besoins de cette solution, elle permet d'exécuter des services de fichiers BeeGFS dans une configuration bien équilibrée avec la disponibilité du débit et des IOPS fournie par les nœuds E-Series à connexion directe.
-
-Pour plus d'informations sur le Lenovo SR665, reportez-vous à la section https://lenovopress.com/lp1269-thinksystem-sr665-server["Site Web de Lenovo"^].
-
+| Serveur Lenovo ThinkSystem SR665 | Serveur 2U à deux sockets avec PCIe 4.0, deux processeurs AMD EPYC 7003. Pour plus d'informations sur le Lenovo SR665, reportez-vous à la section https://lenovopress.lenovo.com/lp1269-thinksystem-sr665-server["Site Web de Lenovo"^]. 
+|===
 
 
 == Conception matérielle vérifiée
 
-Les éléments de base de la solution (illustrée dans la figure ci-dessous) utilisent deux serveurs PCIe 4.0 à double socket pour la couche de fichiers BeeGFS et deux systèmes de stockage EF600 comme la couche bloc.
+Les éléments de base de la solution (illustrés dans la figure suivante) utilisent les serveurs de nœuds de fichiers vérifiés pour la couche de fichiers BeeGFS et deux systèmes de stockage EF600 comme couche bloc.
 
 image:../media/beegfs-design-image2-small.png[""]
 
+La solution BeeGFS sur NetApp s'exécute sur tous les éléments de base du déploiement. Le premier élément de base déployé doit exécuter les services de gestion, de métadonnées et de stockage BeeGFS (également appelés éléments de base). Tous les éléments de base suivants peuvent être configurés via le logiciel pour étendre les métadonnées et les services de stockage, ou pour fournir des services de stockage exclusivement. Cette approche modulaire permet de faire évoluer le système de fichiers en fonction des besoins d'une charge de travail, tout en utilisant les mêmes plateformes matérielles sous-jacentes et la même conception d'éléments de base.
 
-NOTE: Chaque élément de base inclut deux nœuds de fichiers BeeGFS, un minimum de deux éléments de base est requis pour établir le quorum dans le cluster de basculement. Vous pouvez configurer un cluster à deux nœuds, mais cette configuration présente des limites susceptibles d'empêcher un basculement réussi. Si vous avez besoin d'un cluster à deux nœuds, vous pouvez incorporer un troisième périphérique en tant qu'Tiebreaker (mais cette conception n'est pas couverte par ce site).
+Il est possible de déployer jusqu'à cinq éléments de base pour former un cluster Linux HA autonome. Cela optimise la gestion des ressources avec Pacemaker et maintient une synchronisation efficace avec Corosync. Un ou plusieurs de ces clusters haute disponibilité BeeGFS autonomes sont combinés pour créer un système de fichiers BeeGFS accessible aux clients comme un seul namespace de stockage. Côté matériel, un seul rack 42U peut accueillir jusqu'à cinq éléments de base, ainsi que deux commutateurs InfiniBand 1U pour le réseau de stockage/données. Voir le graphique ci-dessous pour une représentation visuelle.
 
-Chaque élément de base offre une haute disponibilité via une conception matérielle à deux niveaux qui sépare les domaines de défaillance des couches de fichiers et de blocs. Chaque Tier peut basculer indépendamment, ce qui améliore la résilience et réduit le risque de pannes en cascade. L'utilisation de la technologie HDR InfiniBand associée à NVMeOF offre un débit élevé et une latence minimale entre les nœuds de fichiers et de blocs, avec une redondance complète et une sursouscription suffisante des liaisons pour éviter que la conception désagrégée ne devienne un goulot d'étranglement, même si le système est partiellement dégradé.
 
-La solution BeeGFS sur NetApp s'exécute sur tous les éléments de base du déploiement. Le premier élément de base déployé doit exécuter des services de gestion BeeGFS, de métadonnées et de stockage (appelé élément de base). Tous les éléments de base ultérieurs sont configurés via le logiciel pour exécuter des services de métadonnées et de stockage BeeGFS ou uniquement des services de stockage. La disponibilité de différents profils de configuration pour chaque élément de base permet de faire évoluer les métadonnées du système de fichiers ou la capacité et les performances du stockage en utilisant les mêmes plateformes matérielles sous-jacentes et la même conception d'éléments de base.
-
-Jusqu'à cinq éléments de base sont combinés dans un cluster Linux HA autonome, garantissant un nombre raisonnable de ressources par gestionnaire de ressources de cluster (Pacemaker) et réduisant la surcharge de messagerie requise pour maintenir la synchronisation des membres du cluster (Corosync). Un minimum de deux blocs de construction par grappe est recommandé pour permettre à un nombre suffisant de membres d'établir le quorum. Un ou plusieurs de ces clusters autonomes BeeGFS HA sont combinés pour créer un système de fichiers BeeGFS (illustré dans la figure suivante) qui est accessible aux clients comme un seul espace de noms de stockage.
+NOTE: Un minimum de deux éléments de base est requis pour établir le quorum dans le cluster de basculement. Un cluster à deux nœuds présente des limites qui peuvent empêcher un basculement réussi. Vous pouvez configurer un cluster à deux nœuds en incorporant un troisième périphérique comme disjoncteur d'attache ; cependant, cette documentation ne décrit pas cette conception.
 
 image:../media/beegfs-design-image3.png[""]
 
-Bien qu'au final, le nombre d'éléments de base par rack dépend des besoins en alimentation et en climatisation d'un site donné, La solution a été conçue de sorte à déployer jusqu'à cinq éléments de base dans un seul rack 42U tout en laissant de l'espace à deux commutateurs InfiniBand 1U utilisés pour le réseau de stockage/données. Chaque module nécessite huit ports IB (quatre par commutateur pour la redondance). Ainsi, cinq blocs de construction laissent la moitié des ports sur un commutateur InfiniBand HDR à 40 ports (comme le NVIDIA QM8700) disponible pour implémenter une topologie FAT-Tree ou non bloquante similaire. Cette configuration garantit une évolutivité verticale du nombre de racks de stockage ou de calcul/GPU sans goulets d'étranglement du réseau. Il est également possible d'utiliser une structure de stockage sursouscrite à l'aide des recommandations du fournisseur de la structure de stockage.
 
-L'image suivante montre une topologie arborescence FAT à 80 nœuds.
 
-image:../media/beegfs-design-image4.png[""]
+== Ansible
 
-En utilisant Ansible comme moteur de déploiement pour déployer BeeGFS sur NetApp, les administrateurs peuvent gérer tout l'environnement en utilisant une infrastructure moderne comme du code. Cela simplifie considérablement le fonctionnement d'un système complexe, permettant aux administrateurs de définir et d'ajuster la configuration en un seul emplacement, puis de s'assurer de son application cohérente quelle que soit la taille de l'environnement. La collection BeeGFS est disponible à partir de https://galaxy.ansible.com/netapp_eseries/beegfs["Galaxy Ansible"^] et https://github.com/netappeseries/beegfs/["NetApp E-Series GitHub"^].
+BeeGFS sur NetApp est fourni et déployé à l'aide d'Ansible Automation, qui est hébergé sur GitHub et Ansible Galaxy (la collection BeeGFS est disponible sur https://galaxy.ansible.com/netapp_eseries/beegfs["Galaxy Ansible"^] et https://github.com/netappeseries/beegfs/["NetApp E-Series GitHub"^]). Bien qu'Ansible soit principalement testé avec le matériel utilisé pour assembler les éléments de base BeeGFS, vous pouvez le configurer de sorte qu'il s'exécute sur presque tous les serveurs x86 à l'aide d'une distribution Linux prise en charge.
+
+Pour plus d'informations, voir https://www.netapp.com/blog/deploying-beegfs-eseries/["Déploiement de BeeGFS avec E-Series Storage"^].

@@ -48,6 +48,12 @@ Chaque version de la collection BeeGFS est testée avec des versions spécifique
 
 
 | 7.3.1 | 7.3.2 | Oui. | Mise à niveau avec beegfs collection v3.1.0 
+
+
+| 7.3.2 | 7.4.1 | Oui. | Mise à niveau avec beegfs collection v3.2.0 
+
+
+| 7.4.1 | 7.4.2 | Oui. | Mise à niveau avec beegfs collection v3.2.0 
 |===
 
 
@@ -83,7 +89,7 @@ Apportez les mises à jour requises ou souhaitées aux fichiers d'inventaire Ans
 
 === Étape 3 : mise à jour du manuel Ansible (uniquement lors de la mise à jour de versions majeures ou mineures)
 
-Si vous déplacez entre des versions majeures ou mineures, dans `playbook.yml` fichier utilisé pour déployer et maintenir le cluster, mettre à jour le nom du `beegfs_ha_<VERSION>` rôle correspondant à la version souhaitée. Par exemple, si vous voulez déployer BeeGFS 7.3 ce serait `beegfs_ha_7_3`:
+Si vous passez d'une version majeure à une version mineure, dans le `playbook.yml` fichier utilisé pour déployer et gérer le cluster, mettez à jour le nom du `beegfs_ha_<VERSION>` rôle pour refléter la version souhaitée. Par exemple, si vous souhaitez déployer BeeGFS 7.4 `beegfs_ha_7_4`:
 
 [source, yaml]
 ----
@@ -95,7 +101,7 @@ Si vous déplacez entre des versions majeures ou mineures, dans `playbook.yml` f
   tasks:
     - name: Ensure BeeGFS HA cluster is setup.
       ansible.builtin.import_role:  # import_role is required for tag availability.
-        name: beegfs_ha_7_3
+        name: beegfs_ha_7_4
 ----
 Pour plus de détails sur le contenu de ce fichier PlayBook, consultez la link:custom-architectures-deploy-ha-cluster.html["Déployez le cluster BeeGFS HA"^] section.
 
