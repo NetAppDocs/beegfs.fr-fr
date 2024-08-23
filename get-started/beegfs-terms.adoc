@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: beegfs-terms.html 
+permalink: get-started/beegfs-terms.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
 summary: 'Termes et concepts qui s"appliquent à la solution BeeGFS sur NetApp.' 
 ---
@@ -10,14 +10,14 @@ summary: 'Termes et concepts qui s"appliquent à la solution BeeGFS sur NetApp.'
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]
 Les termes et concepts suivants s'appliquent à la solution BeeGFS sur NetApp.
 
 
-TIP: Voir la link:administer-clusters-overview.html["Administrer les clusters BeeGFS"] Pour plus de détails sur les termes et concepts spécifiques à l'interaction avec les clusters BeeGFS haute disponibilité (HA).
+TIP: Pour link:../administer/clusters-overview.html["Administrer les clusters BeeGFS"]plus d'informations sur les termes et concepts propres à l'interaction avec les clusters haute disponibilité BeeGFS, reportez-vous à la  section.
 
 [cols="25h,~"]
 |===

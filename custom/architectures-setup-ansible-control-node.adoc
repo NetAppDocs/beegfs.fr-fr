@@ -1,0 +1,30 @@
+---
+sidebar: sidebar 
+permalink: custom/architectures-setup-ansible-control-node.html 
+keywords: BeeGFS on NetApp, NetApp Custom Architectures, EF600 
+summary: Configurez un nœud de contrôle Ansible pour déployer et gérer le système de fichiers. 
+---
+= Configurez le nœud de contrôle Ansible
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Configurez un nœud de contrôle Ansible pour déployer et gérer le système de fichiers.
+
+
+
+== Présentation
+
+Un nœud de contrôle Ansible est une machine Linux physique ou virtuelle utilisée pour gérer le cluster. Il doit répondre aux exigences suivantes :
+
+* Rencontrez le link:../second-gen/beegfs-technology-requirements.html#ansible-control-node-requirements["de formation"^]rôle haute disponibilité BeeGFS, y compris les versions installées d'Ansible, Python et tous les packages Python supplémentaires.
+* Rencontrez l'agent link:https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#control-node-requirements["Configuration requise pour le nœud de contrôle Ansible"^] y compris les versions de système d'exploitation.
+* Accès SSH et HTTPS à tous les nœuds de fichiers et de blocs.
+
+
+Les étapes d'installation détaillées link:../second-gen/beegfs-deploy-setting-up-an-ansible-control-node.html["ici"^]sont disponibles .

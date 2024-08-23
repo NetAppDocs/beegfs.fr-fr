@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: beegfs-design-solution-verification.html 
+permalink: second-gen/beegfs-design-solution-verification.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
 summary: 'Le design de deuxième génération de la solution BeeGFS sur NetApp a été vérifié à l"aide de trois profils de configuration d"élément de base.' 
 ---
@@ -10,7 +10,7 @@ summary: 'Le design de deuxième génération de la solution BeeGFS sur NetApp a
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -27,7 +27,7 @@ Les éléments de base ont été reliés à deux commutateurs NVIDIA Quantum Inf
 
 La figure suivante montre la configuration BeeGFS utilisée pour valider la solution BeeGFS sur NetApp.
 
-image:beegfs-design-image12.png[""]
+image:beegfs-design-image12.png["Configuration de la validation BeeGFS"]
 
 
 
@@ -57,22 +57,22 @@ mpirun --allow-run-as-root --mca btl tcp -np 48 -map-by node -hostfile 10xnodes 
 .Un élément de base BeeGFS (gestion, métadonnées et stockage)
 La figure suivante montre les résultats du test IOR avec un seul élément de base BeeGFS (gestion, métadonnées et stockage).
 
-image:beegfs-design-image13.png[""]
+image:beegfs-design-image13.png["Résultats IOR d'un élément de base BeeGFS"]
 
 .Métadonnées BeeGFS + élément de base du stockage
 La figure suivante présente les résultats du test IOR avec un seul élément de base de stockage + métadonnées BeeGFS.
 
-image:beegfs-design-image14.png[""]
+image:beegfs-design-image14.png["Métadonnées BeeGFS et éléments de base de stockage uniques : résultats IOR"]
 
 .Élément de base BeeGFS uniquement pour le stockage
 La figure suivante montre les résultats du test IOR avec un seul élément de base BeeGFS Storage uniquement.
 
-image:beegfs-design-image15.png[""]
+image:beegfs-design-image15.png["Résultats IOR de stockage BeeGFS uniques"]
 
 .Trois éléments de base BeeGFS
 La figure suivante montre les résultats du test IOR avec trois éléments de base BeeGFS.
 
-image:beegfs-design-image16.png[""]
+image:beegfs-design-image16.png["Trois éléments de base BeeGFS : résultats IOR"]
 
 Comme on pouvait s'y attendre, la différence de performances entre l'élément de base et les métadonnées suivantes + l'élément de base du stockage est négligeable. En comparant les métadonnées + l'élément de base du stockage et un élément de base uniquement destiné au stockage, on constate une légère augmentation des performances de lecture en raison des disques supplémentaires utilisés comme cibles de stockage. Toutefois, il n'y a pas de différence significative dans les performances d'écriture. Pour améliorer les performances, vous pouvez ajouter plusieurs éléments de base pour faire évoluer les performances de manière linéaire.
 
@@ -88,7 +88,7 @@ Le mode de mise en cache native utilise le cache de page du noyau Linux sur le c
 
 Le diagramme suivant montre les résultats du test IOR avec trois éléments de base BeeGFS et un seul client.
 
-image:beegfs-design-image17.png[""]
+image:beegfs-design-image17.png["Trois éléments de base BeeGFS avec des résultats IOR à un seul client"]
 
 
 NOTE: La répartition BeeGFS pour ces tests a été définie sur une taille chunksize de 1 Mo avec huit cibles par fichier.
@@ -111,12 +111,12 @@ Les performances des métadonnées ont été mesurées en premier avec un ou deu
 .Un seul élément de base de métadonnées BeeGFS + stockage
 Le diagramme suivant montre les résultats MDTest avec un bloc de construction BeeGFS + stockage.
 
-image:beegfs-design-image18.png[""]
+image:beegfs-design-image18.png["Métadonnées BeeGFS et éléments de base de stockage uniques : résultats MDTest"]
 
 .Deux métadonnées BeeGFS + éléments de base du stockage
 Le diagramme suivant montre les résultats MDTest avec deux métadonnées BeeGFS + des modules de stockage.
 
-image:beegfs-design-image19.png[""]
+image:beegfs-design-image19.png["Deux métadonnées BeeGFS et éléments de base de stockage : les résultats MDTest"]
 
 
 

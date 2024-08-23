@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: beegfs-deploy-hardware.html 
+permalink: second-gen/beegfs-deploy-hardware.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
 summary: 'Chaque module se compose de deux nœuds de fichiers x86 validés directement connectés à l"aide de l"InfiniBand HDR (200 Go) à deux nœuds de blocs NetApp.' 
 ---
@@ -10,7 +10,7 @@ summary: 'Chaque module se compose de deux nœuds de fichiers x86 validés direc
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -33,7 +33,7 @@ Les étapes suivantes sont identiques pour chaque élément du cluster, qu'il so
 Placez les éléments de base de façon à ce que les deux nœuds de fichier BeeGFS se trouvent au-dessus des nœuds de bloc BeeGFS. La figure suivante présente la configuration matérielle correcte pour l'élément de base BeeGFS utilisant les serveurs Lenovo ThinkSystem SR665 V3 comme nœuds de fichiers (vue arrière).
 
 +
-image:../media/buildingblock-sr665v3.png[""]
+image:buildingblock-sr665v3.png["Élément de base"]
 
 +
 
@@ -44,13 +44,13 @@ NOTE: La configuration de l'alimentation électrique pour les cas d'utilisation 
 .. Si le module sera utilisé pour exécuter des métadonnées et des services de stockage BeeGFS et des disques plus petits sont utilisés pour les volumes de métadonnées, vérifiez qu'ils sont renseignés dans les emplacements de disque les plus à l'extérieur, comme indiqué dans la figure ci-dessous.
 .. Pour toutes les configurations d'éléments de base, si un boîtier de disque n'est pas plein, assurez-vous qu'un nombre égal de disques est utilisé dans les emplacements 0–11 et 12–23 pour des performances optimales.
 +
-image:../media/driveslots.png[""]
+image:driveslots.png["Emplacements de disque EF600"]
 
 
 
 . Connectez les nœuds de bloc et de fichier à l'aide de link:beegfs-technology-requirements.html#block-file-cables["Câbles en cuivre à connexion directe InfiniBand 200 Gbit/s HDR"]la , de manière à ce qu'ils correspondent à la topologie illustrée dans la figure suivante.
 +
-image:../media/directattachcable-sr665v3.png[""]
+image:directattachcable-sr665v3.png["Câblage à connexion directe SR665V3"]
 
 +
 
@@ -64,7 +64,7 @@ Lorsque vous utilisez des câbles de séparation pour connecter le commutateur d
 En outre, pour les réseaux de stockage avec commutateurs redondants, les ports indiqués en vert clair doivent se connecter à un commutateur, tandis que les ports en vert foncé doivent se connecter à un autre commutateur.
 
 +
-image:../media/networkcable.png[""]
+image:networkcable-sr665v3.png["Câblage du réseau de stockage"]
 
 . Au besoin, assembler des éléments de construction supplémentaires en suivant les mêmes directives de câblage.
 +

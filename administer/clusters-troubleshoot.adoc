@@ -1,0 +1,297 @@
+---
+sidebar: sidebar 
+permalink: administer/clusters-troubleshoot.html 
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, troubleshooting 
+summary: 'Dépannage d"un cluster BeeGFS HA' 
+---
+= Résoudre les problèmes
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dépannage d'un cluster BeeGFS HA
+
+
+
+== Présentation
+
+Dans cette section, vous apprendrez à rechercher et à dépanner diverses défaillances et d'autres scénarios possibles liés à l'utilisation d'un cluster BeeGFS HA.
+
+
+
+== Guides de dépannage
+
+
+
+=== Étude des basculements inattendus
+
+Lorsqu'un nœud est fermé de façon inattendue et que ses services sont déplacés vers un autre nœud, la première étape doit s'assurer que le cluster indique des défaillances de ressource en bas du `pcs status`. En général, rien ne sera présent si l'escrime s'est terminé avec succès et que les ressources ont été redémarrées sur un autre noeud.
+
+Généralement, l'étape suivante consiste à rechercher dans les journaux système à l'aide de `journalctl` Sur l'un des nœuds de fichiers restants (les journaux Pacemaker sont synchronisés sur tous les nœuds). Si vous connaissez l'heure de l'échec, vous pouvez lancer la recherche juste avant l'échec (généralement au moins dix minutes avant l'apparition de l'échec est recommandée) :
+
+[source, console]
+----
+journalctl --since "<YYYY-MM-DD HH:MM:SS>"
+----
+Les sections suivantes montrent un texte commun que vous pouvez gresser dans les journaux pour affiner davantage l'enquête.
+
+
+
+==== Étapes à suivre pour rechercher/résoudre
+
+
+
+===== Étape 1 : vérifier si le moniteur BeeGFS a détecté une défaillance :
+
+Si le basculement a été déclenché par le moniteur BeeGFS, une erreur s'affiche (si ce n'est pas le cas, passez à l'étape suivante).
+
+[source, console]
+----
+journalctl --since "<YYYY-MM-DD HH:MM:SS>" | grep -i unexpected
+[...]
+Jul 01 15:51:03 beegfs_01 pacemaker-schedulerd[9246]:  warning: Unexpected result (error: BeeGFS service is not active!) was recorded for monitor of meta_08-monitor on beegfs_02 at Jul  1 15:51:03 2022
+----
+Dans cet exemple, BeeGFS service META_08 s'est arrêté pour une raison quelconque. Pour poursuivre le dépannage, nous devons démarrer beegfs_02 et consulter les journaux du service à l'adresse `/var/log/beegfs-meta-meta_08_tgt_0801.log`. Par exemple, le service BeeGFS peut avoir rencontré une erreur d'application en raison d'un problème interne ou d'un problème sur le nœud.
+
+
+TIP: Contrairement aux logs de Pacemaker, les logs des services BeeGFS ne sont pas distribués à tous les nœuds du cluster. Pour examiner ces types de défaillances, les journaux du nœud d'origine où la défaillance est requise.
+
+Les problèmes possibles pouvant être signalés par le moniteur sont les suivants :
+
+* Les cibles ne sont pas accessibles !
++
+** Description : indique que les volumes de bloc n'ont pas été accessibles.
+** Dépannage :
++
+*** Si le service n'a pas non plus démarré sur le nœud de fichier secondaire, confirmez que le nœud de bloc fonctionne correctement.
+*** Vérifiez si des problèmes physiques empêchent l'accès aux nœuds de blocs depuis ce nœud de fichiers, par exemple des adaptateurs ou des câbles InfiniBand défectueux.
+
+
+
+
+* Le réseau est inaccessible !
++
+** Description : aucun des adaptateurs utilisés par les clients pour se connecter à ce service BeeGFS n'était en ligne.
+** Dépannage :
++
+*** Si plusieurs ou tous les nœuds de fichiers sont affectés, vérifiez s'il y a une défaillance sur le réseau utilisée pour connecter les clients BeeGFS et le système de fichiers.
+*** Recherchez les problèmes physiques susceptibles d'empêcher l'accès des clients à partir de ce nœud de fichiers, par exemple des adaptateurs ou des câbles InfiniBand défectueux.
+
+
+
+
+* Le service BeeGFS n'est pas actif!
++
+** Description : un service BeeGFS s'est arrêté de façon inattendue.
+** Dépannage :
++
+*** Sur le nœud de fichier qui signale l'erreur, vérifiez les journaux du service eGFS impacté pour voir s'il signale une panne. Dans ce cas, ouvrez un dossier auprès du support NetApp afin que le problème puisse être examiné.
+*** Si aucune erreur n'est signalée dans le journal BeeGFS, vérifiez les journaux du journal pour voir si systemd a enregistré une raison pour laquelle le service a été arrêté. Dans certains scénarios, le service BeeGFS n'a peut-être pas été donné la possibilité de consigner tous les messages avant la fin du processus (par exemple si quelqu'un a exécuté `kill -9 <PID>`).
+
+
+
+
+
+
+
+
+===== Étape 2 : vérifiez si le nœud a quitté le cluster de manière inattendue
+
+Si le nœud a subi une défaillance matérielle catastrophique (par exemple, la carte système est morte) ou s'il y avait une panique du noyau ou un problème logiciel similaire, le moniteur BeeGFS ne signale pas d'erreur. Au lieu de cela, recherchez le nom d'hôte et les messages de Pacemaker indiquant que le nœud a été perdu de façon inattendue :
+
+[source, console]
+----
+journalctl --since "<YYYY-MM-DD HH:MM:SS>" | grep -i <HOSTNAME>
+[...]
+Jul 01 16:18:01 beegfs_01 pacemaker-attrd[9245]:  notice: Node beegfs_02 state is now lost
+Jul 01 16:18:01 beegfs_01 pacemaker-controld[9247]:  warning: Stonith/shutdown of node beegfs_02 was not expected
+----
+
+
+===== Étape 3 : vérifier que Pacemaker a pu verrouiller le nœud
+
+Dans tous les scénarios, Pacemaker tente de limiter le nœud pour vérifier qu'il est réellement hors ligne (les messages exacts peuvent varier en fonction de la cause de l'escrime) :
+
+[source, console]
+----
+Jul 01 16:18:02 beegfs_01 pacemaker-schedulerd[9246]:  warning: Cluster node beegfs_02 will be fenced: peer is no longer part of the cluster
+Jul 01 16:18:02 beegfs_01 pacemaker-schedulerd[9246]:  warning: Node beegfs_02 is unclean
+Jul 01 16:18:02 beegfs_01 pacemaker-schedulerd[9246]:  warning: Scheduling Node beegfs_02 for STONITH
+----
+Si l'action de clôture s'effectue correctement, des messages comme :
+
+[source, console]
+----
+Jul 01 16:18:14 beegfs_01 pacemaker-fenced[9243]:  notice: Operation 'off' [2214070] (call 27 from pacemaker-controld.9247) for host 'beegfs_02' with device 'fence_redfish_2' returned: 0 (OK)
+Jul 01 16:18:14 beegfs_01 pacemaker-fenced[9243]:  notice: Operation 'off' targeting beegfs_02 on beegfs_01 for pacemaker-controld.9247@beegfs_01.786df3a1: OK
+Jul 01 16:18:14 beegfs_01 pacemaker-controld[9247]:  notice: Peer beegfs_02 was terminated (off) by beegfs_01 on behalf of pacemaker-controld.9247: OK
+----
+Si l'action d'escrime a échoué pour une raison quelconque, les services BeeGFS ne pourront pas redémarrer sur un autre nœud pour éviter la corruption des données. Ce serait un problème à étudier séparément si, par exemple, le dispositif d'escrime (PDU ou BMC) était inaccessible ou mal configuré.
+
+
+
+=== Echec des actions de ressource de l'adresse (en bas de l'état pcs)
+
+Si une ressource requise pour exécuter un service BeeGFS échoue, un basculement est déclenché par le moniteur BeeGFS. Si cela se produit, il est probable qu'aucune « action de ressource ayant échoué » ne soit répertoriée `pcs status` en bas de et vous devez vous reporter aux étapes à suivre link:clusters-failover-failback.html["retour arrière après un basculement non planifié"^]pour savoir comment .
+
+Dans le cas contraire, il ne devrait y avoir que deux scénarios où vous verrez des « actions de ressource échouées ».
+
+
+
+==== Étapes à suivre pour rechercher/résoudre
+
+
+
+===== Scénario 1 : un problème temporaire ou permanent a été détecté avec un agent d'escrime et il a été redémarré ou déplacé vers un autre nœud.
+
+Certains agents d'escrime sont plus fiables que d'autres et chacun mettra en œuvre sa propre méthode de surveillance pour s'assurer que le dispositif d'escrime est prêt. En particulier, l'agent d'escrime de Redfish a été vu pour signaler des actions de ressources échouées comme les suivantes, même s'il se présente toujours commencé :
+
+[source, console]
+----
+  * fence_redfish_2_monitor_60000 on beegfs_01 'not running' (7): call=2248, status='complete', exitreason='', last-rc-change='2022-07-26 08:12:59 -05:00', queued=0ms, exec=0ms
+----
+Un agent d'escrime signalant l'échec des actions de ressources sur un nœud particulier ne devrait pas déclencher un basculement des services BeeGFS s'exécutant sur ce nœud. Il devrait simplement être redémarré automatiquement sur le même nœud ou sur un autre nœud.
+
+Étapes à suivre pour résoudre :
+
+. Si l'agent d'escrime refuse systématiquement de s'exécuter sur tout ou sous-ensemble de nœuds, vérifiez si ces nœuds peuvent se connecter à l'agent d'escrime et vérifiez que l'agent d'escrime est configuré correctement dans l'inventaire Ansible.
++
+.. Par exemple, si un agent d'escrime Redfish (BMC) s'exécute sur le même nœud qu'il est responsable de l'escrime, et que la gestion du système d'exploitation et les adresses IP BMC sont sur la même interface physique, certaines configurations de commutateurs réseau ne permettent pas la communication entre les deux interfaces (pour éviter les boucles réseau). Par défaut, le cluster HA tente d'éviter de placer des agents d'escrime sur le nœud qu'ils sont responsables de l'escrime, mais cela peut se produire dans certains scénarios/configurations.
+
+
+. Une fois tous les problèmes résolus (ou si le problème semble éphémère), exécutez `pcs resource cleanup` pour réinitialiser les actions de ressources ayant échoué.
+
+
+
+
+===== Scénario 2 : le moniteur BeeGFS a détecté un problème et déclenché un basculement, mais pour une raison quelconque, les ressources ne peuvent pas démarrer sur un nœud secondaire.
+
+Si l'escrime est activé et que la ressource n'a pas été bloquée pour s'arrêter sur le nœud d'origine (voir la section de dépannage pour « attente (en cas d'échec) »), les raisons les plus probables incluent des problèmes de démarrage de la ressource sur un nœud secondaire car :
+
+* Le nœud secondaire était déjà hors ligne.
+* Un problème de configuration physique ou logique a empêché le système secondaire d'accéder aux volumes de bloc utilisés comme cibles BeeGFS.
+
+
+Étapes à suivre pour résoudre :
+
+. Pour chaque entrée des actions de ressources ayant échoué :
++
+.. Confirmez que l'action de ressource échouée était une opération de démarrage.
+.. En fonction de la ressource indiquée et du nœud spécifié dans les actions de ressources ayant échoué :
++
+... Recherchez et corrigez tout problème externe qui empêche le nœud de démarrer la ressource spécifiée. Par exemple, si l'adresse IP BeeGFS (IP flottante) n'a pas démarré, vérifiez qu'au moins une des interfaces requises est connectée/en ligne et câblée au commutateur réseau approprié. Si une cible BeeGFS (périphérique de bloc/volume E-Series) est défectueuse, vérifiez que les connexions physiques vers le(s) nœud(s) du bloc principal sont connectées comme prévu, et vérifiez que les nœuds du bloc sont en bon état.
+
+
+.. Si aucun problème externe n'est évident et que vous souhaitez en savoir plus sur la cause première, nous vous recommandons d'ouvrir un dossier auprès des services de support de NetApp avant de poursuivre, car les étapes suivantes peuvent compliquer ou empêcher l'analyse des causes profondes (RCA).
+
+
+. Après la résolution de tout problème externe :
++
+.. Commentez tous les nœuds non fonctionnels à partir du fichier Ansible Inventory.yml et exécutez à nouveau le PlayBook Ansible complet pour vous assurer que toute la configuration logique est correctement configurée sur le ou les nœuds secondaires.
++
+... Remarque : n'oubliez pas d'annuler la commentaire de ces nœuds et d'exécuter à nouveau le manuel de vente une fois les nœuds sains et vous êtes prêt à revenir en arrière.
+
+
+.. Vous pouvez également tenter de restaurer manuellement le cluster :
++
+... Remettre en ligne tous les nœuds en utilisant : `pcs cluster start <HOSTNAME>`
+... Effacer toutes les actions de ressources ayant échoué à l'aide de : `pcs resource cleanup`
+... Exécutez l'état pcs et vérifiez que tous les services commencent comme prévu.
+... Si nécessaire, exécutez `pcs resource relocate run` pour renvoyer les ressources vers le nœud de votre choix (s'il est disponible).
+
+
+
+
+
+
+
+
+== Problèmes courants
+
+
+
+=== Les services BeeGFS ne sont pas de basculement ou de retour arrière sur demande
+
+*Question probable:* le `pcs resource relocate` la commande d'exécution a été exécutée mais n'a jamais réussi.
+
+*Comment vérifier :* Exécuter `pcs constraint --full` Et recherchez les contraintes d'emplacement avec un ID de `pcs-relocate-<RESOURCE>`.
+
+*Comment résoudre :* Exécuter `pcs resource relocate clear` puis repassage `pcs constraint --full` pour vérifier que les contraintes supplémentaires sont supprimées.
+
+
+
+=== Un nœud dans l'état pcs affiche "attente (on-fail)" lorsque l'escrime est désactivé
+
+*Problème probable :* Pacemaker n'a pas pu confirmer avec succès que toutes les ressources ont été arrêtées sur le nœud qui a échoué.
+
+*Comment résoudre:*
+
+. Courez `pcs status` enfin, recherchez les ressources qui ne sont pas « démarrées » et affichez les erreurs en bas de la page et résolvez les problèmes.
+. Pour rétablir l'exécution en ligne du nœud `pcs resource cleanup --node=<HOSTNAME>`.
+
+
+
+
+=== Après un basculement inattendu, les ressources indiquent « Started (on-fail) » (démarré (on-fail)) dans l'état pcs (pcs) lorsque l'escrime est activé
+
+*Problème probable :* Un problème s'est produit qui a déclenché un basculement, mais Pacemaker n'a pas pu vérifier que le nœud était clôturé. Cela pourrait se produire parce que l'escrime était mal configuré ou qu'il y avait un problème avec l'agent d'escrime (par exemple : l'unité de distribution d'alimentation était déconnectée du réseau).
+
+*Comment résoudre:*
+
+. Vérifiez que le nœud est réellement hors tension.
++
+
+IMPORTANT: Si le nœud que vous spécifiez n'est pas réellement arrêté, mais que vous exécutez les services ou les ressources du cluster, une corruption des données ou une défaillance du cluster se produit.
+
+. Confirmer manuellement l'escrime avec : `pcs stonith confirm <NODE>`
+
+
+À ce stade, les services devraient finir le basculement et être redémarrés sur un autre noeud en bon état.
+
+
+
+== Tâches courantes de dépannage
+
+
+
+=== Redémarrez chaque service BeeGFS
+
+Normalement, si un service BeeGFS doit être redémarré (par exemple pour faciliter une modification de la configuration), il doit être fait en mettant à jour l'inventaire Ansible et en exécutant de nouveau le manuel de vente. Dans certains cas, il peut être souhaitable de redémarrer des services individuels pour accélérer le dépannage, par exemple pour modifier le niveau de journalisation sans avoir à attendre l'exécution du manuel de vente dans son intégralité.
+
+
+IMPORTANT: Sauf si des modifications manuelles sont également ajoutées à l'inventaire Ansible, elles seront rétablies au prochain exécution du PlayBook Ansible.
+
+
+
+==== Option 1 : redémarrage contrôlé par le système
+
+S'il y a un risque que le service BeeGFS ne redémarre pas correctement avec la nouvelle configuration, tout d'abord placer le cluster en mode maintenance pour empêcher le moniteur BeeGFS de détecter le service est arrêté et déclencher un basculement non souhaité :
+
+[source, console]
+----
+pcs property set maintenance-mode=true
+----
+Si nécessaire, modifiez la configuration des services à l'adresse `/mnt/<SERVICE_ID>/*_config/beegfs-*.conf` (exemple : `/mnt/meta_01_tgt_0101/metadata_config/beegfs-meta.conf`) puis utilisez systemd pour le redémarrer :
+
+[source, console]
+----
+systemctl restart beegfs-*@<SERVICE_ID>.service
+----
+Exemple : `systemctl restart beegfs-meta@meta_01_tgt_0101.service`
+
+
+
+==== Option 2 : redémarrage contrôlé par le stimulateur cardiaque
+
+Si vous n'êtes pas préoccupé par la nouvelle configuration, le service peut s'arrêter de façon inattendue (par exemple, en modifiant simplement le niveau de journalisation), ou vous êtes dans une fenêtre de maintenance et ne vous préoccupez pas des temps d'arrêt, il vous suffit de redémarrer le moniteur BeeGFS pour le service que vous voulez redémarrer :
+
+[source, console]
+----
+pcs resource restart <SERVICE>-monitor
+----
+Par exemple, pour redémarrer le service de gestion BeeGFS : `pcs resource restart mgmt-monitor`

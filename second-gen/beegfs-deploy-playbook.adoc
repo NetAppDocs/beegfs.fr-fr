@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: beegfs-deploy-playbook.html 
+permalink: second-gen/beegfs-deploy-playbook.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
 summary: 'Un déploiement et une gestion de la configuration impliquent d"exécuter un ou plusieurs playbooks contenant les tâches Ansible requises pour exécuter et placer le système global dans l"état souhaité.' 
 ---
@@ -10,7 +10,7 @@ summary: 'Un déploiement et une gestion de la configuration impliquent d"exécu
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -103,7 +103,7 @@ ansible-playbook -i inventory.yml playbook.yml --forks 20
 ....
 +
 
-NOTE: En particulier pour les déploiements plus importants, en remplaçant le nombre par défaut de fourches (5) à l'aide du `forks` Paramètre recommandé pour augmenter le nombre d'hôtes qu'Ansible configure en parallèle. (Pour plus d'informations, voir  https://www.ansible.com/blog/ansible-performance-tuning["Réglage des performances Ansible"^] et https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html["Contrôle de l'exécution de PlayBook"^].) Le paramètre de valeur maximale dépend de la puissance de traitement disponible sur le nœud de contrôle Ansible. L'exemple ci-dessus de 20 a été exécuté sur un nœud de contrôle Ansible virtuel avec 4 processeurs (Intel(R) Xeon(R) Gold 6146 CPU à 3,20 GHz).
+NOTE:  `forks`Pour les déploiements de plus grande envergure, il est recommandé de remplacer le nombre par défaut de fourches (5) à l'aide du paramètre afin d'augmenter le nombre d'hôtes configurés en parallèle par Ansible. (Pour plus d'informations, voir https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html["Contrôle de l'exécution de PlayBook"^].) Le paramètre valeur maximale dépend de la puissance de traitement disponible sur le nœud de contrôle Ansible. L'exemple ci-dessus de 20 a été exécuté sur un nœud de contrôle Ansible virtuel avec 4 processeurs (Intel(R) Xeon(R) Gold 6146 CPU à 3,20 GHz).
 
 +
 Selon la taille du déploiement et les performances réseau entre le nœud de contrôle Ansible et les nœuds de fichier et bloc BeeGFS, la durée de déploiement peut varier.

@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: beegfs-design-software-architecture.html 
+permalink: second-gen/beegfs-design-software-architecture.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
 summary: La configuration logicielle de BeeGFS sur NetApp inclut des composants réseau BeeGFS, des nœuds de bloc EF600, des nœuds de fichiers BeeGFS, des groupes de ressources et des services BeeGFS. 
 ---
@@ -10,7 +10,7 @@ summary: La configuration logicielle de BeeGFS sur NetApp inclut des composants 
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -43,13 +43,14 @@ Cette documentation fournit des instructions pour les configurations de sous-ré
 +
 La figure suivante montre l'équilibrage du trafic sur plusieurs interfaces client BeeGFS.
 
-+
-image:../media/beegfs-design-image8.png[""]
 
-+
+
+image:beegfs-design-image8.png["Équilibrage du trafic des interfaces"]
+
 Comme chaque fichier de BeeGFS est généralement réparti sur plusieurs services de stockage, la configuration multi-rail permet au client d'atteindre un débit supérieur à celui d'un seul port InfiniBand. Par exemple, l'exemple de code suivant montre une configuration commune de répartition des fichiers qui permet au client d'équilibrer le trafic entre les deux interfaces :
 
 +
+
 ....
 root@beegfs01:/mnt/beegfs# beegfs-ctl --getentryinfo myfile
 Entry type: file
@@ -67,8 +68,6 @@ Stripe pattern details:
 ....
 
 
-
-
 == Configuration de nœud en mode bloc EF600
 
 Les nœuds de blocs comprennent deux contrôleurs RAID actifs/actifs avec accès partagé au même ensemble de lecteurs. En général, chaque contrôleur possède la moitié des volumes configurés sur le système, mais il peut reprendre l'autre contrôleur si nécessaire.
@@ -77,11 +76,11 @@ Le logiciel de chemins d'accès multiples des nœuds de fichiers détermine le c
 
 Le schéma suivant illustre la disposition du contrôleur dans les nœuds de bloc EF600.
 
-image:../media/beegfs-design-image9.png[""]
+image:beegfs-design-image9.png["Baie EF600"]
 
 Pour faciliter la solution haute disponibilité du disque partagé, les volumes sont mappés sur les deux nœuds de fichiers de manière à ce qu'ils puissent prendre en charge les uns les autres selon les besoins. Le diagramme suivant montre un exemple de configuration du service BeeGFS et de la propriété du volume préféré pour des performances maximales. L'interface à gauche de chaque service BeeGFS indique l'interface préférée que les clients et les autres services utilisent pour le contacter.
 
-image:../media/beegfs-design-image10.png[""]
+image:beegfs-design-image10.png["Propriété du volume de services BeeGFS"]
 
 Dans l'exemple précédent, les clients et les services serveur préfèrent communiquer avec le service de stockage 1 via l'interface i1b. Le service de stockage 1 utilise l'interface i1a comme chemin préféré pour communiquer avec ses volumes (Storage_tgt_101, 102) sur le contrôleur A du premier nœud de bloc. Cette configuration utilise la bande passante PCIe bidirectionnelle complète disponible pour l'adaptateur InfiniBand et offre de meilleures performances avec un adaptateur HDR InfiniBand à deux ports que le tout avec PCIe 4.0.
 
@@ -124,7 +123,7 @@ Pour chaque groupe de ressources BeeGFS, Pacemaker exécute une ressource de sur
 
 La figure suivante montre les services et les dépendances de BeeGFS contrôlés par Pacemaker.
 
-image:../media/beegfs-design-image11.png[""]
+image:beegfs-design-image11.png["Services de contrôleurs de stimulateur cardiaque"]
 
 
 NOTE: Pour que plusieurs services BeeGFS du même type soient démarrés sur le même nœud, Pacemaker est configuré pour démarrer les services BeeGFS à l'aide de la méthode de configuration Multi-mode. Pour plus d'informations, reportez-vous à la section https://doc.beegfs.io/latest/advanced_topics/multimode.html["Documentation BeeGFS sur Multi-mode"^].

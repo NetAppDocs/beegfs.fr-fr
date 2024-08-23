@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: beegfs-deploy-high-capacity-building-block.html 
+permalink: second-gen/beegfs-deploy-high-capacity-building-block.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600, EF300, HDD, Expansion 
 summary: Les variations de déploiement pour un élément de base haute capacité. 
 ---
@@ -10,13 +10,13 @@ summary: Les variations de déploiement pour un élément de base haute capacit�
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]
 Le guide de déploiement de la solution BeeGFS standard décrit les procédures et les recommandations pour répondre aux exigences des workloads de haute performance. Les clients cherchant à répondre aux besoins en capacité élevés doivent observer les variations du déploiement et les recommandations décrites ici.
 
-image:high-capacity-rack-diagram.png[""]
+image:high-capacity-rack-diagram.png["Diagramme de rack haute capacité"]
 
 
 
@@ -32,7 +32,7 @@ La configuration du noeud fichier à noeud bloc reste la même.
 
 Chaque nœud de bloc exige un minimum de 4 SSD NVMe pour le stockage de métadonnées BeeGFS. Ces lecteurs doivent être placés dans les emplacements les plus extérieurs du boîtier.
 
-image:high-capacity-drive-slots-diagram.png[""]
+image:high-capacity-drive-slots-diagram.png["Diagramme de slot de lecteur haute capacité"]
 
 
 

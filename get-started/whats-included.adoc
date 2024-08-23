@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: whats-included.html 
+permalink: get-started/whats-included.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
 summary: Ce site explique comment déployer et gérer BeeGFS sur NetApp. 
 ---
@@ -10,7 +10,7 @@ summary: Ce site explique comment déployer et gérer BeeGFS sur NetApp.
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]

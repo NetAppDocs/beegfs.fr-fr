@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: beegfs-architecture-overview.html 
+permalink: second-gen/beegfs-architecture-overview.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
 summary: 'La solution BeeGFS sur NetApp inclut des critères de conception architecturale qui permettent de déterminer l"équipement, le câblage et les configurations qui sont requis pour prendre en charge les workloads validés.' 
 ---
@@ -10,7 +10,7 @@ summary: 'La solution BeeGFS sur NetApp inclut des critères de conception archi
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -47,7 +47,7 @@ Le système de fichiers BeeGFS inclut les principaux services suivants :
 
 La figure suivante présente les composants et les relations de la solution BeeGFS utilisés avec les systèmes NetApp E-Series.
 
-image:../media/beegfs-components.png[""]
+image:beegfs-components.png["Composants BeeGFS"]
 
 En tant que système de fichiers parallèle, BeeGFS répartit ses fichiers sur plusieurs nœuds de serveur afin de maximiser les performances en lecture/écriture et l'évolutivité. Les nœuds de serveur fonctionnent ensemble pour fournir un système de fichiers unique pouvant être monté et accessible simultanément par d'autres nœuds de serveur, communément appelés _clients_. Ces clients peuvent voir et consommer le système de fichiers distribué de la même manière qu'un système de fichiers local tel que NTFS, XFS ou ext4.
 
@@ -64,7 +64,7 @@ NOTE: L'édition communautaire BeeGFS peut être utilisée gratuitement. Cependa
 
 La figure suivante compare les architectures haute disponibilité sans partage et à disque partagé.
 
-image:../media/beegfs-design-image1.png[""]
+image:beegfs-design-image1.png["Comparaison des architectures de HAUTE DISPONIBILITÉ"]
 
 Pour plus d'informations, voir https://www.netapp.com/blog/high-availability-beegfs/["Annonce de la haute disponibilité pour BeeGFS prise en charge par NetApp"^].
 
@@ -93,7 +93,7 @@ La solution BeeGFS sur NetApp a vérifié les nœuds répertoriés ci-dessous.
 
 Les éléments de base de la solution (illustrés dans la figure suivante) utilisent les serveurs de nœuds de fichiers vérifiés pour la couche de fichiers BeeGFS et deux systèmes de stockage EF600 comme couche bloc.
 
-image:../media/beegfs-design-image2-small.png[""]
+image:beegfs-design-image2-small.png["Élément de base"]
 
 La solution BeeGFS sur NetApp s'exécute sur tous les éléments de base du déploiement. Le premier élément de base déployé doit exécuter les services de gestion, de métadonnées et de stockage BeeGFS (également appelés éléments de base). Tous les éléments de base suivants peuvent être configurés via le logiciel pour étendre les métadonnées et les services de stockage, ou pour fournir des services de stockage exclusivement. Cette approche modulaire permet de faire évoluer le système de fichiers en fonction des besoins d'une charge de travail, tout en utilisant les mêmes plateformes matérielles sous-jacentes et la même conception d'éléments de base.
 
@@ -102,7 +102,7 @@ Il est possible de déployer jusqu'à cinq éléments de base pour former un clu
 
 NOTE: Un minimum de deux éléments de base est requis pour établir le quorum dans le cluster de basculement. Un cluster à deux nœuds présente des limites qui peuvent empêcher un basculement réussi. Vous pouvez configurer un cluster à deux nœuds en incorporant un troisième périphérique comme disjoncteur d'attache ; cependant, cette documentation ne décrit pas cette conception.
 
-image:../media/beegfs-design-image3.png[""]
+image:beegfs-design-image3.png["Évolutivité des clusters BeeGFS haute disponibilité"]
 
 
 

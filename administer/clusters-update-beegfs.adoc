@@ -1,0 +1,152 @@
+---
+sidebar: sidebar 
+permalink: administer/clusters-update-beegfs.html 
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, update, upgrade 
+summary: Utilisez Ansible pour mettre à jour BeeGFS et le cluster HA. 
+---
+= Mettez à jour la version BeeGFS
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Procédez comme suit pour mettre à jour la version BeeGFS du cluster HA à l'aide d'Ansible.
+
+
+
+== Présentation
+
+BeeGFS applique un `major.minor.patch` schéma de gestion des versions. Des rôles Ansible haute disponibilité BeeGFS sont fournis pour chaque `major.minor` version prise en charge (par exemple, `beegfs_ha_7_2` et `beegfs_ha_7_3`). Chaque rôle HA est épinglé à la dernière version de correctif BeeGFS disponible au moment de la publication de la collection Ansible.
+
+Ansible doit être utilisé pour toutes les mises à niveau de BeeGFS, y compris le déplacement entre les versions principale, secondaire et patch de BeeGFS. Pour mettre à jour BeeGFS, vous devez d'abord mettre à jour la collection BeeGFS Ansible, qui vous permet également d'exploiter les derniers correctifs et les améliorations apportées à l'automatisation du déploiement/gestion et au cluster HA sous-jacent. Même après la mise à jour vers la dernière version de la collection, BeeGFS ne sera pas mis à niveau jusqu'à `ansible-playbook` est exécuté avec le `-e "beegfs_ha_force_upgrade=true"` réglez.
+
+
+NOTE: Pour plus d'informations sur les versions BeeGFS, consultez le link:https://doc.beegfs.io/latest/advanced_topics/upgrade.html["Documentation de mise à niveau BeeGFS"^].
+
+
+
+== Chemins de mise à niveau testés
+
+Chaque version de la collection BeeGFS est testée avec des versions spécifiques de BeeGFS pour assurer l'interopérabilité entre tous les composants. Le test est également effectué pour s'assurer que les mises à niveau peuvent être effectuées à partir des versions BeeGFS prises en charge par la dernière version de la collection, vers celles prises en charge dans la dernière version.
+
+[cols="1,1,1,5"]
+|===
+| Version d'origine | Mettre à niveau la version | Multirail | Détails 
+
+
+| 7.2.6 | 7.3.2 | Oui. | Mise à niveau de la collection beegfs de v3.0.1 à v3.1.0, multirail ajouté 
+
+
+| 7.2.6 | 7.2.8 | Non | Mise à niveau de la collection beegfs de v3.0.1 à v3.1.0 
+
+
+| 7.2.8 | 7.3.1 | Oui. | Mise à niveau avec beegfs collection v3.1.0, multirail ajouté 
+
+
+| 7.3.1 | 7.3.2 | Oui. | Mise à niveau avec beegfs collection v3.1.0 
+
+
+| 7.3.2 | 7.4.1 | Oui. | Mise à niveau avec beegfs collection v3.2.0 
+
+
+| 7.4.1 | 7.4.2 | Oui. | Mise à niveau avec beegfs collection v3.2.0 
+|===
+
+
+== Étapes de mise à niveau BeeGFS
+
+Les sections suivantes expliquent comment mettre à jour la collection BeeGFS Ansible et BeeGFS. Portez une attention particulière à toute étape(s) supplémentaire(s) pour la mise à jour de BeeGFS version majeure ou mineure.
+
+
+
+=== Étape 1 : mise à niveau de la collection BeeGFS
+
+Pour les mises à niveau de collecte avec accès à link:https://galaxy.ansible.com/netapp_eseries/beegfs["Galaxy Ansible"^], exécutez la commande suivante :
+
+[source, console]
+----
+ansible-galaxy collection install netapp_eseries.beegfs --upgrade
+----
+Pour les mises à niveau hors ligne de la collection, téléchargez la collection à partir de link:https://galaxy.ansible.com/netapp_eseries/beegfs["Galaxy Ansible"^] en cliquant sur le bouton souhaité `Install Version`` puis `Download tarball`. Transférez le tarball sur votre nœud de contrôle Ansible, puis exécutez la commande suivante.
+
+[source, console]
+----
+ansible-galaxy collection install netapp_eseries-beegfs-<VERSION>.tar.gz --upgrade
+----
+Voir link:https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html["Installation de Collections"^] pour en savoir plus.
+
+
+
+=== Étape 2 : mise à jour de l'inventaire Ansible
+
+Apportez les mises à jour requises ou souhaitées aux fichiers d'inventaire Ansible de votre cluster. Consultez la link:clusters-update-beegfs.html#version-upgrade-notes["Notes de mise à niveau des versions"] section ci-dessous pour plus d'informations sur vos exigences de mise à niveau spécifiques. Pour plus d'link:../custom/architectures-inventory-overview.html["Présentation d'Ansible Inventory"^]informations sur la configuration de l'inventaire haute disponibilité BeeGFS, reportez-vous à la section.
+
+
+
+=== Étape 3 : mise à jour du PlayBook Ansible (uniquement en cas de mise à jour des versions principales ou secondaires)
+
+Si vous passez d'une version majeure à une version mineure, dans le `playbook.yml` fichier utilisé pour déployer et gérer le cluster, mettez à jour le nom du `beegfs_ha_<VERSION>` rôle pour refléter la version souhaitée. Par exemple, si vous souhaitez déployer BeeGFS 7.4 `beegfs_ha_7_4`:
+
+[source, yaml]
+----
+- hosts: all
+  gather_facts: false
+  any_errors_fatal: true
+  collections:
+    - netapp_eseries.beegfs
+  tasks:
+    - name: Ensure BeeGFS HA cluster is setup.
+      ansible.builtin.import_role:  # import_role is required for tag availability.
+        name: beegfs_ha_7_4
+----
+Pour plus de détails sur le contenu de ce fichier PlayBooklink:../custom/architectures-deploy-ha-cluster.html["Déployez le cluster BeeGFS HA"^], reportez-vous à la section.
+
+
+
+=== Étape 4 : exécutez la mise à niveau BeeGFS
+
+Pour appliquer la mise à jour BeeGFS :
+
+[source, console]
+----
+ansible-playbook -i inventory.yml beegfs_ha_playbook.yml -e "beegfs_ha_force_upgrade=true" --tags beegfs_ha
+----
+En coulisse, le rôle haute disponibilité BeeGFS gère :
+
+* Assurez-vous que le cluster est dans un état optimal avec chaque service BeeGFS situé sur son nœud préféré.
+* Mettre le cluster en mode maintenance.
+* Mettre à jour les composants du cluster haute disponibilité (le cas échéant)
+* Mettez à niveau chaque nœud de fichiers un par un en procédant comme suit :
++
+** Mettez le système en veille et basculez ses services vers le nœud secondaire.
+** Mise à jour des packs BeeGFS.
+** Proposer de nouveaux services.
+
+
+* Déplacez le cluster hors du mode maintenance.
+
+
+
+
+== Notes de mise à niveau de la version
+
+
+
+=== Mise à jour de BeeGFS version 7.2.6 ou 7.3.0
+
+
+
+==== Modifications de l'authentification basée sur la connexion
+
+Les versions BeeGFS publiées après 7.3.1 ne permettent plus aux services de démarrer sans spécifier un `connAuthFile` ou réglage `connDisableAuthentication=true` dans le fichier de configuration du service. Il est fortement recommandé d'activer la sécurité d'authentification basée sur la connexion. Voir link:https://doc.beegfs.io/7.3.2/advanced_topics/authentication.html#connectionbasedauth["Authentification basée sur la connexion BeeGFS"^] pour en savoir plus.
+
+Par défaut, le `beegfs_ha*` Les rôles vont générer et distribuer ce fichier, mais également l'ajouter au nœud de contrôle Ansible à l'adresse `<playbook_directory>/files/beegfs/<beegfs_mgmt_ip_address>_connAuthFile`. Le `beegfs_client` le rôle vérifie également la présence de ce fichier et le fournit aux clients s'ils sont disponibles.
+
+
+WARNING: Si le `beegfs_client` le rôle n'a pas été utilisé pour configurer les clients, ce fichier devra être distribué manuellement à chaque client et à la `connAuthFile` configuration dans le `beegfs-client.conf` jeu de fichiers à utiliser. Lors de la mise à niveau à partir d'une version précédente de BeeGFS où l'authentification basée sur la connexion n'était pas activée, les clients perdrent l'accès à moins que l'authentification basée sur la connexion ne soit désactivée dans le cadre de la mise à niveau par paramètre `beegfs_ha_conn_auth_enabled: false` dans `group_vars/ha_cluster.yml` (non recommandé).
+
+Pour plus de détails et d'autres options de configuration, reportez-vous à l'étape de configuration de l'authentification de connexion dans la link:../custom/architectures-inventory-common-file-node-configuration.html["Spécifiez la configuration de nœud de fichier commun"^] section.

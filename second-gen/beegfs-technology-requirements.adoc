@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: beegfs-technology-requirements.html 
+permalink: second-gen/beegfs-technology-requirements.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
 summary: Pour implémenter la solution BeeGFS sur NetApp, assurez-vous que votre environnement répond aux exigences technologiques. 
 ---
@@ -10,7 +10,7 @@ summary: Pour implémenter la solution BeeGFS sur NetApp, assurez-vous que votre
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -30,7 +30,7 @@ Avant de commencer, assurez-vous que votre matériel répond aux spécifications
  a| 
 2
  a| 
-[[beegfs-file-nodes]]nœuds de fichier BeeGFS
+Nœuds de fichiers BeeGFS
  a| 
 Pour atteindre les performances attendues, chaque nœud de fichier doit satisfaire ou dépasser les spécifications des nœuds de fichiers recommandés.
 
@@ -70,12 +70,12 @@ Pour atteindre les performances attendues, chaque nœud de fichier doit satisfai
 
 
 
-| 2 | [[esseries-block-nodes]]nœuds de bloc E-Series (baie EF600)  a| 
-*Mémoire :* 256 Go (128 Go par contrôleur). *Adaptateur :* 2 ports 200 Go/HDR (NVMe/IB). *Lecteurs :* configurés pour correspondre à la capacité souhaitée.
+| 2 | Nœuds de bloc E-Series (baie EF600)  a| 
+*Mémoire :* 256 Go (128 Go par contrôleur). *Adaptateur :* 2 ports 200 Go/HDR (NVMe/IB). *Lecteurs :* configurés pour correspondre aux métadonnées et à la capacité de stockage souhaitées.
 
 
 
-| 8 | [[infiniband-Adapters]]adaptateurs de carte hôte InfiniBand (pour les nœuds de fichiers).  a| 
+| 8 | Adaptateurs de carte hôte InfiniBand (pour les nœuds de fichiers).  a| 
 Les adaptateurs de carte hôte varient en fonction du modèle de serveur utilisé pour le nœud de fichiers. Recommandations pour les nœuds de fichiers vérifiés :
 
 * *Lenovo ThinkSystem SR665 V3 Server:*
@@ -104,7 +104,7 @@ Le commutateur du réseau de stockage doit offrir une vitesse InfiniBand 200 Gbi
 
 === Exigences de câblage
 
-[Bloc-fichier-câbles]*connexions directes entre les nœuds de bloc et les nœuds de fichier.*
+*Connexions directes des nœuds de bloc aux nœuds de fichier.*
 
 [cols="10%,70%,20%"]
 |===
@@ -113,7 +113,7 @@ Le commutateur du réseau de stockage doit offrir une vitesse InfiniBand 200 Gbi
 
 | 8 | MCP1650-H001E30 (câble en cuivre passif NVIDIA, QSFP56, 200 Gbit/s) | 1 m 
 |===
-[File-switch-cables]*connexions entre les nœuds de fichiers et le commutateur de réseau de stockage.* Sélectionnez l'option de câble appropriée dans le tableau ci-dessous en fonction de votre commutateur de stockage InfiniBand. + la longueur de câble recommandée est de 2 M. toutefois, elle peut varier en fonction de l'environnement du client.
+*Connexions entre les nœuds de fichiers et le commutateur de réseau de stockage.* Sélectionnez l'option de câble appropriée dans le tableau suivant en fonction de votre commutateur de stockage InfiniBand. + la longueur de câble recommandée est de 2 M. toutefois, elle peut varier en fonction de l'environnement du client.
 
 [cols="20%,10%,15%,55%"]
 |===

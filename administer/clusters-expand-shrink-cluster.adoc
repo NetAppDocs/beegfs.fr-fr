@@ -1,0 +1,65 @@
+---
+sidebar: sidebar 
+permalink: administer/clusters-expand-shrink-cluster.html 
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, replace 
+summary: Ajouter ou supprimer des éléments de base du cluster. 
+---
+= Développez ou réduisez le cluster
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Ajouter ou supprimer des éléments de base du cluster.
+
+
+
+== Présentation
+
+Cette section présente divers éléments à prendre en compte et diverses options pour ajuster la taille de votre cluster BeeGFS HA. La taille du cluster est généralement ajustée en ajoutant ou en supprimant des éléments de base, qui sont généralement deux nœuds de fichiers configurés comme une paire haute disponibilité. Il est également possible d'ajouter ou de supprimer des nœuds de fichiers individuels (ou d'autres types de nœuds de cluster) si nécessaire.
+
+
+
+== Ajout d'un module au cluster
+
+
+
+=== Considérations
+
+Le développement du cluster par l'ajout d'éléments de base supplémentaires est un processus simple. Avant de commencer, les restrictions s'imposent concernant le nombre minimal et maximal de nœuds de cluster dans chaque cluster haute disponibilité. Déterminer si vous devez ajouter des nœuds au cluster haute disponibilité existant ou créer un nouveau cluster haute disponibilité. En général, chaque élément de base se compose de deux nœuds de fichiers, mais trois nœuds représentent le nombre minimum de nœuds par cluster (pour établir le quorum) et dix est le nombre maximum recommandé (testé). Pour les scénarios avancés, il est possible d'ajouter un nœud « Tiebreaker » unique qui n'exécute aucun service BeeGFS lors du déploiement d'un cluster à deux nœuds. Si vous envisagez un tel déploiement, contactez le support NetApp.
+
+Gardez à l'esprit ces restrictions et toute future croissance des clusters lorsque vous décidez d'étendre le cluster. Par exemple, si vous disposez d'un cluster à six nœuds et que vous devez en ajouter quatre autres, il est recommandé de simplement démarrer un nouveau cluster haute disponibilité.
+
+
+TIP: N'oubliez pas qu'un seul système de fichiers BeeGFS peut consister en plusieurs clusters HA indépendants. Les systèmes de fichiers peuvent ainsi continuer à évoluer au-delà des limites recommandées/strictes des composants de cluster haute disponibilité sous-jacents.
+
+
+
+=== Étapes
+
+Lorsque vous ajoutez un élément de base à votre cluster, vous devez créer les `host_vars` fichiers pour chacun des nouveaux nœuds de fichiers et nœuds de blocs (baies E-Series). Les noms de ces hôtes doivent être ajoutés à l'inventaire, ainsi que les nouvelles ressources à créer. Les `group_vars` fichiers correspondants devront être créés pour chaque nouvelle ressource. Voir la link:../custom/architectures-overview.html["utilisez des architectures personnalisées"^] section pour plus de détails.
+
+Une fois les fichiers corrects créés, il suffit de relancer l'automatisation à l'aide de la commande :
+
+[source, console]
+----
+ansible-playbook -i <inventory>.yml <playbook>.yml
+----
+
+
+== Retrait d'un module du cluster
+
+Il y a plusieurs considérations à garder à l'esprit lorsque vous devez retirer un élément de construction, par exemple :
+
+* Quels sont les services BeeGFS exécutés dans cet élément de base ?
+* Les nœuds de fichiers ne sont-ils que ceux qui sont mis hors service et ceux qui doivent être associés à de nouveaux nœuds de fichiers ?
+* Si l'ensemble du bloc de construction est retiré, les données doivent-elles être déplacées vers un nouveau bloc de construction, dispersées vers les nœuds existants du cluster ou déplacées vers un nouveau système de fichiers BeeGFS ou un autre système de stockage ?
+* Cela peut-il avoir lieu en cas de panne ou doit-il être effectué sans interruption ?
+* L'élément de base est-il activement utilisé ou contient-il principalement des données qui ne sont plus actives ?
+
+
+Étant donné la diversité des points de départ et des États de terminaison, veuillez contacter le support NetApp afin que nous puissions identifier et vous aider à mettre en œuvre la meilleure stratégie en fonction de votre environnement et de vos besoins.

@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: beegfs-design-hardware-architecture.html 
+permalink: second-gen/beegfs-design-hardware-architecture.html 
 keywords: BeeGFS on NetApp, NetApp Verified Architecture, EF600 
 summary: La configuration matérielle de BeeGFS sur NetApp inclut des nœuds de fichiers et le câblage réseau. 
 ---
@@ -10,7 +10,7 @@ summary: La configuration matérielle de BeeGFS sur NetApp inclut des nœuds de 
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ./media/
+:imagesdir: ../media/
 
 
 [role="lead"]
@@ -26,7 +26,7 @@ Les adaptateurs InfiniBand doivent être placés dans les connecteurs ou les car
 
 La figure suivante montre la configuration NUMA du nœud de fichiers.
 
-image:../media/beegfs-design-image5-small.png[""]
+image:beegfs-design-image5-small.png["Configuration DE L'INFRASTRUCTURE NUMA"]
 
 Les processus BeeGFS sont épinglés à une zone NUMA particulière pour s'assurer que les interfaces utilisées se trouvent dans la même zone. Cette configuration évite d'avoir besoin d'un accès à distance via la connexion inter-socket. La connexion inter-sockets est parfois appelée liaison QPI ou GMI2 ; même dans les architectures de processeurs modernes, ils peuvent être un goulot d'étranglement lors de l'utilisation de réseaux haut débit comme HDR InfiniBand.
 
@@ -44,7 +44,7 @@ Dans la figure suivante, notez que :
 * Les ports du nœud NUMA 1 se connectent au second nœud de bloc.
 
 
-image:../media/beegfs-design-image6.png[""]
+image:beegfs-design-image6.png["Câblage réseau"]
 
 
 NOTE: Lors de l'utilisation de câbles de séparation pour connecter le commutateur de stockage aux nœuds de fichiers, un câble doit se brancher et se connecter aux ports indiqués en vert clair. Un autre câble doit se brancher et se connecter aux ports indiqués en vert foncé. En outre, pour les réseaux de stockage avec commutateurs redondants, les ports indiqués en vert clair doivent se connecter à un commutateur, tandis que les ports en vert foncé doivent se connecter à un autre commutateur.
@@ -61,6 +61,6 @@ Pour exploiter la bande passante bidirectionnelle PCIe complète, vérifiez que 
 
 La figure suivante montre la conception de câblage utilisée pour exploiter la bande passante bidirectionnelle PCIe complète.
 
-image:../media/beegfs-design-image7.png[""]
+image:beegfs-design-image7.png["Bande passante bidirectionnelle HCA"]
 
 Pour chaque service BeeGFS, utilisez la même carte pour connecter le port préféré utilisé pour le trafic client avec le chemin vers le contrôleur de nœuds de bloc qui est le principal propriétaire de ces volumes de services. Pour plus d'informations, voir link:beegfs-design-software-architecture.html["Configuration logicielle"].

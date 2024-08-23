@@ -1,0 +1,74 @@
+---
+sidebar: sidebar 
+permalink: administer/clusters-examine-state.html 
+keywords: BeeGFS on NetApp, HA, Cluster, Administration, pcs 
+summary: 'Utilisez les pièces pour voir l"état du bloc d"instruments.' 
+---
+= Vérifiez l'état du cluster
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Utilisez les pièces pour voir l'état du bloc d'instruments.
+
+
+
+== Présentation
+
+Exécution `pcs status` À partir de n'importe quel nœud de cluster est le moyen le plus simple de voir l'état global du cluster et l'état de chaque ressource (par exemple, les services BeeGFS et leurs dépendances). Cette section présente ce que vous trouverez dans les résultats du `pcs status` commande.
+
+
+
+== Présentation de la sortie de `pcs status`
+
+Courez `pcs status` Sur n'importe quel nœud de cluster où les services de cluster (Pacemaker et Corosync) sont démarrés. Le haut de la sortie affiche un récapitulatif du cluster :
+
+[source, console]
+----
+[root@beegfs_01 ~]# pcs status
+Cluster name: hacluster
+Cluster Summary:
+  * Stack: corosync
+  * Current DC: beegfs_01 (version 2.0.5-9.el8_4.3-ba59be7122) - partition with quorum
+  * Last updated: Fri Jul  1 13:37:18 2022
+  * Last change:  Fri Jul  1 13:23:34 2022 by root via cibadmin on beegfs_01
+  * 6 nodes configured
+  * 235 resource instances configured
+----
+La section ci-dessous liste les nœuds du cluster :
+
+[source, console]
+----
+Node List:
+  * Node beegfs_06: standby
+  * Online: [ beegfs_01 beegfs_02 beegfs_04 beegfs_05 ]
+  * OFFLINE: [ beegfs_03 ]
+----
+Cela indique notamment tous les nœuds en veille ou hors ligne. Les nœuds en veille font toujours partie du cluster, mais sont marqués comme non éligibles pour l'exécution des ressources. Les nœuds hors ligne indiquent que les services du cluster ne s'exécutent pas sur ce nœud, soit en raison d'un arrêt manuel, soit en raison du redémarrage ou de l'arrêt du nœud.
+
+
+NOTE: Lorsque les nœuds démarrent initialement, les services de cluster sont arrêtés et doivent être démarrés manuellement pour éviter de basculer accidentellement des ressources sur un nœud défaillant.
+
+Si les nœuds sont en attente ou hors ligne en raison d'une raison non administrative (par exemple, une panne), un texte supplémentaire s'affiche à côté de l'état du nœud entre parenthèses. Par exemple, si l'escrime est désactivé et qu'une ressource rencontre une défaillance, vous verrez `Node <HOSTNAME>: standby (on-fail)`. Un autre état possible est `Node <HOSTNAME>: UNCLEAN (offline)`, qui sera brièvement vu comme un nœud est clôturé, mais persistera si l'escrime a échoué indiquant que le cluster ne peut pas confirmer l'état du nœud (cela peut bloquer les ressources de démarrer sur d'autres noeuds).
+
+La section suivante affiche la liste de toutes les ressources du cluster et leur état :
+
+[source, console]
+----
+Full List of Resources:
+  * mgmt-monitor	(ocf::eseries:beegfs-monitor):	 Started beegfs_01
+  * Resource Group: mgmt-group:
+    * mgmt-FS1	(ocf::eseries:beegfs-target):	 Started beegfs_01
+    * mgmt-IP1	(ocf::eseries:beegfs-ipaddr2):	 Started beegfs_01
+    * mgmt-IP2	(ocf::eseries:beegfs-ipaddr2):	 Started beegfs_01
+    * mgmt-service	(systemd:beegfs-mgmtd):	 Started beegfs_01
+[...]
+----
+Tout comme les nœuds, un texte supplémentaire s'affiche en regard de l'état de la ressource entre parenthèses s'il y a des problèmes avec la ressource. Par exemple, si Pacemaker demande un arrêt de ressource et qu'il ne s'effectue pas dans le temps alloué, Pacemaker tente de verrouiller le nœud. Si l'escrime est désactivé ou que l'opération d'escrime échoue, l'état de la ressource sera `FAILED <HOSTNAME> (blocked)` Et Pacemaker ne pourra pas démarrer sur un autre nœud.
+
+Il est utile de noter que les clusters BeeGFS HA utilisent un certain nombre d'agents de ressources personnalisées de BeeGFS optimisés pour les OCF. En particulier, le moniteur BeeGFS est responsable du déclenchement d'un basculement lorsque les ressources BeeGFS sur un nœud donné ne sont pas disponibles.
