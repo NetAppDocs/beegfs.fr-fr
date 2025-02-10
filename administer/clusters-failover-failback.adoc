@@ -54,7 +54,7 @@ Une fois le nœud mis en ligne hors veille, grâce à :
 
 [source, console]
 ----
-pcs cluster node unstandby <HOSTNAME>
+pcs node unstandby <HOSTNAME>
 ----
 Enfin, transférez tous les services BeeGFS vers leurs nœuds préférés avec :
 

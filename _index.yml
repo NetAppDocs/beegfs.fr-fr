@@ -30,6 +30,9 @@ indexpage:
       url: https://doc.beegfs.io/
     - title: 'Tr-4915 : déplacement des données avec E-Series et BeeGFS pour l''IA'
       url: https://www.netapp.com/pdf.html?item=/media/65882-tr-4915.pdf
+    - title: NVA-1174 - BeeGFS sur les baies EF-Series NetApp avec les systèmes NVIDIA
+        DGX SuperPOD
+      url: "/media/PDF/nva-1174-deploy.pdf"
   - title: Les outils prennent en charge
     links:
     - title: Collections NetApp E-Series sur Ansible Galaxy
