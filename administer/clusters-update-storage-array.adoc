@@ -14,13 +14,13 @@ summary: Étapes de mise à niveau des baies de stockage E-Series du cluster hau
 
 
 [role="lead"]
-Procédez comme suit pour mettre à niveau les baies de stockage E-Series du cluster HA (nœuds de blocs).
+Suivez ces étapes pour mettre à niveau les composants de la baie de stockage E-Series du cluster HA.
 
 
 
 == Présentation
 
-En conservant les baies de stockage NetApp E-Series de votre cluster de haute disponibilité à jour avec le dernier firmware, vous bénéficiez de performances optimales et d'une sécurité renforcée. Les mises à jour de micrologiciel pour la matrice de stockage sont appliquées à l'aide du système d'exploitation SANtricity, de la NVSRAM et des fichiers de micrologiciel de lecteur.
+En conservant les baies de stockage NetApp E-Series de votre cluster de haute disponibilité à jour avec le dernier firmware, vous bénéficiez de performances optimales et d'une sécurité renforcée. Les mises à jour du micrologiciel de la baie de stockage sont appliquées via le système d'exploitation SANtricity, la NVSRAM et les fichiers de micrologiciel du lecteur.
 
 
 IMPORTANT: Bien que les baies de stockage puissent être mises à niveau avec le cluster haute disponibilité en ligne, il est recommandé de placer le cluster en mode de maintenance pour toutes les mises à niveau.
@@ -65,7 +65,7 @@ Voir link:https://docs.ansible.com/ansible/latest/collections_guide/collections_
 
 
 . Si nécessaire, mettez à jour les fichiers d'inventaire Ansible de votre cluster afin d'inclure toutes les baies de stockage (nœuds de bloc) nécessitant des mises à jour. Pour obtenir des conseils, voir link:../custom/architectures-inventory-overview.html["Présentation d'Ansible Inventory"^]la section.
-. Assurez-vous que le cluster est dans un état optimal, chaque service BeeGFS étant sur le nœud de votre choix. Voir link:clusters-examine-state.html["Vérifiez l'état du cluster"^] pour plus de détails.
+. Assurez-vous que le cluster est optimal avec chaque service BeeGFS sur le nœud de votre choix. Voir link:clusters-examine-state.html["Vérifiez l'état du cluster"^] pour plus de détails.
 . Placez le cluster en mode maintenance en suivant les instructions de link:clusters-maintenance-mode.html["Placer le cluster en mode maintenance"^]la section .
 . Créez un nouveau PlayBook Ansible nommé `update_block_node_playbook.yml`. Remplissez le manuel avec le contenu suivant en remplaçant le système d'exploitation SANtricity, la NVSRAM et les versions de firmware des disques par le chemin de mise à niveau souhaité :
 +

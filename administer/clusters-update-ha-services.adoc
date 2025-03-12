@@ -1,0 +1,184 @@
+---
+sidebar: sidebar 
+permalink: administer/clusters-update-ha-services.html 
+keywords: Cluster, Administration, Update, Upgrade, Pacemaker, Corosync 
+summary: Étapes de mise à niveau des packages Pacemaker et Corosync dans un cluster HA 
+---
+= Mise à niveau des packages Pacemaker et Corosync dans un cluster haute disponibilité
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Procédez comme suit pour mettre à niveau les packages Pacemaker et Corosync dans un cluster HA.
+
+
+
+== Présentation
+
+La mise à niveau de Pacemaker et Corosync garantit que le cluster bénéficie de nouvelles fonctionnalités, de nouveaux correctifs de sécurité et d'améliorations des performances.
+
+
+
+== Approche de mise à niveau
+
+Il existe deux approches recommandées pour la mise à niveau d'un cluster : une mise à niveau par déploiement ou un arrêt complet du cluster. Chaque approche a ses propres avantages et inconvénients. La procédure de mise à niveau peut varier en fonction de la version de votre Pacemaker. Reportez-vous à la documentation de ClusterLabs link:https://clusterlabs.org/projects/pacemaker/doc/3.0/Pacemaker_Administration/html/upgrading.html["Mise à niveau d'un cluster Pacemaker"^]pour déterminer quelle approche utiliser. Avant de suivre une approche de mise à niveau, vérifiez que :
+
+* Les nouveaux packages Pacemaker et Corosync sont pris en charge dans la solution NetApp BeeGFS.
+* Il existe des sauvegardes valides pour votre système de fichiers BeeGFS et la configuration de cluster Pacemaker.
+* Le cluster est en bon état.
+
+
+
+
+=== Mise à jour du déploiement
+
+Cette méthode implique de supprimer chaque nœud du cluster, de le mettre à niveau, puis de le réintégrer dans le cluster jusqu'à ce que tous les nœuds exécutent la nouvelle version. Cette approche assure le fonctionnement continu du cluster, ce qui est idéal pour les clusters haute disponibilité de plus grande taille, mais comporte le risque d'exécuter des versions mixtes lors du processus. Cette approche doit être évitée dans un cluster à deux nœuds.
+
+. Vérifiez que le cluster est dans un état optimal, chaque service BeeGFS étant exécuté sur le nœud favori. Voir link:clusters-examine-state.html["Vérifiez l'état du cluster"^] pour plus de détails.
+. Pour la mise à niveau du nœud, mettez-le en mode veille afin d'exploiter (ou de déplacer) tous les services BeeGFS :
++
+[source, console]
+----
+pcs node standby <HOSTNAME>
+----
+. Vérifier que les services du nœud ont été vidangés en exécutant :
++
+[source, console]
+----
+pcs status
+----
++
+Assurez-vous qu'aucun service n'est signalé comme `Started` sur le nœud en veille.
+
++
+
+NOTE: Selon la taille de votre cluster, le déplacement des services vers le nœud sœur peut prendre quelques secondes, voire quelques minutes. Si un service BeeGFS ne démarre pas sur le nœud Sister, reportez-vous au link:clusters-troubleshoot.html["Guides de dépannage"^].
+
+. Arrêter le cluster sur le nœud :
++
+[source, console]
+----
+pcs cluster stop <HOSTNAME>
+----
+. Mettez à niveau les packages Pacemaker, Corosync et pcs sur le nœud :
++
+
+NOTE: Les commandes du gestionnaire de paquets varient selon le système d'exploitation. Les commandes suivantes sont destinées aux systèmes exécutant RHEL 8 et versions ultérieures.
+
++
+[source, console]
+----
+dnf update pacemaker-<version>
+----
++
+[source, console]
+----
+dnf update corosync-<version>
+----
++
+[source, console]
+----
+dnf update pcs-<version>
+----
+. Démarrer les services de cluster Pacemaker sur le nœud :
++
+[source, console]
+----
+pcs cluster start <HOSTNAME>
+----
+. Si le `pcs` pack a été mis à jour, réauthentifier le nœud avec le cluster :
++
+[source, console]
+----
+pcs host auth <HOSTNAME>
+----
+. Vérifiez que la configuration du stimulateur est toujours valide avec l' `crm_verify`outil.
++
+
+NOTE: Cette vérification doit être effectuée une seule fois lors de la mise à niveau du cluster.
+
++
+[source, console]
+----
+crm_verify -L -V
+----
+. Mettre le nœud hors veille :
++
+[source, console]
+----
+pcs node unstandby <HOSTNAME>
+----
+. Retransférez tous les services BeeGFS vers le nœud de votre choix :
++
+[source, console]
+----
+pcs resource relocate run
+----
+. Répétez les étapes précédentes pour chaque nœud du cluster jusqu'à ce que tous les nœuds exécutent les versions Pacemaker, Corosync et pcs souhaitées.
+. Enfin, exécutez `pcs status` et vérifiez que le cluster fonctionne correctement et `Current DC` indique la version du stimulateur souhaitée.
++
+
+NOTE: Si le `Current DC` indique « version limite », un nœud du cluster fonctionne toujours avec la version précédente de Pacemaker et doit être mis à niveau. Si un nœud mis à niveau ne parvient pas à rejoindre le cluster ou si les ressources ne démarrent pas, consultez les journaux du cluster et consultez les notes de mise à jour ou les guides de l'utilisateur Pacemaker pour connaître les problèmes de mise à niveau connus.
+
+
+
+
+
+=== Arrêt complet du cluster
+
+Dans cette approche, tous les nœuds et toutes les ressources du cluster sont arrêtés, les nœuds sont mis à niveau, puis le cluster est redémarré. Cette approche est nécessaire si les versions Pacemaker et Corosync ne prennent pas en charge une configuration en version mixte.
+
+. Vérifiez que le cluster est dans un état optimal, chaque service BeeGFS étant exécuté sur le nœud favori. Voir link:clusters-examine-state.html["Vérifiez l'état du cluster"^] pour plus de détails.
+. Arrêtez le logiciel de cluster (Pacemaker et Corosync) sur tous les nœuds.
++
+
+NOTE: Selon la taille du cluster, l'arrêt de tout le cluster peut prendre quelques secondes, voire quelques minutes.
+
++
+[source, console]
+----
+pcs cluster stop --all
+----
+. Une fois les services de cluster arrêtés sur tous les nœuds, mettez à niveau les packages Pacemaker, Corosync et pcs sur chaque nœud en fonction de vos besoins.
++
+
+NOTE: Les commandes du gestionnaire de paquets varient selon le système d'exploitation. Les commandes suivantes sont destinées aux systèmes exécutant RHEL 8 et versions ultérieures.
+
++
+[source, console]
+----
+dnf update pacemaker-<version>
+----
++
+[source, console]
+----
+dnf update corosync-<version>
+----
++
+[source, console]
+----
+dnf update pcs-<version>
+----
+. Une fois la mise à niveau de tous les nœuds effectuée, démarrez le logiciel du cluster sur tous les nœuds :
++
+[source, console]
+----
+pcs cluster start --all
+----
+. Si le `pcs` pack a été mis à jour, réauthentifier chaque nœud du cluster :
++
+[source, console]
+----
+pcs host auth <HOSTNAME>
+----
+. Enfin, exécutez `pcs status` et vérifiez que le cluster est en bon état et `Current DC` indique la version correcte du Pacemaker.
++
+
+NOTE: Si le `Current DC` indique « version limite », un nœud du cluster fonctionne toujours avec la version précédente de Pacemaker et doit être mis à niveau.
+
+
