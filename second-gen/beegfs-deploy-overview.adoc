@@ -14,15 +14,15 @@ summary: 'Vous pouvez déployer BeeGFS sur NetApp pour des nœuds de fichiers et
 
 
 [role="lead"]
-Vous pouvez déployer BeeGFS sur NetApp pour des nœuds de fichiers et de blocs validés en utilisant la deuxième génération de l'architecture de base BeeGFS de NetApp.
+BeeGFS sur NetApp peut être déployé sur des nœuds de blocs et de fichiers validés à l'aide d'Ansible et de la conception d'éléments de base BeeGFS de NetApp.
 
 
 
 == Collections et rôles Ansible
 
-Vous déployez la solution BeeGFS sur NetApp à l'aide d'Ansible, un moteur d'automatisation IT très populaire qui permet d'automatiser les déploiements d'applications. Ansible utilise ensemble de fichiers appelés « inventaire », qui modélise le système de fichiers BeeGFS que vous souhaitez déployer.
+La solution BeeGFS sur NetApp est déployée à l'aide d'Ansible, un moteur d'automatisation IT couramment utilisé pour automatiser les déploiements d'applications. Ansible utilise une série de fichiers appelée collectivement l'inventaire, qui modélise le système de fichiers BeeGFS que vous souhaitez déployer.
 
-Ansible permet à des entreprises telles que NetApp d'étendre leur environnement aux fonctionnalités intégrées à l'aide de collections sur Ansible Galaxy (voir https://galaxy.ansible.com/netapp_eseries/santricity["Collection NetApp E-Series BeeGFS"^]). Les collections incluent des modules qui effectuent une fonction ou une tâche spécifique (comme créer un volume E-Series) et incluent des rôles qui peuvent appeler plusieurs modules et d'autres rôles. Cette approche automatisée réduit la durée de déploiement du système de fichiers BeeGFS et du cluster HA sous-jacent. Il simplifie en outre l'ajout d'éléments de base pour développer les systèmes de fichiers existants.
+Ansible permet à des entreprises comme NetApp de développer leur activité grâce aux fonctionnalités intégrées à l'aide de collections disponibles sur Ansible Galaxy (voir https://galaxy.ansible.com/netapp_eseries/santricity["Collection NetApp E-Series BeeGFS"^]). Elles comprennent des modules qui exécutent des fonctions ou des tâches spécifiques (telles que la création d'un volume E-Series) ainsi que des rôles pouvant appeler plusieurs modules ou d'autres rôles. Cette approche automatisée réduit la durée de déploiement du système de fichiers BeeGFS et du cluster HA sous-jacent. De plus, il simplifie la maintenance et l'extension du cluster et du système de fichiers BeeGFS.
 
 Pour plus de détails, voir link:beegfs-deploy-learn-ansible.html["Découvrez l'inventaire Ansible"].
 
@@ -40,7 +40,7 @@ Les procédures de déploiement couvrent les profils de configuration suivants :
 * Un troisième élément inclut uniquement des services de stockage.
 
 
-Ces profils illustrent la gamme complète de profils de configuration recommandés pour les éléments de base NetApp BeeGFS. Pour chaque déploiement, le nombre de métadonnées et d'éléments de base de stockage ou d'éléments de base uniquement destinés aux services de stockage peut varier selon les procédures appliquées à la capacité et aux performances.
+Ces profils illustrent la gamme complète de profils de configuration recommandés pour les éléments de base NetApp BeeGFS. Pour chaque déploiement, le nombre d'éléments de base de métadonnées et de stockage ou de services de stockage uniquement peut varier en fonction des exigences de capacité et de performances.
 
 
 

@@ -119,9 +119,9 @@ Le commutateur du réseau de stockage doit offrir une vitesse InfiniBand 200 Gbi
 |===
 
 
-== Configuration logicielle requise
+== Configuration logicielle et firmware requise
 
-Pour des performances et une fiabilité prévisibles, les versions de la solution BeeGFS sur NetApp sont testées avec des versions spécifiques des composants logiciels requis pour implémenter la solution.
+Pour assurer des performances et une fiabilité prévisibles, les versions de la solution BeeGFS sur NetApp sont testées avec des versions spécifiques des composants logiciels et de firmware. Ces versions sont requises pour l'implémentation de la solution.
 
 
 
@@ -132,14 +132,7 @@ Pour des performances et une fiabilité prévisibles, les versions de la solutio
 | Logiciel | Version 
 
 
- a| 
-Red Hat Enterprise Linux
- a| 
-Red Hat 9.3 Server Physical avec haute disponibilité (2 sockets).
-
-
-IMPORTANT: Les nœuds de fichiers nécessitent un abonnement Red Hat Enterprise Linux Server valide et le module complémentaire haute disponibilité de Red Hat Enterprise Linux.
-
+| Red Hat Enterprise Linux | Red Hat 9.3 Server Physical avec haute disponibilité (2 sockets). IMPORTANT : les nœuds de fichiers nécessitent un abonnement Red Hat Enterprise Linux Server valide et le module complémentaire High Availability de Red Hat Enterprise Linux. 
 
 
 | Noyau Linux | 5.14.0-362.24.1.el9_3.x86_64 
@@ -208,10 +201,13 @@ Les exigences logicielles répertoriées dans les tableaux suivants sont spécif
 | Logiciel | Version 
 
 
-| Ansible | 6.x lorsqu'il est installé via pip : ansible-6.0.0 et ansible-core >= 2.13.0 
+| Ansible | 10.x 
 
 
-| Python | 3.9 (ou ultérieure) 
+| Cœur Ansible | >= 2.13.0 
+
+
+| Python | 3,10 
 
 
 | Packs Python supplémentaires | Cryptographie-43.0.0, netaddr-1.3.0, ipaddr-2.2.0 

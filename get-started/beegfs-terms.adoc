@@ -32,6 +32,13 @@ L'intelligence artificielle.
 
 
  a| 
+Nœud de contrôle Ansible
+ a| 
+Machine physique ou virtuelle utilisée pour exécuter l'interface de ligne de commande Ansible.
+
+
+
+ a| 
 Inventaire Ansible
  a| 
 Structure de répertoire contenant les fichiers YAML qui sont utilisés pour décrire le cluster BeeGFS HA souhaité.
@@ -46,14 +53,14 @@ Contrôleur de gestion de la carte mère. Parfois appelé processeur de service.
 
 
  a| 
-nœuds de blocs
+Blocs de nœuds
  a| 
-Systèmes de stockage NetApp FAS.
+NetApp E-Series
 
 
 
  a| 
-clients
+Clients
  a| 
 Nœuds du cluster HPC exécutant des applications qui doivent utiliser le système de fichiers. Parfois également appelé nœuds de calcul ou nœuds GPU.
 
