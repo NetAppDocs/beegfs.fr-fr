@@ -62,4 +62,5 @@ WARNING: Dans cette configuration, si le moniteur BeeGFS détecte une défaillan
 . Pour activer la séquence d'escrime : `pcs property set stonith-enabled=true`
 
 
-Remarque : ce paramètre sera remplacé lors de l'exécution suivante du PlayBook Ansible.
+
+CAUTION: Ce paramètre sera remplacé la prochaine fois que vous exécuterez le playbook Ansible.

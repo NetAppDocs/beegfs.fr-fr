@@ -47,7 +47,7 @@ Installez un système d'exploitation pris en charge en fonction de la configurat
 
 ==== Red Hat
 
-Utilisez RedHat Subscription Manager pour enregistrer et abonner le système afin de permettre l'installation des packages requis dans les référentiels Red Hat officiels et de limiter les mises à jour vers la version prise en charge de Red Hat : `subscription-manager release --set=<MAJOR_VERSION>.<MINOR_VERSION>`. Pour obtenir des instructions, reportez-vous à la section https://access.redhat.com/solutions/253273["Comment enregistrer et souscrire un système RHEL"^] et  https://access.redhat.com/solutions/2761031["Comment limiter les mises à jour"^].
+, voir  https://access.redhat.com/solutions/253273["Comment enregistrer et souscrire un système RHEL"^] et  https://access.redhat.com/solutions/2761031["Comment limiter les mises à jour"^] .
 
 Activez le référentiel Red Hat contenant les packages requis pour la haute disponibilité :
 

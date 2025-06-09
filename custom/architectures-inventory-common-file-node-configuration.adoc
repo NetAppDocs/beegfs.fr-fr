@@ -198,7 +198,7 @@ eseries_ip_udev_rules:
 ----
 +
 
-IMPORTANT: Pour éviter les conflits lorsque les interfaces sont renommées (les empêchant d'être renommées), vous ne devez pas utiliser de noms par défaut potentiels tels que eth0, en9 f0, ib0 ou ibs4f0. la convention de nom la plus courante consiste à utiliser « e » ou « i » pour Ethernet ou InfiniBand, suivi du numéro de connecteur PCIe, ainsi qu'une lettre indiquant le port. Par exemple, le deuxième port d'un adaptateur InfiniBand installé dans le logement 3 est : i3b.
+CAUTION: Pour éviter les conflits lorsque les interfaces sont renommées (les empêchant d'être renommées), vous ne devez pas utiliser de noms par défaut potentiels tels que eth0, en9 f0, ib0 ou ibs4f0. la convention de nom la plus courante consiste à utiliser « e » ou « i » pour Ethernet ou InfiniBand, suivi du numéro de connecteur PCIe, ainsi qu'une lettre indiquant le port. Par exemple, le deuxième port d'un adaptateur InfiniBand installé dans le logement 3 est : i3b.
 
 +
 
@@ -271,9 +271,8 @@ Actuellement, la version intégrée de `opensm` fournie avec les distributions L
 +
 [source, bash]
 ----
-curl -o packages/opensm-libs-5.17.2.MLNX20240610.dc7c2998-0.1.2310322.x86_64.rpm https://linux.mellanox.com/public/repo/mlnx_ofed/23.10-3.2.2.0/rhel9.3/x86_64/opensm-libs-5.17.2.MLNX20240610.dc7c2998-0.1.2310322.x86_64.rpm
-
-curl -o packages/opensm-5.17.2.MLNX20240610.dc7c2998-0.1.2310322.x86_64.rpm https://linux.mellanox.com/public/repo/mlnx_ofed/23.10-3.2.2.0/rhel9.3/x86_64/opensm-5.17.2.MLNX20240610.dc7c2998-0.1.2310322.x86_64.rpm
+curl -o packages/opensm-5.17.2.MLNX20240610.dc7c2998-0.1.2310322.x86_64.rpm https://linux.mellanox.com/public/repo/mlnx_ofed/23.10-3.2.2.0/rhel9.4/x86_64/opensm-5.17.2.MLNX20240610.dc7c2998-0.1.2310322.x86_64.rpm
+curl -o packages/opensm-libs-5.17.2.MLNX20240610.dc7c2998-0.1.2310322.x86_64.rpm https://linux.mellanox.com/public/repo/mlnx_ofed/23.10-3.2.2.0/rhel9.4/x86_64/opensm-libs-5.17.2.MLNX20240610.dc7c2998-0.1.2310322.x86_64.rpm
 ----
 . Sous `group_vars/ha_cluster.yml` définissez la configuration suivante :
 +
@@ -287,8 +286,8 @@ eseries_ib_opensm_custom_packages:
   install:
     - files:
         add:
-          "packages/opensm-libs-5.17.2.MLNX20240610.dc7c2998-0.1.2310322.x86_64.rpm": "/tmp/"
           "packages/opensm-5.17.2.MLNX20240610.dc7c2998-0.1.2310322.x86_64.rpm": "/tmp/"
+          "packages/opensm-libs-5.17.2.MLNX20240610.dc7c2998-0.1.2310322.x86_64.rpm": "/tmp/"
     - packages:
         add:
           - /tmp/opensm-5.17.2.MLNX20240610.dc7c2998-0.1.2310322.x86_64.rpm

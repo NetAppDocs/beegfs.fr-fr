@@ -89,7 +89,7 @@ all:
 ----
 +
 
-IMPORTANT: Ne stockez pas les mots de passe en texte brut. Utilisez plutôt Ansible Vault (voir la link:https://docs.ansible.com/ansible/latest/user_guide/vault.html["Documentation Ansible"^] Pour le chiffrement de contenu avec Ansible Vault) ou utilisez le `--ask-become-pass` option lors de l'exécution du manuel de vente.
+NOTE: Ne stockez pas les mots de passe en texte brut. Utilisez plutôt Ansible Vault (voir la link:https://docs.ansible.com/ansible/latest/user_guide/vault.html["Documentation Ansible"^] Pour le chiffrement de contenu avec Ansible Vault) ou utilisez le `--ask-become-pass` option lors de l'exécution du manuel de vente.
 
 . Dans le `client_inventory.yml` Fichier, répertorie tous les hôtes qui doivent être configurés comme clients BeeGFS sous `beegfs_clients` Grouper, puis se reporter aux commentaires en ligne et supprimer toute configuration supplémentaire requise pour construire le module de noyau client BeeGFS sur votre système :
 +

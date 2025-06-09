@@ -33,9 +33,9 @@ NOTE: Un contrôleur de gestion de la carte mère (BMC), parfois appelé process
 Vous configurez les paramètres système à l'aide de la configuration UEFI (anciennement appelée BIOS) ou en utilisant les API Redfish fournies par de nombreux BMCs. Les paramètres système varient en fonction du modèle de serveur utilisé comme nœud de fichier.
 
 +
-Pour savoir comment configurer les paramètres système des nœuds de fichiers Lenovo SR665 validés, reportez-vous à la section link:beegfs-deploy-file-node-tuning.html["Réglez les paramètres du système en fonction des performances"].
+Pour savoir comment configurer les paramètres système pour les nœuds de fichiers Lenovo SR665 V3 validés, consultez link:beegfs-deploy-file-node-tuning.html["Réglez les paramètres du système en fonction des performances"] .
 
-. Installez Red Hat 9.3 et configurez le nom d'hôte et le port réseau utilisés pour gérer le système d'exploitation, y compris la connectivité SSH à partir du nœud de contrôle Ansible.
+. Installez Red Hat Enterprise Linux (RHEL) 9.4 et configurez le nom d’hôte et le port réseau utilisés pour gérer le système d’exploitation, y compris la connectivité SSH à partir du nœud de contrôle Ansible.
 +
 Ne configurez pas d'adresses IP sur l'un des ports InfiniBand pour le moment.
 
@@ -43,7 +43,7 @@ Ne configurez pas d'adresses IP sur l'un des ports InfiniBand pour le moment.
 
 NOTE: Bien qu'il ne soit pas strictement nécessaire, les sections suivantes présument que les noms d'hôte sont numérotés séquentiellement (comme h1-HN) et font référence aux tâches qui doivent être effectuées sur les hôtes impairs et pairs.
 
-. Utilisez RedHat Subscription Manager pour enregistrer et abonner le système afin de permettre l'installation des packages requis à partir des référentiels Red Hat officiels et de limiter les mises à jour à la version prise en charge de Red Hat: `subscription-manager release --set=9.3`. Pour obtenir des instructions, voir https://access.redhat.com/solutions/253273["Comment enregistrer et souscrire un système RHEL"^] et  https://access.redhat.com/solutions/2761031["Comment limiter les mises à jour"^].
+. Utilisez Red Hat Subscription Manager pour enregistrer et abonner le système afin de permettre l'installation des packages requis à partir des référentiels officiels Red Hat et de limiter les mises à jour à la version prise en charge de Red Hat :  `subscription-manager release --set=9.4` . Pour obtenir des instructions, voir https://access.redhat.com/solutions/253273["Comment enregistrer et souscrire un système RHEL"^] et  https://access.redhat.com/solutions/2761031["Comment limiter les mises à jour"^].
 . Activez le référentiel Red Hat contenant les packages requis pour la haute disponibilité.
 +
 ....

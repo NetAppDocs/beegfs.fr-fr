@@ -69,12 +69,17 @@ Le déploiement implique plusieurs tâches générales :
 . link:beegfs-deploy-configure-clients.html["Configurer les clients BeeGFS"].
 
 
+[NOTE]
+====
+Les procédures de déploiement incluent plusieurs exemples où du texte doit être copié dans un fichier. Portez une attention particulière à tous les commentaires en ligne indiqués par les caractères « # » ou « // » pour tout ce qui doit ou peut être modifié pour un déploiement spécifique. Par exemple :
 
-NOTE: Les procédures de déploiement incluent plusieurs exemples où du texte doit être copié dans un fichier. Portez une attention particulière aux commentaires en ligne signalés par les caractères “#” ou “//” pour tout ce qui doit ou peut être modifié pour un déploiement spécifique. Par exemple :
+[source, yaml]
+----
 `beegfs_ha_ntp_server_pools:  # THIS IS AN EXAMPLE OF A COMMENT!
   - "pool 0.pool.ntp.org iburst maxsources 3"
   - "pool 1.pool.ntp.org iburst maxsources 3"`
-
+----
+====
 Architectures dérivées avec variations dans les recommandations de déploiement :
 
 * link:beegfs-design-high-capacity-building-block.html["Élément de base haute capacité"]

@@ -25,7 +25,7 @@ BeeGFS applique un `major.minor.patch` schéma de gestion des versions. Des rôl
 Ansible doit être utilisé pour toutes les mises à niveau de BeeGFS, y compris le déplacement entre les versions principale, secondaire et patch de BeeGFS. Pour mettre à jour BeeGFS, vous devez d'abord mettre à jour la collection BeeGFS Ansible, qui vous permet également d'exploiter les derniers correctifs et les améliorations apportées à l'automatisation du déploiement/gestion et au cluster HA sous-jacent. Même après la mise à jour vers la dernière version de la collection, BeeGFS ne sera pas mis à niveau jusqu'à `ansible-playbook` est exécuté avec le `-e "beegfs_ha_force_upgrade=true"` réglez.
 
 
-NOTE: Pour plus d'informations sur les versions BeeGFS, consultez le link:https://doc.beegfs.io/latest/advanced_topics/upgrade.html["Documentation de mise à niveau BeeGFS"^].
+TIP: Pour plus d'informations sur les versions BeeGFS, consultez le link:https://doc.beegfs.io/latest/advanced_topics/upgrade.html["Documentation de mise à niveau BeeGFS"^].
 
 
 

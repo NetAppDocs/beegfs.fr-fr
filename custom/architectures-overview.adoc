@@ -67,7 +67,7 @@ Ansible gère toutes les tâches de provisionnement et de configuration des logi
 
 La prise en charge de BeeGFS dans Ansible est activée link:https://galaxy.ansible.com/netapp_eseries/beegfs["Galaxy Ansible"] Ensemble de rôles et de modules qui automatisent le déploiement et la gestion de bout en bout des clusters BeeGFS HA.
 
-BeeGFS est également versionné suivant un schéma de gestion des versions <major>.<minor>.<patch> et la collection conserve les rôles pour chaque version <major>.<minor> prise en charge de BeeGFS, par exemple BeeGFS 7.2 ou BeeGFS 7.3. À mesure que les mises à jour de la collection sont publiées, la version patch dans chaque rôle sera mise à jour pour pointer à la dernière version BeeGFS disponible pour cette branche de publication (exemple : 7.2.8). Chaque version de la collection est également testée et prise en charge avec des distributions et versions spécifiques de Linux, actuellement Red Hat pour les nœuds de fichiers, et RedHat et Ubuntu pour les clients. L'exécution d'autres distributions n'est pas prise en charge et l'exécution d'autres versions (en particulier d'autres versions majeures) n'est pas recommandée.
+BeeGFS est également versionné suivant un schéma de gestion des versions <major>.<minor>.<patch> et la collection conserve les rôles pour chaque version <major>.<minor> prise en charge de BeeGFS, par exemple BeeGFS 7.2 ou BeeGFS 7.3. À mesure que les mises à jour de la collection sont publiées, la version patch dans chaque rôle sera mise à jour pour pointer à la dernière version BeeGFS disponible pour cette branche de publication (exemple : 7.2.8). Chaque version de la collection est également testée et prise en charge avec des distributions et versions Linux spécifiques, actuellement Red Hat pour les nœuds de fichiers et Red Hat et Ubuntu pour les clients. L'exécution d'autres distributions n'est pas prise en charge et l'exécution d'autres versions (en particulier d'autres versions majeures) n'est pas recommandée.
 
 
 
@@ -86,7 +86,7 @@ Il est également recommandé d'installer SSH sans mot de passe depuis le nœud 
 
 === Nœuds de fichiers BeeGFS
 
-Les nœuds de fichiers doivent exécuter RedHat 9.3 et avoir accès au référentiel HA contenant les packages requis (stimulateur, corosync, clôture-agents-tous, agents-ressources). Par exemple, la commande suivante peut être exécutée pour activer le référentiel approprié sur RedHat 9 :
+Les nœuds de fichiers doivent exécuter Red Hat Enterprise Linux (RHEL) 9.4 et avoir accès au référentiel HA contenant les packages requis (pacemaker, corosync, fence-agents-all, resource-agents). Par exemple, la commande suivante peut être exécutée pour activer le référentiel approprié sur RHEL 9 :
 
 [source, bash]
 ----
@@ -96,6 +96,6 @@ subscription-manager repo-override repo=rhel-9-for-x86_64-highavailability-rpms 
 
 === Nœuds clients BeeGFS
 
-Un rôle de client BeeGFS Ansible est disponible pour installer le paquet client BeeGFS et gérer le(s) BeeGFS mount(s). Ce rôle a été testé avec RedHat 8.4 et Ubuntu 22.04.
+Un rôle de client BeeGFS Ansible est disponible pour installer le paquet client BeeGFS et gérer le(s) BeeGFS mount(s). Ce rôle a été testé avec RHEL 9.4 et Ubuntu 22.04.
 
 Si vous n'utilisez pas Ansible pour configurer le client BeeGFS et monter BeeGFS, tout link:https://doc.beegfs.io/latest/release_notes.html#supported-linux-distributions-and-kernels["BeeGFS prend en charge la distribution et le noyau Linux"] peut être utilisé.

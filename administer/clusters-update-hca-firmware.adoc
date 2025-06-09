@@ -40,7 +40,7 @@ Ce guide présente deux approches de mise à jour du firmware de la carte Connec
 Il est recommandé d'utiliser l'utilitaire de NVIDIA `mlxfwmanager` pour mettre à jour le micrologiciel de l'adaptateur d'un nœud, qui est fourni avec le pilote MLNX_OFED de NVIDIA. Avant de commencer les mises à jour, téléchargez l'image du micrologiciel de  la carte à partir de link:https://network.nvidia.com/support/firmware/firmware-downloads/["Site de support NVIDIA"^] et stockez-la sur chaque nœud de fichier.
 
 
-NOTE: Pour les cartes Lenovo ConnectX-7, utilisez l' `mlxfwmanager_LES`outil, disponible sur la page NVIDIAlink:https://network.nvidia.com/support/firmware/lenovo-intelligent-cluster/["Micrologiciel OEM"^].
+TIP: Pour les cartes Lenovo ConnectX-7, utilisez l' `mlxfwmanager_LES`outil, disponible sur la page NVIDIAlink:https://network.nvidia.com/support/firmware/lenovo-intelligent-cluster/["Micrologiciel OEM"^].
 
 
 
@@ -101,8 +101,21 @@ mlxfwreset -d <pci_device_name> reset -y
 ----
 systemctl start opensm
 ----
+.. Redémarrez le  `eseries_nvme_ib.service` .
++
+[source, console]
+----
+systemctl restart eseries_nvme_ib.service
+----
+.. Vérifiez que les volumes de la baie de stockage de la série E sont présents.
 
 
+
+
+[listing]
+----
+multipath -ll
+----
 . Exécutez `ibstat` et vérifiez que toutes les cartes fonctionnent avec la version de micrologiciel souhaitée :
 +
 [source, console]

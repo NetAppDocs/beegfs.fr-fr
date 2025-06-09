@@ -26,7 +26,7 @@ Les paramètres de réglage disponibles que vous pouvez configurer sont les suiv
 
 . *Paramètres système dans l'UEFI/BIOS des nœuds de fichiers.* pour optimiser les performances, nous vous recommandons de configurer les paramètres système sur le modèle de serveur que vous utilisez comme nœuds de fichiers. Vous configurez les paramètres système lorsque vous configurez vos nœuds de fichiers à l'aide de la configuration du système (UEFI/BIOS) ou des API Redfish fournies par le contrôleur de gestion de la carte mère (BMC).
 +
-Les paramètres système varient en fonction du modèle de serveur que vous utilisez comme nœud de fichier. Les paramètres doivent être configurés manuellement en fonction du modèle de serveur utilisé. Pour savoir comment configurer les paramètres système des nœuds de fichiers Lenovo SR665 validés, reportez-vous à la section link:beegfs-deploy-file-node-tuning.html["Réglez les paramètres du système de nœud de fichiers en fonction des performances"].
+Les paramètres système varient en fonction du modèle de serveur que vous utilisez comme nœud de fichier. Les paramètres doivent être configurés manuellement en fonction du modèle de serveur utilisé. Pour savoir comment configurer les paramètres système pour les nœuds de fichiers Lenovo SR665 V3 validés, consultez link:beegfs-deploy-file-node-tuning.html["Réglez les paramètres du système de nœud de fichiers en fonction des performances"] .
 
 . *Paramètres par défaut pour les paramètres de configuration requis.* les paramètres de configuration requis affectent la configuration des services BeeGFS et la façon dont les volumes E-Series (dispositifs de bloc) sont formatés et montés par Pacemaker. Voici les paramètres de configuration requis :
 +

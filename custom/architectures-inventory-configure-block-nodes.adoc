@@ -54,7 +54,7 @@ eseries_initiator_protocol: <PROTOCOL>
 . Selon le protocole utilisé, les ports HIC peuvent nécessiter des configurations supplémentaires. Si nécessaire, la configuration du port HIC doit être définie de sorte que l'entrée supérieure de la configuration de chaque contrôleur corresponde au port physique le plus à gauche de chaque contrôleur et au port inférieur le plus à droite. Tous les ports nécessitent une configuration valide même s'ils ne sont pas actuellement utilisés.
 +
 
-IMPORTANT: Reportez-vous également à la section ci-dessous si vous utilisez des nœuds de bloc EF600 (InfiniBand 200 Go) ou RoCE 200 Go avec les nœuds de bloc EF600.
+NOTE: Reportez-vous également à la section ci-dessous si vous utilisez des nœuds de bloc EF600 (InfiniBand 200 Go) ou RoCE 200 Go avec les nœuds de bloc EF600.
 
 +
 .. Pour iSCSI :

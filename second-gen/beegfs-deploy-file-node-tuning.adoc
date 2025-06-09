@@ -22,7 +22,7 @@ Les paramètres système varient en fonction du modèle de serveur que vous util
 
 == Utilisez l'interface UEFI pour régler les paramètres du système
 
-Le micrologiciel système du serveur Lenovo SR665 contient de nombreux paramètres de réglage qui peuvent être définis via l'interface UEFI. Ces paramètres de réglage peuvent affecter tous les aspects du fonctionnement du serveur et de son fonctionnement.
+Le micrologiciel système du serveur Lenovo SR665 V3 contient de nombreux paramètres de réglage qui peuvent être définis via l'interface UEFI. Ces paramètres de réglage peuvent affecter tous les aspects du fonctionnement du serveur et de son fonctionnement.
 
 Sous *Configuration UEFI > Paramètres système*, réglez les paramètres système suivants :
 

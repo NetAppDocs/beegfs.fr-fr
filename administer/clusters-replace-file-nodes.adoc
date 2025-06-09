@@ -50,7 +50,7 @@ all:
 . Depuis un des autres nœuds du cluster, supprimer l'ancien nœud : `pcs cluster node remove <HOSTNAME>`.
 +
 
-IMPORTANT: NE PAS POURSUIVRE AVANT D'EXÉCUTER CETTE ÉTAPE.
+CAUTION: NE PAS POURSUIVRE AVANT D'EXÉCUTER CETTE ÉTAPE.
 
 . Sur le nœud de contrôle Ansible :
 +

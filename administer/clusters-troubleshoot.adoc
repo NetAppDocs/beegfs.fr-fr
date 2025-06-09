@@ -246,7 +246,7 @@ Si l'escrime est activé et que la ressource n'a pas été bloquée pour s'arrê
 . Vérifiez que le nœud est réellement hors tension.
 +
 
-IMPORTANT: Si le nœud que vous spécifiez n'est pas réellement arrêté, mais que vous exécutez les services ou les ressources du cluster, une corruption des données ou une défaillance du cluster se produit.
+CAUTION: Si le nœud que vous spécifiez n'est pas réellement arrêté, mais que vous exécutez les services ou les ressources du cluster, une corruption des données ou une défaillance du cluster se produit.
 
 . Confirmer manuellement l'escrime avec : `pcs stonith confirm <NODE>`
 
@@ -264,7 +264,7 @@ IMPORTANT: Si le nœud que vous spécifiez n'est pas réellement arrêté, mais 
 Normalement, si un service BeeGFS doit être redémarré (par exemple pour faciliter une modification de la configuration), il doit être fait en mettant à jour l'inventaire Ansible et en exécutant de nouveau le manuel de vente. Dans certains cas, il peut être souhaitable de redémarrer des services individuels pour accélérer le dépannage, par exemple pour modifier le niveau de journalisation sans avoir à attendre l'exécution du manuel de vente dans son intégralité.
 
 
-IMPORTANT: Sauf si des modifications manuelles sont également ajoutées à l'inventaire Ansible, elles seront rétablies au prochain exécution du PlayBook Ansible.
+CAUTION: Sauf si des modifications manuelles sont également ajoutées à l'inventaire Ansible, elles seront rétablies au prochain exécution du PlayBook Ansible.
 
 
 
