@@ -141,7 +141,7 @@ Pour assurer des performances et une fiabilité prévisibles, les versions de la
  a| 
 Micrologiciel HCA
  a| 
-*Micrologiciel ConnectX-7 HCA* Micrologiciel : 28.43.1014 + PXE : 3.7.0500 + UEFI : 14.36.0016
+*Micrologiciel ConnectX-7 HCA* Micrologiciel : 28.45.1200 + PXE : 3.7.0500 + UEFI : 14.38.0016
 
 *Micrologiciel ConnectX-6 HCA* Micrologiciel : 20.43.2566 + PXE : 3.7.0500 + UEFI : 14.37.0013
 
@@ -155,7 +155,7 @@ Micrologiciel HCA
 | Logiciel | Version 
 
 
-| SANtricity OS | 11.90R1 
+| SANtricity OS | 11.90R3 
 
 
 | NVSRAM | N6000-890834-D02.dlp 
