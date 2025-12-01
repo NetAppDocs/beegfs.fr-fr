@@ -1,0 +1,97 @@
+---
+sidebar: sidebar 
+permalink: deploy-features-integration/beegfs-csi-driver/csi-driver-verify.html 
+keywords: BeeGFS Features, CSI, Driver 
+summary: Vérification du déploiement du pilote BeeGFS CSI. 
+---
+= Vérification du déploiement du pilote BeeGFS CSI
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Pour vérifier que le pilote CSI BeeGFS a été déployé avec succès, vérifiez l'état des pods du pilote CSI et assurez-vous qu'ils fonctionnent comme prévu.
+
+Pour vérifier l'état de toutes les ressources dans l'espace de noms BeeGFS-CSI, exécutez :
+
+[source, console]
+----
+kubectl get all -n beegfs-csi
+----
+**Résultat attendu :**
+
+[listing]
+----
+NAME                          READY    STATUS      RESTARTS    AGE
+pod/csi-beegfs-controller-0   3/3      Running     0           5d11h
+pod/csi-beegfs-node-8f917     3/3      Running     0           5d11h
+----
+
+
+== Inspecter le module de contrôle
+
+Pour diagnostiquer les problèmes ou obtenir plus de détails sur le pod BeeGFS CSI Controller, utilisez la commande suivante pour décrire le pod et consulter ses événements, son état et son activité récente :
+
+[source, console]
+----
+kubectl describe pod csi-beegfs-controller-0 -n beegfs-csi
+----
+**Résultat attendu :**
+
+[listing]
+----
+Events:
+
+  Type     Reason     Age                  From               Message
+  ----     ------     ----                 ----               -------
+  Normal   Scheduled  117s                 default-scheduler  Successfully assigned beegfs-csi/csi-beegfs-controller-0 to node01
+  Normal   Pulled     117s                 kubelet            Container image "registry.k8s.io/sig-storage/csi-provisioner:v3.5.0" already present on machine
+  Normal   Created    117s                 kubelet            Created container: csi-provisioner
+  Normal   Started    117s                 kubelet            Started container csi-provisioner
+  Normal   Started    101s (x3 over 117s)  kubelet            Started container beegfs
+  Normal   Pulled     86s (x2 over 117s)   kubelet            Container image "registry.k8s.io/sig-storage/csi-resizer:v1.11.1" already present on machine
+  Normal   Created    86s (x2 over 117s)   kubelet            Created container: csi-resizer
+  Normal   Started    86s (x2 over 117s)   kubelet            Started container csi-resizer
+  Warning  BackOff    85s (x5 over 115s)   kubelet            Back-off restarting failed container beegfs in pod csi-beegfs-controller-0_beegfs-csi(47016fd3-3a2a-41ed-bc4c-5a716c377b1e)
+  Normal   Pulled     73s (x4 over 117s)   kubelet            Container image "ghcr.io/thinkparq/beegfs-csi-driver:v1.7.0" already present on machine
+  Normal   Created    73s (x4 over 117s)   kubelet            Created container: beegfs
+----
+
+
+== Vérifier la classe de stockage
+
+. Vérifiez que la StorageClass a bien été créée :
++
+[source, console]
+----
+kubectl get sc
+----
++
+**Résultat attendu :**
+
++
+[listing]
+----
+root@node01:/home/user_id/beegfs-csi-driver# kubectl get sc
+NAME                PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
+csi-beegfs-dyn-sc   beegfs.csi.org.com   Delete          Immediate           true                   17s
+----
+. Vérifiez que le volume BeeGFS est monté comme prévu.
++
+Vérifiez le répertoire spécifié comme `volDirBasePath` dans `examples/k8s/dyn/dyn-sc.yaml` apparaît sous `/mnt/beegfs` .
+
++
+Par exemple, si `volDirBasePath` est réglé sur `user_id_k8s` , vous devriez voir ce répertoire dans la liste :
+
++
+[source, console]
+----
+root@node01:/# ls -ltr /mnt/beegfs/
+total 1
+drwxrwxrwx 4 root root 2 Oct 15 10:16 user_id_k8s
+----
+

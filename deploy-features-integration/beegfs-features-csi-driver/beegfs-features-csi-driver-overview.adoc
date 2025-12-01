@@ -1,0 +1,33 @@
+---
+sidebar: sidebar 
+permalink: deploy-features-integration/beegfs-csi-driver/csi-driver-overview.html 
+keywords: BeeGFS Features, CSI, Driver 
+summary: Présentation et configuration du pilote CSI BeeGFS. 
+---
+= Configuration du pilote CSI BeeGFS
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Le pilote BeeGFS CSI permet aux clusters Kubernetes de provisionner et de gérer dynamiquement les volumes BeeGFS, intégrant ainsi le stockage BeeGFS haute performance aux charges de travail conteneurisées.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Un"]S'assurer que toutes les conditions préalables sont remplies
+[role="quick-margin-para"]
+Vérifiez les prérequis pour vous assurer que vous disposez d'un cluster Kubernetes en fonctionnement, d'une connectivité au cluster BeeGFS et des autorisations nécessaires pour installer les ressources à l'échelle du cluster.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Deux"]Déployer le pilote CSI BeeGFS
+[role="quick-margin-para"]
+Clonez le dépôt du pilote BeeGFS CSI et déployez le pilote à l'aide des manifestes ou des superpositions Kubernetes fournis.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Trois"]Vérifier le déploiement
+[role="quick-margin-para"]
+Vérifiez que tous les composants du pilote BeeGFS CSI sont installés et opérationnels en inspectant les pods Kubernetes concernés.  Résolvez tout problème éventuel, comme les conflits de planification des nœuds ou l'activation du swap sur les nœuds.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Quatre"]Déployer et valider des exemples d'applications
+[role="quick-margin-para"]
+Appliquez les exemples de manifestes Kubernetes et vérifiez que les charges de travail peuvent accéder au stockage BeeGFS comme prévu.
