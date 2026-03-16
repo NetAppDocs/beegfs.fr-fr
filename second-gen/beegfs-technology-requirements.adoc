@@ -79,23 +79,6 @@ Chaque élément de base nécessite deux matrices E-Series du même modèle. Ne 
 | Quantité | Modèle | Caractéristiques 
 
 
-| 2 | EF80  a| 
-*Matériel :*
-
-* *Mémoire :* 128GB (64GB par controller)
-* *Adaptateur :* 2x 2 ports 200 Gb/NDR (NVMe/IB)
-* *Disques :* Configurés pour correspondre aux métadonnées souhaitées et à la capacité de stockage
-
-
-*Micrologiciel :*
-
-* *SANtricity OS :* 12.00
-* *NVSRAM :* NEF80-200834-D00
-* *Micrologiciel du disque :* Dernière version disponible pour vos modèles de disque (voir link:https://mysupport.netapp.com/site/downloads/firmware/e-series-disk-firmware["Site du firmware du disque E-Series"^])
-
-
-
-
 | 2 | EF600  a| 
 *Matériel :*
 
@@ -107,7 +90,7 @@ Chaque élément de base nécessite deux matrices E-Series du même modèle. Ne 
 *Micrologiciel :*
 
 * *SANtricity OS :* 11.90R5
-* *NVSRAM :* N6000-890834-D02
+* *NVSRAM :* N6000-890834-D03
 * *Micrologiciel du disque :* Dernière version disponible pour vos modèles de disque (voir link:https://mysupport.netapp.com/site/downloads/firmware/e-series-disk-firmware["Site du firmware du disque E-Series"^])
 
 
