@@ -25,7 +25,7 @@ BeeGFS applique un `major.minor.patch` schéma de gestion des versions. Des rôl
 Ansible doit être utilisé pour toutes les mises à niveau de BeeGFS, y compris le passage entre les versions majeure, mineure et corrective de BeeGFS. Pour mettre à jour BeeGFS, vous devrez d'abord mettre à jour la collection Ansible BeeGFS, ce qui intégrera également les derniers correctifs et améliorations de l'automatisation du déploiement/gestion et du cluster HA sous-jacent. Même après la mise à jour vers la dernière version de la collection, BeeGFS ne sera pas mis à niveau tant que  `ansible-playbook` n'aura pas été exécuté avec l' `-e "beegfs_ha_force_upgrade=true"` activé. Pour plus de détails sur chaque mise à niveau, consultez la link:https://doc.beegfs.io/latest/advanced_topics/upgrade.html["Documentation de mise à niveau BeeGFS"^] pour votre version actuelle.
 
 
-NOTE: Si vous effectuez une mise à niveau vers BeeGFS v8, consultez plutôt la link:clusters-upgrade-beegfs-v8.html["Mise à jour vers BeeGFS v8"]procédure.
+NOTE: Si vous effectuez une mise à niveau vers BeeGFS 8, consultez plutôt la link:clusters-upgrade-beegfs-v8.html["Mise à niveau vers BeeGFS 8"]procédure.
 
 
 
@@ -59,13 +59,13 @@ Les voies de mise à niveau suivantes ont été testées et vérifiées :
 | 7.4.2 | 7.4.6 | Oui. | Mise à niveau avec beegfs collection v3.2.0 
 
 
-| 7.4.6 | 8,0 | Oui. | Mettez à niveau en suivant les instructions dans la link:clusters-upgrade-beegfs-v8.html["Mise à jour vers BeeGFS v8"] procédure. 
+| 7.4.6 | 8,0 | Oui. | Mettez à niveau en suivant les instructions dans la link:clusters-upgrade-beegfs-v8.html["Mise à niveau vers BeeGFS 8"] procédure. 
 
 
-| 7.4.6 | 8,1 | Oui. | Mettez à niveau en suivant les instructions dans la link:clusters-upgrade-beegfs-v8.html["Mise à jour vers BeeGFS v8"] procédure. 
+| 7.4.6 | 8,1 | Oui. | Mettez à niveau en suivant les instructions dans la link:clusters-upgrade-beegfs-v8.html["Mise à niveau vers BeeGFS 8"] procédure. 
 
 
-| 7.4.6 | 8,2 | Oui. | Mettez à niveau en suivant les instructions dans la link:clusters-upgrade-beegfs-v8.html["Mise à jour vers BeeGFS v8"] procédure. 
+| 7.4.6 | 8,2 | Oui. | Mettez à niveau en suivant les instructions dans la link:clusters-upgrade-beegfs-v8.html["Mise à niveau vers BeeGFS 8"] procédure. 
 |===
 
 

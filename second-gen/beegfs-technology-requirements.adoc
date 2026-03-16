@@ -18,82 +18,140 @@ Pour implémenter la solution BeeGFS sur NetApp, assurez-vous que votre environn
 
 
 
+== Aperçu des exigences
+
+Cette page détaille les exigences matérielles, logicielles et micrologicielles pour la mise en œuvre de BeeGFS sur NetApp éléments de base. Les exigences sont organisées dans les sections suivantes :
+
+* <<Configuration matérielle requise>> - Nœuds de fichiers (matériel/logiciel/micrologiciel), nœuds de blocs (matériel/micrologiciel), réseau et câblage
+* <<Configuration requise pour le déploiement de logiciels>> - Composants déployés par Ansible
+* <<Configuration requise pour le nœud de contrôle Ansible>> - Versions logicielles du nœud de contrôle
+
+
+
+
 == Configuration matérielle requise
 
-Avant de commencer, assurez-vous que votre matériel répond aux spécifications suivantes pour un design modulaire deuxième génération de la solution BeeGFS sur NetApp. Les composants exacts d'un déploiement particulier peuvent varier en fonction des besoins du client.
+Avant de commencer, assurez-vous que votre matériel respecte les spécifications suivantes pour un seul élément de base de la solution BeeGFS sur NetApp. Les composants exacts d'un déploiement particulier peuvent varier selon les exigences du client. Chaque nœud de fichiers doit respecter ou dépasser ces spécifications pour atteindre les performances attendues.
+
+
+
+=== Configuration requise pour les nœuds de fichiers
+
+[cols="10%,90%"]
+|===
+| Quantité | Caractéristiques 
+
+
+| 2  a| 
+*Lenovo ThinkSystem SR665 V3*
+
+*Matériel :*
+
+* *Processeurs :* 2x AMD EPYC 9124 16C 3.0 GHz (configurés en deux zones NUMA)
+* *Mémoire :* 256 Go (16 x 16 Go TruDDR5 4800 MHz RDIMM-A)
+* *Extension PCIe :* quatre emplacements PCIe Gen5 x16 (deux par zone NUMA)
+* *Cartes HCA :* 4x MCX755106AS-HEAT ConnectX-7, NDR200, QSFP112, 2 ports, PCIe Gen5 x16, InfiniBand Adapter
+* *Stockage :* Deux disques en RAID 1 pour le système d’exploitation (1TB 7.2K SATA ou mieux)
+* *Gestion :* port 1 GbE pour la gestion du système d’exploitation en bande
+* *BMC :* BMC 1GbE avec API Redfish pour la gestion hors bande du serveur
+* *Alimentation :* Deux alimentations remplaçables à chaud et ventilateurs haute performance
+
+
+*Logiciels et micrologiciels*
+
+* *Système d'exploitation :* Red Hat 9.4 Server Physical avec haute disponibilité (2 socket)
+* *Noyau Linux :* 5.14.0-427.42.1.el9_4.x86_64
+* *Firmware HCA :* FW: 28.46.1006, PXE: 3.8.0100, UEFI: 14.39.0013
+
+
+|===
+
+IMPORTANT: Les nœuds de fichiers nécessitent un abonnement valide à Red Hat Enterprise Linux Server et au Red Hat Enterprise Linux High Availability Add-On.
+
+
+
+=== Exigences relatives aux nœuds de bloc
+
+Chaque élément de base nécessite deux matrices E-Series du même modèle. Ne mélangez pas les modèles de matrices au sein d'un même élément de base.
 
 [cols="10%,20%,70%"]
 |===
-| Quantité | Composant matériel | De formation 
+| Quantité | Modèle | Caractéristiques 
 
 
- a| 
-2
- a| 
-Nœuds de fichiers BeeGFS
- a| 
-Pour atteindre les performances attendues, chaque nœud de fichier doit satisfaire ou dépasser les spécifications des nœuds de fichiers recommandés.
+| 2 | EF80  a| 
+*Matériel :*
 
-*Options de noeud de fichier recommandées :*
+* *Mémoire :* 128GB (64GB par controller)
+* *Adaptateur :* 2x 2 ports 200 Gb/NDR (NVMe/IB)
+* *Disques :* Configurés pour correspondre aux métadonnées souhaitées et à la capacité de stockage
 
-* *Lenovo ThinkSystem SR665 V3*
-+
-** *Processeurs:* 2x AMD EPYC 9124 16C 3.0 GHz (configurés comme deux zones NUMA).
-** *Mémoire :* 256 Go (16 x 16 Go TruDDR5 4800 MHz RDIMM-A)
-** *Extension PCIe :* quatre emplacements PCIe Gen5 x16 (deux par zone NUMA)
-** *Divers:*
-+
-*** Deux disques en RAID 1 pour le système d'exploitation (1 To 7200 tr/min SATA)
-*** Port 1 GbE pour la gestion du système d'exploitation intrabande
-*** BMC 1GbE avec API Redfish pour la gestion des serveurs hors bande
-*** Deux blocs d'alimentation remplaçables à chaud et ventilateurs haute performance
+
+*Micrologiciel :*
+
+* *SANtricity OS :* 12.00
+* *NVSRAM :* NEF80-200834-D00
+* *Micrologiciel du disque :* Dernière version disponible pour vos modèles de disque (voir link:https://mysupport.netapp.com/site/downloads/firmware/e-series-disk-firmware["Site du firmware du disque E-Series"^])
 
 
 
 
+| 2 | EF600  a| 
+*Matériel :*
+
+* *Mémoire :* 256 Go (128 Go par contrôleur)
+* *Adaptateur :* 2-port 200Gb/HDR (NVMe/IB)
+* *Disques :* Configurés pour correspondre aux métadonnées souhaitées et à la capacité de stockage
 
 
+*Micrologiciel :*
 
-
-| 2 | Nœuds de bloc E-Series (baie EF600)  a| 
-*Mémoire :* 256 Go (128 Go par contrôleur). *Adaptateur :* 2 ports 200 Go/HDR (NVMe/IB). *Lecteurs :* configurés pour correspondre aux métadonnées et à la capacité de stockage souhaitées.
-
-
-
-| 8 | Adaptateurs de carte hôte InfiniBand (pour les nœuds de fichiers).  a| 
-Les adaptateurs de carte hôte peuvent varier en fonction du modèle de serveur du nœud de fichier. Recommandations pour les nœuds de fichiers vérifiés :
-
-* *Lenovo ThinkSystem SR665 V3 Server:*
-+
-** MCX755106AS-HEAT ConnectX-7, NDR200, QSFP112, 2 ports, PCIe Gen5 x16, adaptateur InfiniBand
-
-
-
-
-
-
-| 1 | Switch réseau de stockage  a| 
-Le commutateur du réseau de stockage doit offrir une vitesse InfiniBand 200 Gbit/s. Modèles de commutateurs recommandés :
-
-* *Commutateur NVIDIA QM9700 Quantum 2 NDR InfiniBand*
-* *Commutateur NVIDIA MQM8700 Quantum HDR InfiniBand*
+* *SANtricity OS :* 11.90R5
+* *NVSRAM :* N6000-890834-D02
+* *Micrologiciel du disque :* Dernière version disponible pour vos modèles de disque (voir link:https://mysupport.netapp.com/site/downloads/firmware/e-series-disk-firmware["Site du firmware du disque E-Series"^])
 
 
 |===
+
+
+=== Exigences relatives aux commutateurs de réseau de stockage
+
+[cols="10%,90%"]
+|===
+| Quantité | Caractéristiques 
+
+
+| 1  a| 
+*Commutateur NVIDIA QM9700 Quantum 2 NDR InfiniBand*
+
+Le commutateur réseau de stockage doit supporter des vitesses de 200Gb/s InfiniBand. Le NVIDIA QM9700 est le commutateur recommandé pour le cluster.
+
+|===
+
+NOTE: D'autres commutateurs, tels que le NVIDIA MQM8700 Quantum, peuvent être utilisés mais nécessitent un câblage différent.
+
 
 
 === Exigences de câblage
 
-*Connexions directes des nœuds de bloc aux nœuds de fichier.*
 
-[cols="10%,70%,20%"]
+
+==== Câbles du nœud bloc au nœud fichier
+
+Les connexions directes entre les nœuds de blocs et les nœuds de fichiers nécessitent les câbles suivants :
+
+[cols="15%,60%,25%"]
 |===
-| Quantité | Référence | Longueur 
+| Quantité | Spécification du câble | Longueur 
 
 
-| 8 | MCP1650-H001E30 (câble en cuivre passif NVIDIA, QSFP56, 200 Gbit/s) | 1 m 
+| 8 | MCP1650-H001E30 - Câble cuivre passif NVIDIA, QSFP56, 200 Gb/s | 1 m 
 |===
-*Connexions entre les nœuds de fichiers et le commutateur de réseau de stockage.* Sélectionnez l'option de câble appropriée dans le tableau suivant en fonction de votre commutateur de stockage InfiniBand. + la longueur de câble recommandée est de 2 M. toutefois, elle peut varier en fonction de l'environnement du client.
+
+
+==== Câbles du nœud de fichiers au commutateur de stockage
+
+Les types de câbles suivants sont recommandés pour le commutateur NVIDIA QM9700 Quantum 2. Choisissez entre fibre optique active et cuivre passif selon vos besoins. Les quantités sont indiquées par élément de base.
 
 [cols="20%,15%,10%,55%"]
 |===
@@ -110,58 +168,6 @@ Le commutateur du réseau de stockage doit offrir une vitesse InfiniBand 200 Gbi
 
 
 | Cuivre passif | 2 | MCP7Y40-N002 (câble répartiteur en cuivre passif NVIDIA, InfiniBand 800 Go/s à 4 200 Go/s, OSFP à 4 x QSFP112) 
-
-
-.2+| NVIDIA MQM8700 | Fibre active | 8 | MFS1S00-H003E (câble fibre active NVIDIA, InfiniBand 200 Gbit/s, QSFP56) 
-
-
-| Cuivre passif | 8 | MCP1650-H002E26 (câble en cuivre passif NVIDIA, InfiniBand 200 Gbit/s, QSFP56) 
-|===
-
-
-== Configuration logicielle et firmware requise
-
-Pour assurer des performances et une fiabilité prévisibles, les versions de la solution BeeGFS sur NetApp sont testées avec des versions spécifiques des composants logiciels et de firmware. Ces versions sont requises pour l'implémentation de la solution.
-
-
-
-=== Configuration requise pour les nœuds de fichiers
-
-[cols="20%,80%"]
-|===
-| Logiciel | Version 
-
-
-| Red Hat Enterprise Linux (RHEL) | Serveur physique RHEL 9.4 avec haute disponibilité (2 sockets). *Remarque :* les nœuds de fichiers nécessitent un abonnement Red Hat Enterprise Linux Server valide et le module complémentaire Red Hat Enterprise Linux High Availability. 
-
-
-| Noyau Linux | 5.14.0-427.42.1.el9_4.x86_64 
-
-
- a| 
-Micrologiciel HCA
- a| 
-*Micrologiciel ConnectX-7 HCA* Micrologiciel : 28.45.1200 + PXE : 3.7.0500 + UEFI : 14.38.0016
-
-*Micrologiciel ConnectX-6 HCA* Micrologiciel : 20.43.2566 + PXE : 3.7.0500 + UEFI : 14.37.0013
-
-|===
-
-
-=== Exigences liées aux nœuds en mode bloc EF600
-
-[cols="20%,80%"]
-|===
-| Logiciel | Version 
-
-
-| SANtricity OS | 11.90R3 
-
-
-| NVSRAM | N6000-890834-D02.dlp 
-
-
-| Micrologiciel de lecteur | Dernière version disponible pour les modèles de lecteurs utilisés. Voir la link:https://mysupport.netapp.com/site/downloads/firmware/e-series-disk-firmware["Site du firmware du disque E-Series"^]. 
 |===
 
 
@@ -174,7 +180,7 @@ Le tableau suivant répertorie les exigences logicielles déployées automatique
 | Logiciel | Version 
 
 
-| BeeGFS | 7.4.6 
+| BeeGFS | 8.2.2 
 
 
 | Corosync | 3.1.8-1 
@@ -183,13 +189,10 @@ Le tableau suivant répertorie les exigences logicielles déployées automatique
 | Stimulateur cardiaque | 2.1.7-5,2 
 
 
-| PCS | 0.11.7-2 
-
-
 | Agents de clôture (sébaste/apc) | 4.10.0-62 
 
 
-| Pilotes InfiniBand / RDMA | MLNX_OFED_LINUX-23.10-3.2.2.1-LTS 
+| Pilotes InfiniBand / RDMA | DOCA-OFED-25.04-0.6.1 
 |===
 
 
@@ -204,17 +207,14 @@ Les exigences logicielles répertoriées dans les tableaux suivants sont spécif
 | Logiciel | Version 
 
 
-| Ansible | 10.x 
+| Cœur Ansible | >= 2.19.0 
 
 
-| Cœur Ansible | >= 2.13.0 
+| Python | 3,12 
 
 
-| Python | 3,10 
+| Packs Python supplémentaires | Cryptography-46.0.3, netaddr-1.3.0, ipaddr-2.2.0 
 
 
-| Packs Python supplémentaires | Cryptographie-43.0.0, netaddr-1.3.0, ipaddr-2.2.0 
-
-
-| Collection Ansible NetApp E-Series BeeGFS | 3.2.0 
+| Collection Ansible NetApp E-Series BeeGFS | 4.0.0 
 |===
