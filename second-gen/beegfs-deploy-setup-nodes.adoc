@@ -49,7 +49,7 @@ NOTE: Bien qu'il ne soit pas strictement nécessaire, les sections suivantes pr�
 ....
 subscription-manager repo-override --repo=rhel-9-for-x86_64-highavailability-rpms --add=enabled:1
 ....
-. Mettez à jour tous les micrologiciels HCA à la version recommandée dans le link:beegfs-technology-requirements.html["Exigences technologiques"]Guide d'utilisationlink:..administer/clusters-update-hca-firmware.html["Mettez à jour le micrologiciel de l'adaptateur de nœud de fichier"^].
+. Mettez à jour tous les firmwares HCA vers la version recommandée dans link:beegfs-technology-requirements.html["Exigences technologiques"] en utilisant le guide link:../administer/clusters-update-hca-firmware.html["Mettez à jour le micrologiciel de l'adaptateur de nœud de fichier"^].
 
 
 

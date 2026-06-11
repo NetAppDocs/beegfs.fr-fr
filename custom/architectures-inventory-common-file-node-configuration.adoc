@@ -202,7 +202,7 @@ CAUTION: Pour éviter les conflits lorsque les interfaces sont renommées (les e
 
 +
 
-NOTE: Si vous utilisez un modèle de nœud de fichier vérifié, cliquez sur link:https://docs.netapp.com/us-en/beegfs/beegfs-deploy-create-inventory.html#step-4-define-configuration-that-should-apply-to-all-file-nodes["ici"^] Exemples de mappages de port adresse PCIe vers port logique.
+NOTE: Si vous utilisez un modèle de nœud de fichier vérifié, cliquez link:https://docs.netapp.com/us-en/beegfs/second-gen/beegfs-deploy-create-inventory.html#step-4-define-configuration-that-should-apply-to-all-file-nodes["ici"^] pour voir, par exemple, les correspondances entre adresses PCIe et ports logiques.
 
 
 
@@ -255,7 +255,7 @@ beegfs_ha_conn_auth_enabled: false
 
 
 
-Cliquez sur link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/group_vars/ha_cluster.yml["ici"^] par exemple, un fichier d'inventaire complet représentant la configuration de nœud de fichier commune.
+Cliquez link:https://github.com/NetApp/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/H2_DAC_IB_A2_EF600/beegfs_cluster_building_blocks/beegfs_ha_building_block_cluster_1/group_vars/ha_cluster.yml["ici"^] pour afficher un exemple de fichier d'inventaire complet représentant la configuration d'un nœud de fichier commun.
 
 
 

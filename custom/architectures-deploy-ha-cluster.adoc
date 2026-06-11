@@ -120,7 +120,7 @@ NOTE: Un rôle BeeGFS HA est maintenu pour chaque version majeure.mineure de Bee
 . Facultatif : si vous souhaitez définir d'autres tâches, n'oubliez pas si les tâches doivent être dirigées vers `all` Hôtes (y compris les systèmes de stockage E-Series) ou uniquement les nœuds de fichiers. Si nécessaire, définissez une nouvelle lecture ciblant spécifiquement les nœuds de fichiers à l'aide de `- hosts: ha_cluster`.
 
 
-Cliquez sur link:https://github.com/netappeseries/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/playbook.yml["ici"^] par exemple de fichier playbook complet.
+Cliquez link:https://github.com/NetApp/beegfs/blob/master/getting_started/beegfs_on_netapp/gen2/H2_DAC_IB_A2_EF600/beegfs_cluster_building_blocks/beegfs_ha_playbook.yml["ici"^] pour voir un exemple de fichier de playbook complet.
 
 
 
