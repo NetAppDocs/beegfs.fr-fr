@@ -18,16 +18,19 @@ Déplacement des services BeeGFS entre les nœuds du cluster.
 
 
 
+[[overview]]
 == Présentation
 
 Les services BeeGFS peuvent basculer entre les nœuds du cluster pour s'assurer que les clients sont en mesure de continuer à accéder au système de fichiers en cas de défaillance d'un nœud ou si vous devez effectuer une maintenance planifiée. Cette section décrit différentes méthodes permettant aux administrateurs d'effectuer une réparation sur le cluster après une reprise d'activité ou de déplacer manuellement les services entre les nœuds.
 
 
 
+[[steps]]
 == Étapes
 
 
 
+[[failover-and-failback]]
 === Basculement et rétablissement
 
 
@@ -89,6 +92,7 @@ pcs resource relocate run
 ----
 
 
+[[moving-individual-beegfs-services-to-alternate-file-nodes]]
 === Déplacement de services BeeGFS individuels vers d'autres nœuds de fichiers
 
 

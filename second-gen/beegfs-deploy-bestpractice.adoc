@@ -18,6 +18,7 @@ Suivez les bonnes pratiques pour déployer la solution BeeGFS sur NetApp.
 
 
 
+[[standard-conventions]]
 == Conventions standard
 
 Lors du montage physique et de la création du fichier d'inventaire Ansible, respecter les conventions standard suivantes (pour plus d'informations, voir link:beegfs-deploy-create-inventory.html["Créez l'inventaire Ansible"]).
@@ -45,12 +46,14 @@ L'objectif est de réduire la longueur du câble qui passe en haut des commutate
 
 
 
+[[infiniband-storage-network-configuration]]
 == Configuration du réseau de stockage InfiniBand
 
 Moitié des ports InfiniBand sur chaque nœud de fichiers sont utilisés pour se connecter directement aux nœuds de bloc. L'autre moitié est connectée aux commutateurs InfiniBand et est utilisée pour la connectivité client-serveur BeeGFS. Pour déterminer la taille des sous-réseaux IPoIB utilisés pour les clients et les serveurs BeeGFS, vous devez tenir compte de la croissance prévue de votre cluster Compute/GPU et de votre système de fichiers BeeGFS. Si vous devez vous écarter des plages IP recommandées, n'oubliez pas que chaque connexion directe d'un bloc de construction unique possède un sous-réseau unique et qu'il n'y a pas de chevauchement avec les sous-réseaux utilisés pour la connectivité client-serveur.
 
 
 
+[[direct-connects]]
 === Connexions directes
 
 Les nœuds de fichiers et de blocs dans chaque bloc de construction utilisent toujours les adresses IP du tableau suivant pour leurs connexions directes.
@@ -87,6 +90,7 @@ NOTE: Ce schéma d'adressage adhère à la règle suivante : le troisième octet
 |===
 
 
+[[beegfs-client-server-ipoib-addressing-schemes]]
 === Schémas d'adressage IPoIB client-serveur BeeGFS
 
 Chaque nœud de fichier exécute plusieurs services BeeGFS Server (gestion, métadonnées ou stockage). Pour permettre à chaque service de basculer de manière indépendante vers l'autre nœud de fichiers, chaque service est configuré avec des adresses IP uniques qui peuvent basculer entre les deux nœuds (parfois appelées interfaces logiques ou LIF).

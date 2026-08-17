@@ -18,12 +18,14 @@ Procédez comme suit pour mettre à jour les cartes ConnectX-7 du nœud de fichi
 
 
 
+[[overview]]
 == Présentation
 
 La mise à jour du firmware de l'adaptateur ConnectX-7 peut être nécessaire pour prendre en charge un nouveau pilote MLNX_OFED, activer de nouvelles fonctionnalités ou corriger des bogues. Ce guide utilisera l'utilitaire NVIDIA `mlxfwmanager` pour les mises à jour de la carte en raison de sa facilité d'utilisation et de son efficacité.
 
 
 
+[[upgrade-considerations]]
 == Mise à niveau
 
 Ce guide présente deux approches de mise à jour du firmware de la carte ConnectX-7 : une mise à jour en continu et une mise à jour de cluster à deux nœuds. Choisissez l'approche de mise à jour appropriée en fonction de la taille de votre cluster. Avant d'effectuer les mises à jour du micrologiciel, vérifiez que :
@@ -35,6 +37,7 @@ Ce guide présente deux approches de mise à jour du firmware de la carte Connec
 
 
 
+[[firmware-update-preparation]]
 == Préparation de la mise à jour du micrologiciel
 
 Il est recommandé d'utiliser l'utilitaire de NVIDIA `mlxfwmanager` pour mettre à jour le micrologiciel de l'adaptateur d'un nœud, qui est fourni avec le pilote MLNX_OFED de NVIDIA. Avant de commencer les mises à jour, téléchargez l'image du micrologiciel de  la carte à partir de link:https://network.nvidia.com/support/firmware/firmware-downloads/["Site de support NVIDIA"^] et stockez-la sur chaque nœud de fichier.
@@ -44,6 +47,7 @@ TIP: Pour les cartes Lenovo ConnectX-7, utilisez l' `mlxfwmanager_LES`outil, dis
 
 
 
+[[rolling-update-approach]]
 == Approche de mise à jour par roulement
 
 Cette approche est recommandée pour tout cluster haute disponibilité de plus de deux nœuds. Cette approche implique de mettre à jour le firmware des adaptateurs sur un nœud de fichiers à la fois afin que le cluster haute disponibilité puisse continuer à traiter les demandes, bien qu'il soit recommandé d'éviter de traiter les E/S pendant ce temps.
@@ -80,7 +84,7 @@ Notez `PCI Device Name` que pour chaque adaptateur recevant des mises à jour de
 . Réinitialisez chaque carte à l'aide de l' `mlxfwreset`utilitaire pour appliquer le nouveau micrologiciel.
 +
 
-NOTE: Certaines mises à jour du micrologiciel peuvent nécessiter un redémarrage pour appliquer la mise à jour. Reportez-vous link:https://docs.nvidia.com/networking/display/mftv4310/mlxfwreset+%E2%80%93+loading+firmware+on+5th+generation+devices+tool#src-3566627427_safe-id-bWx4ZndyZXNldOKAk0xvYWRpbmdGaXJtd2FyZW9uNXRoR2VuZXJhdGlvbkRldmljZXNUb29sLW1seGZ3cmVzZXRMaW1pdGF0aW9ucw["Limitations de mlxfwreset de NVIDIA"^]à pour obtenir des conseils. Si un redémarrage est nécessaire, effectuez un redémarrage au lieu de réinitialiser les adaptateurs.
+NOTE: Certaines mises à jour du micrologiciel peuvent nécessiter un redémarrage pour appliquer la mise à jour. Consultez link:https://networking-docs.nvidia.com/mftswum/4201/mlxfwreset-loading-firmware-on-5th-generation-devices-tool#id-(4.20.1)mlxfwreset–LoadingFirmwareon5thGenerationDevicesTool-mlxfwresetLimitations["Limitations de mlxfwreset de NVIDIA"^] pour obtenir des instructions. Si un redémarrage est nécessaire, effectuez un redémarrage plutôt que de réinitialiser les adaptateurs.
 
 +
 .. Arrêter le service openhm :
@@ -146,6 +150,7 @@ Répétez ces étapes pour chaque nœud de fichiers du cluster jusqu'à ce que t
 
 
 
+[[two-node-cluster-update-approach]]
 == Approche de mise à jour des clusters à deux nœuds
 
 Cette approche est recommandée pour les clusters haute disponibilité à deux nœuds uniquement. Cette approche est similaire à une mise à jour propagée, mais elle comprend des étapes supplémentaires pour éviter tout temps d'indisponibilité des services lorsque les services de cluster d'un nœud sont arrêtés.
@@ -188,7 +193,7 @@ Notez `PCI Device Name` que pour chaque adaptateur recevant des mises à jour de
 . Réinitialisez chaque carte à l'aide de l' `mlxfwreset`utilitaire pour appliquer le nouveau micrologiciel.
 +
 
-NOTE: Certaines mises à jour du micrologiciel peuvent nécessiter un redémarrage pour appliquer la mise à jour. Reportez-vous link:https://docs.nvidia.com/networking/display/mftv4310/mlxfwreset+%E2%80%93+loading+firmware+on+5th+generation+devices+tool#src-3566627427_safe-id-bWx4ZndyZXNldOKAk0xvYWRpbmdGaXJtd2FyZW9uNXRoR2VuZXJhdGlvbkRldmljZXNUb29sLW1seGZ3cmVzZXRMaW1pdGF0aW9ucw["Limitations de mlxfwreset de NVIDIA"^]à pour obtenir des conseils. Si un redémarrage est nécessaire, effectuez un redémarrage au lieu de réinitialiser les adaptateurs.
+NOTE: Certaines mises à jour du micrologiciel peuvent nécessiter un redémarrage pour appliquer la mise à jour. Consultez link:https://networking-docs.nvidia.com/mftswum/4201/mlxfwreset-loading-firmware-on-5th-generation-devices-tool#id-(4.20.1)mlxfwreset–LoadingFirmwareon5thGenerationDevicesTool-mlxfwresetLimitations["Limitations de mlxfwreset de NVIDIA"^] pour obtenir des instructions. Si un redémarrage est nécessaire, effectuez un redémarrage plutôt que de réinitialiser les adaptateurs.
 
 +
 .. Arrêter le service openhm :

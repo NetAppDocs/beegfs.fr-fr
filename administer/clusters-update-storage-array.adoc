@@ -18,6 +18,7 @@ Suivez ces étapes pour mettre à niveau les composants de la baie de stockage E
 
 
 
+[[overview]]
 == Présentation
 
 En conservant les baies de stockage NetApp E-Series de votre cluster de haute disponibilité à jour avec le dernier firmware, vous bénéficiez de performances optimales et d'une sécurité renforcée. Les mises à jour du micrologiciel de la baie de stockage sont appliquées via le système d'exploitation SANtricity, la NVSRAM et les fichiers de micrologiciel du lecteur.
@@ -27,6 +28,7 @@ NOTE: Bien que les baies de stockage puissent être mises à niveau avec le clus
 
 
 
+[[block-node-upgrade-steps]]
 == Étapes de mise à niveau du nœud de bloc
 
 Les étapes suivantes expliquent comment mettre à jour le firmware des baies de stockage à l'aide de la `Netapp_Eseries.Santricity` collection Ansible. Avant de continuer, consultez le link:https://docs.netapp.com/us-en/e-series/upgrade-santricity/overview-upgrade-consider-task.html["Mise à niveau"^] pour la mise à jour des systèmes E-Series.

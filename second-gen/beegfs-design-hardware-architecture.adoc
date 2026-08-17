@@ -18,6 +18,7 @@ La configuration matérielle de BeeGFS sur NetApp inclut des nœuds de fichiers 
 
 
 
+[[file-node-configuration]]
 == Configuration de nœud de fichiers
 
 Les nœuds de fichiers ont deux sockets de CPU configurés en zones NUMA distinctes, qui incluent un accès local à un nombre égal de slots PCIe et de mémoire.
@@ -32,6 +33,7 @@ Les processus BeeGFS sont épinglés à une zone NUMA particulière pour s'assur
 
 
 
+[[network-cabling-configuration]]
 == Configuration des câbles réseau
 
 Dans un élément de base, chaque nœud de fichier est connecté à deux nœuds de bloc grâce à quatre connexions InfiniBand redondantes. En outre, chaque nœud de fichiers dispose de quatre connexions redondantes au réseau de stockage InfiniBand.

@@ -18,6 +18,7 @@ Les services BeeGFS sont configurés à l'aide de variables de groupe (Group_var
 
 
 
+[[overview]]
 == Présentation
 
 Cette section décrit la définition du service de stockage BeeGFS. Au moins un service de ce type doit exister dans le(s) cluster(s) haute disponibilité pour un système de fichiers particulier. La configuration de ce service inclut la définition des éléments suivants :
@@ -30,6 +31,7 @@ Cette section décrit la définition du service de stockage BeeGFS. Au moins un 
 
 
 
+[[steps]]
 == Étapes
 
 En faisant référence link:architectures-plan-file-system.html["Planifiez le système de fichiers"^]à la  section, créez un fichier à `group_vars/stor_<ID>.yml` pour chaque service de stockage du cluster et remplissez-le comme suit :

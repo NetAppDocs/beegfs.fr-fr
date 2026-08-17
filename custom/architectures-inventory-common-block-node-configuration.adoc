@@ -18,6 +18,7 @@ Spécifiez une configuration de nœud de bloc commune à l'aide de variables de 
 
 
 
+[[overview]]
 == Présentation
 
 La configuration qui doit être pommeltée à tous les nœuds de bloc est définie à `group_vars/eseries_storage_systems.yml`. Elle comprend généralement :
@@ -32,6 +33,7 @@ NOTE: Les options définies dans ce fichier peuvent également être définies s
 
 
 
+[[steps]]
 == Étapes
 
 Créez le fichier `group_vars/eseries_storage_systems.yml` et remplir comme suit :

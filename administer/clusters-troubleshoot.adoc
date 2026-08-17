@@ -18,16 +18,19 @@ Dépannage d'un cluster BeeGFS HA
 
 
 
+[[overview]]
 == Présentation
 
 Dans cette section, vous apprendrez à rechercher et à dépanner diverses défaillances et d'autres scénarios possibles liés à l'utilisation d'un cluster BeeGFS HA.
 
 
 
+[[troubleshooting-guides]]
 == Guides de dépannage
 
 
 
+[[investigating-unexpected-failovers]]
 === Étude des basculements inattendus
 
 Lorsqu'un nœud est fermé de façon inattendue et que ses services sont déplacés vers un autre nœud, la première étape doit s'assurer que le cluster indique des défaillances de ressource en bas du `pcs status`. En général, rien ne sera présent si l'escrime s'est terminé avec succès et que les ressources ont été redémarrées sur un autre noeud.
@@ -135,6 +138,7 @@ Si l'action d'escrime a échoué pour une raison quelconque, les services BeeGFS
 
 
 
+[[address-failed-resource-actions-found-at-the-bottom-of-pcs-status]]
 === Echec des actions de ressource de l'adresse (en bas de l'état pcs)
 
 Si une ressource requise pour exécuter un service BeeGFS échoue, un basculement est déclenché par le moniteur BeeGFS. Si cela se produit, il est probable qu'aucune « action de ressource ayant échoué » ne soit répertoriée `pcs status` en bas de et vous devez vous reporter aux étapes à suivre link:clusters-failover-failback.html["retour arrière après un basculement non planifié"^]pour savoir comment .
@@ -211,10 +215,12 @@ Si l'escrime est activé et que la ressource n'a pas été bloquée pour s'arrê
 
 
 
+[[common-issues]]
 == Problèmes courants
 
 
 
+[[beegfs-services-dont-failover-or-failback-when-requested]]
 === Les services BeeGFS ne sont pas de basculement ou de retour arrière sur demande
 
 *Question probable:* le `pcs resource relocate` la commande d'exécution a été exécutée mais n'a jamais réussi.
@@ -225,6 +231,7 @@ Si l'escrime est activé et que la ressource n'a pas été bloquée pour s'arrê
 
 
 
+[[one-node-in-pcs-status-shows-standby-on-fail-when-fencing-is-disabled]]
 === Un nœud dans l'état pcs affiche "attente (on-fail)" lorsque l'escrime est désactivé
 
 *Problème probable :* Pacemaker n'a pas pu confirmer avec succès que toutes les ressources ont été arrêtées sur le nœud qui a échoué.
@@ -237,6 +244,7 @@ Si l'escrime est activé et que la ressource n'a pas été bloquée pour s'arrê
 
 
 
+[[after-an-unexpected-failover-resources-show-started-on-fail-in-pcs-status-when-fencing-is-enabled]]
 === Après un basculement inattendu, les ressources indiquent « Started (on-fail) » (démarré (on-fail)) dans l'état pcs (pcs) lorsque l'escrime est activé
 
 *Problème probable :* Un problème s'est produit qui a déclenché un basculement, mais Pacemaker n'a pas pu vérifier que le nœud était clôturé. Cela pourrait se produire parce que l'escrime était mal configuré ou qu'il y avait un problème avec l'agent d'escrime (par exemple : l'unité de distribution d'alimentation était déconnectée du réseau).
@@ -255,10 +263,12 @@ CAUTION: Si le nœud que vous spécifiez n'est pas réellement arrêté, mais qu
 
 
 
+[[common-troubleshooting-tasks]]
 == Tâches courantes de dépannage
 
 
 
+[[restart-individual-beegfs-services]]
 === Redémarrez chaque service BeeGFS
 
 Normalement, si un service BeeGFS doit être redémarré (par exemple pour faciliter une modification de la configuration), il doit être fait en mettant à jour l'inventaire Ansible et en exécutant de nouveau le manuel de vente. Dans certains cas, il peut être souhaitable de redémarrer des services individuels pour accélérer le dépannage, par exemple pour modifier le niveau de journalisation sans avoir à attendre l'exécution du manuel de vente dans son intégralité.

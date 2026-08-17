@@ -31,6 +31,7 @@ image:beegfs-design-image12.png["Configuration de la validation BeeGFS"]
 
 
 
+[[beegfs-file-striping]]
 == Répartition des fichiers BeeGFS
 
 Les systèmes de fichiers parallèles ont notamment pour avantage de répartir les fichiers individuels sur plusieurs cibles de stockage, qui peuvent représenter des volumes sur les mêmes systèmes de stockage sous-jacents ou différents.
@@ -41,6 +42,7 @@ Pour obtenir les meilleures performances, les motifs de bande ont été ajustés
 
 
 
+[[ior-bandwidth-tests-multiple-clients]]
 == Tests de bande passante IOR : plusieurs clients
 
 Les tests de bande passante IOR ont utilisé OpenMPI pour exécuter des travaux parallèles du générateur d'E/S synthétique IOR (disponible à partir de https://github.com/hpc/ior["GitHub HPC"^]) Sur l'ensemble des 10 nœuds clients à un ou plusieurs blocs de construction BeeGFS. Sauf mention contraire :
@@ -78,6 +80,7 @@ Comme on pouvait s'y attendre, la différence de performances entre l'élément 
 
 
 
+[[ior-bandwidth-tests-single-client]]
 == Tests de bande passante IOR : client unique
 
 Le test de bande passante IOR a utilisé OpenMPI pour exécuter plusieurs processus IOR à l'aide d'un seul serveur GPU hautes performances afin d'explorer les performances réalisables pour un même client.
@@ -97,6 +100,7 @@ Bien que les performances d'écriture et de lecture initiale soient supérieures
 
 
 
+[[metadata-performance-test]]
 == Test de performance des métadonnées
 
 Les tests de performance des métadonnées ont utilisé l'outil MDTest (inclus dans IOR) pour mesurer la performance des métadonnées de BeeGFS. Les tests ont utilisé OpenMPI pour exécuter des travaux parallèles sur les dix nœuds clients.
@@ -120,6 +124,7 @@ image:beegfs-design-image19.png["Deux métadonnées BeeGFS et éléments de base
 
 
 
+[[functional-validation]]
 == Validation fonctionnelle
 
 Dans le cadre de la validation de cette architecture, NetApp a effectué plusieurs tests fonctionnels :
@@ -137,6 +142,7 @@ NOTE: Il y a un problème connu (voir https://github.com/netappeseries/beegfs/bl
 
 
 
+[[nvidia-dgx-superpod-and-basepod-validation]]
 == Validation de NVIDIA DGX SuperPOD et BasePOD
 
 NetApp a validé une solution de stockage pour NVIDIA DGX A100 SuperPOD à l'aide d'un système de fichiers BeeGFS constitué de trois éléments de base avec les métadonnées plus le profil de configuration du stockage appliqué. L'effort de qualification a participé au test de la solution décrite par cette architecture NVA avec vingt serveurs GPU DGX A100 exécutant plusieurs bancs d'essai de stockage, d'apprentissage machine et d'apprentissage profond. Basée sur la validation établie avec le DGX A100 SuperPOD de NVIDIA, la solution BeeGFS sur NetApp a été approuvée pour les systèmes DGX SuperPOD H100, H200 et B200. Cette extension repose sur le respect des bancs d'essai et des exigences système précédemment établis et validés avec le système NVIDIA DGX A100

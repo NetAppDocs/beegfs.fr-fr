@@ -18,6 +18,7 @@ Pour implémenter la solution BeeGFS sur NetApp, assurez-vous que votre environn
 
 
 
+[[requirements-overview]]
 == Aperçu des exigences
 
 Cette page détaille les exigences matérielles, logicielles et micrologicielles pour la mise en œuvre de BeeGFS sur NetApp éléments de base. Les exigences sont organisées dans les sections suivantes :
@@ -29,12 +30,14 @@ Cette page détaille les exigences matérielles, logicielles et micrologicielles
 
 
 
+[[hardware-requirements]]
 == Configuration matérielle requise
 
 Avant de commencer, assurez-vous que votre matériel respecte les spécifications suivantes pour un seul élément de base de la solution BeeGFS sur NetApp. Les composants exacts d'un déploiement particulier peuvent varier selon les exigences du client. Chaque nœud de fichiers doit respecter ou dépasser ces spécifications pour atteindre les performances attendues.
 
 
 
+[[file-node-requirements]]
 === Configuration requise pour les nœuds de fichiers
 
 [cols="10%,90%"]
@@ -70,6 +73,7 @@ IMPORTANT: Les nœuds de fichiers nécessitent un abonnement valide à Red Hat E
 
 
 
+[[block-node-requirements]]
 === Exigences relatives aux nœuds de bloc
 
 Chaque élément de base nécessite deux matrices E-Series du même modèle. Ne mélangez pas les modèles de matrices au sein d'un même élément de base.
@@ -97,6 +101,7 @@ Chaque élément de base nécessite deux matrices E-Series du même modèle. Ne 
 |===
 
 
+[[storage-network-switch-requirements]]
 === Exigences relatives aux commutateurs de réseau de stockage
 
 [cols="10%,90%"]
@@ -115,12 +120,14 @@ NOTE: D'autres commutateurs, tels que le NVIDIA MQM8700 Quantum, peuvent être u
 
 
 
+[[cabling-requirements]]
 === Exigences de câblage
 
 
 
 ==== Câbles du nœud bloc au nœud fichier
 
+[[block-file-cables]]
 Les connexions directes entre les nœuds de blocs et les nœuds de fichiers nécessitent les câbles suivants :
 
 [cols="15%,60%,25%"]
@@ -134,6 +141,7 @@ Les connexions directes entre les nœuds de blocs et les nœuds de fichiers néc
 
 ==== Câbles du nœud de fichiers au commutateur de stockage
 
+[[file-switch-cables]]
 Les types de câbles suivants sont recommandés pour le commutateur NVIDIA QM9700 Quantum 2. Choisissez entre fibre optique active et cuivre passif selon vos besoins. Les quantités sont indiquées par élément de base.
 
 [cols="20%,15%,10%,55%"]
@@ -154,6 +162,7 @@ Les types de câbles suivants sont recommandés pour le commutateur NVIDIA QM970
 |===
 
 
+[[software-deployment-requirements]]
 === Configuration requise pour le déploiement de logiciels
 
 Le tableau suivant répertorie les exigences logicielles déployées automatiquement dans le cadre du déploiement BeeGFS basé sur Ansible.
@@ -179,6 +188,7 @@ Le tableau suivant répertorie les exigences logicielles déployées automatique
 |===
 
 
+[[ansible-control-node-requirements]]
 === Configuration requise pour le nœud de contrôle Ansible
 
 La solution BeeGFS sur NetApp est déployée et gérée à partir d'un nœud de contrôle Ansible. Pour plus d'informations, reportez-vous à la section https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html["Documentation Ansible"^].

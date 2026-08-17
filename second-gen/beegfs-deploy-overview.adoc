@@ -18,6 +18,7 @@ BeeGFS sur NetApp peut être déployé sur des nœuds de blocs et de fichiers va
 
 
 
+[[ansible-collections-and-roles]]
 == Collections et rôles Ansible
 
 La solution BeeGFS sur NetApp est déployée à l'aide d'Ansible, un moteur d'automatisation IT couramment utilisé pour automatiser les déploiements d'applications. Ansible utilise une série de fichiers appelée collectivement l'inventaire, qui modélise le système de fichiers BeeGFS que vous souhaitez déployer.
@@ -31,6 +32,7 @@ NOTE: Comme de nombreuses étapes sont nécessaires pour déployer la solution B
 
 
 
+[[configuration-profiles-for-beegfs-building-blocks]]
 == Profils de configuration pour les éléments de base BeeGFS
 
 Les procédures de déploiement couvrent les profils de configuration suivants :
@@ -44,6 +46,7 @@ Ces profils illustrent la gamme complète de profils de configuration recommand�
 
 
 
+[[overview-of-deployment-steps]]
 == Présentation des étapes de déploiement
 
 Le déploiement implique plusieurs tâches générales :

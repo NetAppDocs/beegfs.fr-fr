@@ -18,10 +18,12 @@ summary: 'Étapes manuelles nécessaires pour configurer les nœuds de blocs et 
 
 
 
+[[file-nodes]]
 == Nœuds de fichiers
 
 
 
+[[configure-the-baseboard-management-controller-bmc]]
 === Configuration du contrôleur BMC (Baseboard Management Controller)
 
 Un contrôleur de gestion de la carte mère (BMC), parfois appelé processeur de service, est le nom générique de la fonctionnalité de gestion hors bande intégrée dans diverses plates-formes de serveurs qui fournissent un accès à distance même si le système d'exploitation n'est pas installé ou accessible. Les fournisseurs vendent généralement cette fonctionnalité avec leur propre marque. Par exemple, sur le Lenovo SR665, le contrôleur BMC est appelé XCC (Lenovo XClarity Controller).
@@ -33,12 +35,14 @@ NOTE: Si vous souhaitez utiliser Redfish pour l'escrime basé sur BMC, assurez-v
 
 
 
+[[tune-system-settings]]
 === Réglage des paramètres système
 
 À l'aide de l'interface de configuration du système (BIOS/UEFI), assurez-vous que les paramètres sont définis pour optimiser les performances. Les paramètres exacts et les valeurs optimales varient en fonction du modèle de serveur utilisé. Des conseils sont fournis pour link:../second-gen/beegfs-deploy-file-node-tuning.html["modèles de nœud de fichier vérifiés"^], sinon reportez-vous à la documentation du fournisseur du serveur et aux meilleures pratiques en fonction de votre modèle.
 
 
 
+[[install-an-operating-system]]
 === Installer un système d'exploitation
 
 Installez un système d'exploitation pris en charge en fonction de la configuration requise pour link:../second-gen/beegfs-technology-requirements.html#file-node-requirements["ici"^]le nœud de fichiers indiquée . Reportez-vous aux étapes supplémentaires ci-dessous en fonction de votre distribution Linux.
@@ -56,6 +60,7 @@ subscription-manager repo-override --repo=rhel-9-for-x86_64-highavailability-rpm
 ....
 
 
+[[configure-management-network]]
 === Configurer le réseau de gestion
 
 Configurez toutes les interfaces réseau nécessaires pour permettre la gestion intrabande du système d'exploitation. Les étapes exactes dépendent de la distribution et de la version spécifiques de Linux utilisées.
@@ -65,12 +70,14 @@ NOTE: Assurez-vous que SSH est activé et que toutes les interfaces de gestion s
 
 
 
+[[update-hca-and-hba-firmware]]
 === Mettre à jour le micrologiciel HCA et HBA
 
 Assurez-vous que tous les HBA et les HCA exécutent les versions de micrologiciel prises en charge répertoriées sur le link:https://imt.netapp.com/matrix/["Matrice d'interopérabilité NetApp"^] et mettez à niveau si nécessaire. Des recommandations supplémentaires pour les adaptateurs NVIDIA ConnectX sont disponibles link:../second-gen/beegfs-technology-requirements.html#file-node-requirements["ici"^].
 
 
 
+[[block-nodes]]
 == Nœuds de blocs
 
 Suivez les étapes à link:https://docs.netapp.com/us-en/e-series/getting-started/getup-run-concept.html["Mise en service de la gamme E-Series"^] pour configurer le port de gestion sur chaque contrôleur de nœud de bloc et définir éventuellement le nom de la matrice de stockage pour chaque système.

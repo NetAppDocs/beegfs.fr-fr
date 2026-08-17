@@ -18,12 +18,14 @@ Remplacement d'un noeud de fichier si le serveur d'origine est défectueux.
 
 
 
+[[overview]]
 == Présentation
 
 Voici un aperçu des étapes nécessaires au remplacement d'un noeud de fichier dans le cluster. Ces étapes présupposent que le nœud de fichier a échoué en raison d'un problème matériel et a été remplacé par un nouveau nœud de fichier identique.
 
 
 
+[[steps]]
 == Étapes :
 
 . Remplacez physiquement le nœud de fichiers et restaurez tout le câblage vers le nœud de bloc et le réseau de stockage.

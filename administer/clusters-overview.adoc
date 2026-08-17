@@ -18,12 +18,14 @@ Apprenez à gérer des clusters BeeGFS HA après leur déploiement.
 
 
 
+[[overview]]
 == Présentation
 
 Cette section s'adresse aux administrateurs de cluster qui doivent gérer des clusters BeeGFS HA après leur déploiement. Même ceux qui connaissent les clusters haute disponibilité Linux doivent lire attentivement ce guide car il existe un certain nombre de différences dans la gestion du cluster, en particulier concernant la reconfiguration, grâce à l'utilisation d'Ansible.
 
 
 
+[[key-concepts]]
 == Concepts clés
 
 Certains de ces concepts sont présentés sur la link:../get-started/beegfs-terms.html["termes et concepts"]page principale, mais il est utile de les réintroduire dans le contexte d'un cluster BeeGFS HA :
@@ -50,6 +52,7 @@ Certains de ces concepts sont présentés sur la link:../get-started/beegfs-term
 
 
 
+[[common-terminology]]
 == Terminologie commune
 
 **Basculement:** chaque service BeeGFS a un noeud de fichier préféré qu'il fonctionne à moins que ce noeud ne tombe en panne. Lorsqu'un service BeeGFS s'exécute sur un nœud de fichier non préféré/secondaire, il est dit qu'il est en cours de basculement.

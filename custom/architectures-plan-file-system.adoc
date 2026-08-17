@@ -18,12 +18,14 @@ Planifiez le déploiement du système de fichiers avant de créer l'inventaire A
 
 
 
+[[overview]]
 == Présentation
 
 Avant de déployer le système de fichiers, vous devez définir les adresses IP, les ports et autres configurations requis par tous les nœuds de fichiers, les nœuds de bloc et les services BeeGFS s'exécutant dans le cluster. La configuration exacte varie en fonction de l'architecture du cluster, mais cette section définit les meilleures pratiques et les étapes à suivre généralement applicables.
 
 
 
+[[steps]]
 == Étapes
 
 . Si vous utilisez un protocole de stockage IP (iser, iSCSI, NVMe/IB ou NVMe/RoCE) pour connecter les nœuds de fichiers aux nœuds de bloc, remplissez la fiche suivante pour chaque élément de base. Chaque connexion directe dans un seul bloc de construction doit disposer d'un sous-réseau unique et ne doit pas se chevaucher avec les sous-réseaux utilisés pour la connectivité client-serveur.

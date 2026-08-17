@@ -18,6 +18,7 @@ La solution BeeGFS sur NetApp inclut des critères de conception architecturale 
 
 
 
+[[building-block-architecture]]
 == Architecture modulaire
 
 Le système de fichiers BeeGFS peut être déployé et adapté de différentes manières, en fonction des besoins en stockage. Par exemple, certains cas d'utilisation mettant en avant de nombreux fichiers de petite taille bénéficieront d'une performance et d'une capacité supplémentaires de métadonnées, tandis que les cas d'utilisation comportant moins de fichiers volumineux peuvent favoriser une capacité de stockage et des performances supérieures pour le contenu réel des fichiers. Ces considérations ont un impact sur les différentes dimensions du déploiement d'un système de fichiers parallèle, ce qui ajoute de la complexité à la conception et au déploiement d'un système de fichiers.
@@ -35,6 +36,7 @@ Pour plus de détails, voir <<Conception matérielle vérifiée>>.
 
 
 
+[[file-system-services]]
 == Services de système de fichiers
 
 Le système de fichiers BeeGFS inclut les principaux services suivants :
@@ -55,6 +57,7 @@ Les quatre services principaux fonctionnent sur un large éventail de distributi
 
 
 
+[[ha-architecture]]
 == Architecture HAUTE DISPONIBILITÉ
 
 BeeGFS sur NetApp étend les fonctionnalités de la version BeeGFS Enterprise en créant une solution entièrement intégrée avec du matériel NetApp qui offre une architecture haute disponibilité (HA) de disque partagé.
@@ -70,6 +73,7 @@ Pour plus d'informations, voir https://www.netapp.com/blog/high-availability-bee
 
 
 
+[[verified-nodes]]
 == Nœuds vérifiés
 
 La solution BeeGFS sur NetApp a vérifié les nœuds répertoriés ci-dessous.
@@ -89,6 +93,7 @@ La solution BeeGFS sur NetApp a vérifié les nœuds répertoriés ci-dessous.
 |===
 
 
+[[verified-hardware-design]]
 == Conception matérielle vérifiée
 
 Les éléments de base de la solution (illustrés dans la figure suivante) utilisent les serveurs de nœuds de fichiers vérifiés pour la couche de fichiers BeeGFS et deux systèmes de stockage EF600 comme couche bloc.
@@ -106,6 +111,7 @@ image:beegfs-design-image3.png["Évolutivité des clusters BeeGFS haute disponib
 
 
 
+[[ansible]]
 == Ansible
 
 BeeGFS sur NetApp est fourni et déployé à l'aide d'Ansible Automation, qui est hébergé sur GitHub et Ansible Galaxy (la collection BeeGFS est disponible sur https://galaxy.ansible.com/netapp_eseries/beegfs["Galaxy Ansible"^] et https://github.com/netappeseries/beegfs/["NetApp E-Series GitHub"^]). Bien qu'Ansible soit principalement testé avec le matériel utilisé pour assembler les éléments de base BeeGFS, vous pouvez le configurer de sorte qu'il s'exécute sur presque tous les serveurs x86 à l'aide d'une distribution Linux prise en charge.

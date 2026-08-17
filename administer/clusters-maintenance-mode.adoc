@@ -18,6 +18,7 @@ Empêcher le cluster de haute disponibilité de réagir accidentellement aux cha
 
 
 
+[[overview]]
 == Présentation
 
 Le fait de mettre le cluster en mode maintenance désactive toute la surveillance des ressources et empêche Pacemaker de déplacer ou de gérer des ressources dans le cluster. Toutes les ressources restent exécutées sur leurs nœuds d'origine, peu importe la condition de panne temporaire qui empêcherait leur accès. Voici quelques scénarios recommandés/utiles :
@@ -31,6 +32,7 @@ En général, la seule raison de placer manuellement le cluster en mode de maint
 
 
 
+[[steps]]
 == Étapes
 
 Pour vérifier si le cluster est en mode maintenance, exécutez :

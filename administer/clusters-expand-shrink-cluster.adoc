@@ -18,16 +18,19 @@ Ajouter ou supprimer des éléments de base du cluster.
 
 
 
+[[overview]]
 == Présentation
 
 Cette section présente divers éléments à prendre en compte et diverses options pour ajuster la taille de votre cluster BeeGFS HA. La taille du cluster est généralement ajustée en ajoutant ou en supprimant des éléments de base, qui sont généralement deux nœuds de fichiers configurés comme une paire haute disponibilité. Il est également possible d'ajouter ou de supprimer des nœuds de fichiers individuels (ou d'autres types de nœuds de cluster) si nécessaire.
 
 
 
+[[adding-a-building-block-to-the-cluster]]
 == Ajout d'un module au cluster
 
 
 
+[[considerations]]
 === Considérations
 
 Le développement du cluster par l'ajout d'éléments de base supplémentaires est un processus simple. Avant de commencer, les restrictions s'imposent concernant le nombre minimal et maximal de nœuds de cluster dans chaque cluster haute disponibilité. Déterminer si vous devez ajouter des nœuds au cluster haute disponibilité existant ou créer un nouveau cluster haute disponibilité. En général, chaque élément de base se compose de deux nœuds de fichiers, mais trois nœuds représentent le nombre minimum de nœuds par cluster (pour établir le quorum) et dix est le nombre maximum recommandé (testé). Pour les scénarios avancés, il est possible d'ajouter un nœud « Tiebreaker » unique qui n'exécute aucun service BeeGFS lors du déploiement d'un cluster à deux nœuds. Si vous envisagez un tel déploiement, contactez le support NetApp.
@@ -39,6 +42,7 @@ TIP: N'oubliez pas qu'un seul système de fichiers BeeGFS peut consister en plus
 
 
 
+[[steps]]
 === Étapes
 
 Lorsque vous ajoutez un élément de base à votre cluster, vous devez créer les `host_vars` fichiers pour chacun des nouveaux nœuds de fichiers et nœuds de blocs (baies E-Series). Les noms de ces hôtes doivent être ajoutés à l'inventaire, ainsi que les nouvelles ressources à créer. Les `group_vars` fichiers correspondants devront être créés pour chaque nouvelle ressource. Voir la link:../custom/architectures-overview.html["utilisez des architectures personnalisées"^] section pour plus de détails.
@@ -51,6 +55,7 @@ ansible-playbook -i <inventory>.yml <playbook>.yml
 ----
 
 
+[[removing-a-building-block-from-the-cluster]]
 == Retrait d'un module du cluster
 
 Il y a plusieurs considérations à garder à l'esprit lorsque vous devez retirer un élément de construction, par exemple :

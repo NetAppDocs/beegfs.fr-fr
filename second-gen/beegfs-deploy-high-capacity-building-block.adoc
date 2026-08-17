@@ -20,6 +20,7 @@ image:high-capacity-rack-diagram.png["Diagramme de rack haute capacité"]
 
 
 
+[[controllers]]
 == Contrôleurs
 
 Pour les éléments de base haute capacité, les contrôleurs EF600 doivent être remplacés par des contrôleurs EF300, chacun avec une HIC Cascade installée pour l'extension SAS. Chaque nœud de bloc aura un nombre minimal de SSD NVMe dans le boîtier de la baie pour le stockage de métadonnées BeeGFS et sera relié à des tiroirs d'extension dotés de disques durs NL-SAS pour les volumes de stockage BeeGFS.
@@ -28,6 +29,7 @@ La configuration du noeud fichier à noeud bloc reste la même.
 
 
 
+[[drive-placement]]
 == Placement des disques
 
 Chaque nœud de bloc exige un minimum de 4 SSD NVMe pour le stockage de métadonnées BeeGFS. Ces lecteurs doivent être placés dans les emplacements les plus extérieurs du boîtier.
@@ -36,6 +38,7 @@ image:high-capacity-drive-slots-diagram.png["Diagramme de slot de lecteur haute 
 
 
 
+[[expansion-trays]]
 == Bacs d'extension
 
 L'élément de base haute capacité peut être dimensionné avec 1-7, 60 tiroirs d'extension de disque par matrice de stockage.

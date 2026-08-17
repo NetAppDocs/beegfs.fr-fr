@@ -18,12 +18,14 @@ Vérifiez le déploiement du système de fichiers avant de mettre le système en
 
 
 
+[[overview]]
 == Présentation
 
 Avant de placer le système de fichiers BeeGFS en production, effectuez quelques vérifications.
 
 
 
+[[steps]]
 === Étapes
 
 . Connectez-vous à n'importe quel client et exécutez les opérations suivantes pour vous assurer que tous les nœuds attendus sont présents/accessibles, et qu'il n'y a pas d'incohérences ou d'autres problèmes signalés :

@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: deploy-features-integration/beegfs-csi-driver/csi-driver-tshoot.html 
+permalink: deploy-features-integration/beegfs-features-csi-driver/beegfs-features-csi-driver-tshoot.html 
 keywords: BeeGFS Features, CSI, Driver, Troubleshoot, Troubleshooting 
 summary: Dépannage du déploiement du pilote BeeGFS CSI. 
 ---
@@ -26,6 +26,7 @@ Pour un dépannage approfondi, reportez-vous à la documentation.link:https://gi
 
 
 
+[[kubernetes-setup-common-error-scenarios]]
 == Configuration de Kubernetes - Scénarios d'erreurs courants
 
 Exemple d'erreur lors de la tentative de récupération de tous les pods actuellement en cours d'exécution sur le nœud :
@@ -48,6 +49,7 @@ Il existe plusieurs domaines clés à examiner pour aborder des problèmes de ce
 
 
 
+[[error-in-containerd]]
 == Erreur dans le conteneur
 
 Vérifiez l'état du démon containerd :
@@ -75,6 +77,7 @@ journalctl -u containerd
 ----
 
 
+[[error-in-kubelet]]
 == Erreur dans kubelet
 
 Vérifiez l'état du service kubelet :
@@ -112,6 +115,7 @@ tail -f /var/log/syslog | grep kubelet
 ----
 
 
+[[swap-issue]]
 == Problème d'échange
 
 Si vous rencontrez des erreurs liées à « swap », désactivez swap et redémarrez le kubelet.
@@ -146,6 +150,7 @@ NOTE: Le swap est généralement activé par défaut lors de l'installation du s
 
 
 
+[[troubleshooting-beegfs-client-and-helperd-configuration]]
 == Dépannage de la configuration du client BeeGFS et de Helperd
 
 . Examinez la configuration dans `/etc/beegfs/beegfs-client.conf` .
@@ -232,6 +237,7 @@ tuneNumWorkers                = 2
 
 
 
+[[troubleshooting-beegfs-controller-issues]]
 == Dépannage des problèmes du contrôleur BeeGFS
 
 Après le déploiement des superpositions, vous pouvez voir certaines ressources avec un statut EN ATTENTE dans la sortie de kubectl get all.
@@ -256,6 +262,7 @@ kubectl describe pod <pod-name> -n beegfs-csi | grep -i image
 ----
 
 
+[[checking-pod-logs]]
 === Vérification des journaux du pod
 
 Si un pod ne démarre pas ou se trouve dans un `CrashLoopBackOff` état, consultez ses journaux pour plus de détails :

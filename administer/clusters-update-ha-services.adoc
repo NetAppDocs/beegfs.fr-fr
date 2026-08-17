@@ -18,12 +18,14 @@ Procédez comme suit pour mettre à niveau les packages Pacemaker et Corosync da
 
 
 
+[[overview]]
 == Présentation
 
 La mise à niveau de Pacemaker et Corosync garantit que le cluster bénéficie de nouvelles fonctionnalités, de nouveaux correctifs de sécurité et d'améliorations des performances.
 
 
 
+[[upgrade-approach]]
 == Approche de mise à niveau
 
 Il existe deux approches recommandées pour la mise à niveau d'un cluster : une mise à niveau par déploiement ou un arrêt complet du cluster. Chaque approche a ses propres avantages et inconvénients. La procédure de mise à niveau peut varier en fonction de la version de votre Pacemaker. Reportez-vous à la documentation de ClusterLabs link:https://clusterlabs.org/projects/pacemaker/doc/3.0/Pacemaker_Administration/html/upgrading.html["Mise à niveau d'un cluster Pacemaker"^]pour déterminer quelle approche utiliser. Avant de suivre une approche de mise à niveau, vérifiez que :
@@ -35,6 +37,7 @@ Il existe deux approches recommandées pour la mise à niveau d'un cluster : une
 
 
 
+[[rolling-upgrade]]
 === Mise à jour du déploiement
 
 Cette méthode implique de supprimer chaque nœud du cluster, de le mettre à niveau, puis de le réintégrer dans le cluster jusqu'à ce que tous les nœuds exécutent la nouvelle version. Cette approche assure le fonctionnement continu du cluster, ce qui est idéal pour les clusters haute disponibilité de plus grande taille, mais comporte le risque d'exécuter des versions mixtes lors du processus. Cette approche doit être évitée dans un cluster à deux nœuds.
@@ -129,6 +132,7 @@ NOTE: Si le `Current DC` indique « version limite », un nœud du cluster fonct
 
 
 
+[[complete-cluster-shutdown]]
 === Arrêt complet du cluster
 
 Dans cette approche, tous les nœuds et toutes les ressources du cluster sont arrêtés, les nœuds sont mis à niveau, puis le cluster est redémarré. Cette approche est nécessaire si les versions Pacemaker et Corosync ne prennent pas en charge une configuration en version mixte.

@@ -22,6 +22,7 @@ Notez que ces estimations sont les meilleures performances au cas par cas. Les a
 
 
 
+[[performance-sizing]]
 == Dimensionnement de la performance
 
 Le tableau suivant indique le dimensionnement de performance recommandé.
@@ -41,6 +42,7 @@ L'utilisation de fonctions telles que les listes de contrôle d'accès et le nom
 
 
 
+[[capacity-sizing-for-metadata-storage-building-blocks]]
 == Dimensionnement de la capacité pour les métadonnées + éléments de base du stockage
 
 Le tableau suivant indique le dimensionnement de la capacité recommandé pour les métadonnées et les éléments de base du stockage.
@@ -65,6 +67,7 @@ NOTE: Lors du dimensionnement des métadonnées et des éléments de base de sto
 
 
 
+[[capacity-sizing-for-storage-only-building-blocks]]
 == Dimensionnement de la capacité pour les éléments de base uniquement destinés au stockage
 
 Le tableau suivant indique la règle générale de dimensionnement de la capacité pour les éléments de base uniquement liés au stockage.

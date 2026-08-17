@@ -20,6 +20,7 @@ Bien que BeeGFS fournit des performances raisonnables, NetApp a développé un e
 
 
 
+[[performance-tuning-for-file-nodes]]
 == L'ajustement des performances des nœuds de fichiers
 
 Les paramètres de réglage disponibles que vous pouvez configurer sont les suivants :
@@ -79,6 +80,7 @@ Vous pouvez augmenter la taille maximale des demandes de lecture pour les applic
 
 
 
+[[performance-tuning-for-block-nodes]]
 == Réglage des performances des nœuds en mode bloc
 
 En fonction des profils de configuration appliqués à un élément de base BeeGFS particulier, les groupes de volumes configurés sur les nœuds de blocs changent légèrement. Par exemple, avec un nœud de bloc EF600 de 24 disques :

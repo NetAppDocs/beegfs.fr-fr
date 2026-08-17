@@ -20,6 +20,7 @@ L'inventaire Ansible est une structure de répertoires répertoriant les nœuds 
 
 
 
+[[ansible-modules-and-roles]]
 == Modules et rôles Ansible
 
 Pour appliquer la configuration décrite dans l'inventaire Ansible, utilisez les différents modules et rôles Ansible fournis dans la collection NetApp E-Series (disponible dans le https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_ha_7_4["NetApp E-Series BeeGFS GitHub"^]) qui déploient la solution de bout en bout.
@@ -33,6 +34,7 @@ NOTE: Bien que la procédure de déploiement tenter d'offrir suffisamment de dé
 
 
 
+[[inventory-layout-for-a-beegfs-ha-cluster]]
 == Disposition de l'inventaire pour un cluster BeeGFS HA
 
 Définissez un cluster BeeGFS haute disponibilité à l'aide de la structure d'inventaire Ansible.

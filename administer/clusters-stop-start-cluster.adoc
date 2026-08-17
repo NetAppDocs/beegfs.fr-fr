@@ -18,12 +18,14 @@ Arrêt et démarrage du cluster HA avec élégance.
 
 
 
+[[overview]]
 == Présentation
 
 Cette section décrit comment arrêter et redémarrer le cluster BeeGFS. Par exemple, la maintenance électrique ou la migration d'un data Center à l'autre ou d'un rack peut être nécessaire.
 
 
 
+[[steps]]
 == Étapes
 
 Si, pour une raison quelconque, vous devez arrêter tout le cluster BeeGFS et arrêter tous les services exécutent :

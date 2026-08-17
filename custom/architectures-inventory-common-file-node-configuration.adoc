@@ -18,6 +18,7 @@ Spécifiez une configuration de nœud de fichier commune à l'aide de variables 
 
 
 
+[[overview]]
 == Présentation
 
 La configuration qui doit pommier à tous les noeuds de fichiers est définie à `group_vars/ha_cluster.yml`. Elle comprend généralement :
@@ -36,6 +37,7 @@ NOTE: Les options définies dans ce fichier peuvent également être définies s
 
 
 
+[[steps]]
 == Étapes
 
 Créez le fichier `group_vars/ha_cluster.yml` et remplir comme suit :
@@ -259,6 +261,7 @@ Cliquez link:https://github.com/NetApp/beegfs/blob/master/getting_started/beegfs
 
 
 
+[[using-hdr-200gb-infiniband-with-netapp-ef600-block-nodes]]
 === Utilisation de la technologie InfiniBand HDR (200 Go) avec des nœuds de bloc NetApp EF600 :
 
 Pour utiliser l'InfiniBand HDR (200 Go) avec l'EF600, le gestionnaire de sous-réseau doit prendre en charge la virtualisation. Si les nœuds de fichiers et de blocs sont connectés à l'aide d'un commutateur, celui-ci doit être activé sur le gestionnaire de sous-réseau pour la structure globale.

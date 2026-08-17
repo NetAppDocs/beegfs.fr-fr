@@ -18,6 +18,7 @@ Spécifiez la configuration pour les nœuds de bloc individuels à l'aide de var
 
 
 
+[[overview]]
 == Présentation
 
 Cette section décrit le remplissage d'un `host_vars/<BLOCK_NODE_HOSTNAME>.yml` fichier pour chaque nœud de bloc du cluster. Ces fichiers ne doivent contenir qu'une configuration unique à un nœud de bloc particulier. Les points suivants sont généralement utilisés :
@@ -30,6 +31,7 @@ Cette section décrit le remplissage d'un `host_vars/<BLOCK_NODE_HOSTNAME>.yml` 
 
 
 
+[[steps]]
 == Étapes
 
 En référençant le schéma d'adressage IP défini dans la link:architectures-plan-file-system.html["Planifiez le système de fichiers"^] section, pour chaque nœud de bloc du cluster, créez un fichier `host_vars/<BLOCK_NODE_HOSTNAME>/yml` et remplissez-le comme suit :
@@ -136,6 +138,7 @@ Cliquez sur link:https://github.com/NetApp/beegfs/blob/master/getting_started/be
 
 
 
+[[using-hdr-200gb-infiniband-or-200gb-roce-with-netapp-ef600-block-nodes]]
 === Avec l'utilisation de HDR (200 Go) InfiniBand ou RoCE 200 Gb avec les nœuds de bloc NetApp EF600 :
 
 Pour utiliser l'InfiniBand HDR (200 Go) avec la baie EF600, une seconde IP « virtuelle » doit être configurée pour chaque port physique. Vous trouverez ci-dessous un exemple de configuration correcte d'une baie EF600 équipée du système HIC InfiniBand HDR à deux ports :

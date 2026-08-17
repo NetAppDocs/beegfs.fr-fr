@@ -18,12 +18,14 @@ Spécifiez quels nœuds de fichiers peuvent exécuter chaque service BeeGFS à l
 
 
 
+[[overview]]
 == Présentation
 
 Cette section explique comment créer le `inventory.yml` fichier. Cela inclut la liste de tous les nœuds de bloc et la spécification des nœuds de fichier pouvant exécuter chaque service BeeGFS.
 
 
 
+[[steps]]
 == Étapes
 
 Créez le fichier `inventory.yml` et remplir comme suit :

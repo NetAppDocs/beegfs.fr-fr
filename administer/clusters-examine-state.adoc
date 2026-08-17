@@ -18,12 +18,14 @@ Utilisez les pièces pour voir l'état du bloc d'instruments.
 
 
 
+[[overview]]
 == Présentation
 
 Exécution `pcs status` À partir de n'importe quel nœud de cluster est le moyen le plus simple de voir l'état global du cluster et l'état de chaque ressource (par exemple, les services BeeGFS et leurs dépendances). Cette section présente ce que vous trouverez dans les résultats du `pcs status` commande.
 
 
 
+[[understanding-the-output-from-pcs-status]]
 == Présentation de la sortie de `pcs status`
 
 Courez `pcs status` Sur n'importe quel nœud de cluster où les services de cluster (Pacemaker et Corosync) sont démarrés. Le haut de la sortie affiche un récapitulatif du cluster :

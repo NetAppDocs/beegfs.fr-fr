@@ -18,16 +18,19 @@ Spécifiez les tâches à exécuter pour déployer le cluster BeeGFS HA à l'aid
 
 
 
+[[overview]]
 == Présentation
 
 Cette section explique comment assembler le manuel de vente standard utilisé pour déployer/gérer BeeGFS sur NetApp.
 
 
 
+[[steps]]
 == Étapes
 
 
 
+[[create-the-ansible-playbook]]
 === Créez le manuel de vente Ansible
 
 Créez le fichier `playbook.yml` et remplir comme suit :
@@ -124,6 +127,7 @@ Cliquez link:https://github.com/NetApp/beegfs/blob/master/getting_started/beegfs
 
 
 
+[[install-the-netapp-ansible-collections]]
 === Installez les collections NetApp Ansible
 
 La collection BeeGFS pour Ansible et toutes les dépendances sont conservées link:https://galaxy.ansible.com/netapp_eseries/beegfs["Galaxy Ansible"^]. Sur votre nœud de contrôle Ansible, exécutez la commande suivante pour installer la dernière version :
@@ -140,6 +144,7 @@ ansible-galaxy collection install netapp_eseries.beegfs:==<MAJOR>.<MINOR>.<PATCH
 ----
 
 
+[[run-the-playbook]]
 === À l'aide du manuel de vente
 
 À partir du répertoire de votre nœud de contrôle Ansible contenant le `inventory.yml` et `playbook.yml` exécutez le playbook comme suit :

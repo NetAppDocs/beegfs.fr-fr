@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: deploy-features-integration/beegfs-csi-driver/csi-driver-deploy.html 
+permalink: deploy-features-integration/beegfs-features-csi-driver/beegfs-features-csi-driver-deploy.html 
 keywords: BeeGFS Features, CSI, Driver 
 summary: Instructions de déploiement du pilote BeeGFS CSI. 
 ---
@@ -18,12 +18,14 @@ Instructions pour le déploiement du pilote CSI BeeGFS dans un environnement Kub
 
 
 
+[[air-gapped-deployment]]
 == Déploiement isolé
 
 Pour effectuer un déploiement hors ligne (Air-Gapped), les fichiers de configuration YAML de Kubernetes et les images de conteneur requises doivent être téléchargés au préalable sur un système ayant accès à Internet.  Ces fichiers doivent ensuite être transférés vers le ou les nœuds cibles où le pilote CSI sera installé.
 
 
 
+[[retrieve-the-driver-and-images]]
 === Récupérer le pilote et les images
 
 Pour déployer le pilote BeeGFS CSI dans un environnement isolé du réseau électrique, procédez comme suit.
@@ -83,6 +85,7 @@ Répétez cette commande d'exportation pour chaque image requise, en remplaçant
 
 
 
+[[import-the-required-images]]
 === Importer les images requises
 
 . Accédez à `/home/<User>/beegfs-csi-images` répertoire où les images sont enregistrées et importer chaque image à l'aide de containerd. Par exemple:
@@ -105,6 +108,7 @@ crictl images
 
 
 
+[[configure-and-deploy-the-csi-driver-overlays]]
 === Configurer et déployer les superpositions de pilotes CSI
 
 . Accédez à `/home/<User>/beegfs-csi-driver` annuaire.
@@ -189,6 +193,7 @@ NOTE: Le `patchesStrategicMerge` Cette section vous permet d'appliquer des corre
 
 
 
+[[install-the-beegfs-csi-driver]]
 === Installez le pilote CSI BeeGFS
 
 . Installez le pilote BeeGFS CSI en utilisant votre superposition personnalisée.  Cette étape applique toutes vos modifications de configuration, y compris l'utilisation d'images importées localement et la politique d'extraction d'images mise à jour.
@@ -205,12 +210,14 @@ kubectl apply -k deploy/k8s/overlays/beegfs-overlay
 
 
 
+[[online-deployment]]
 == Déploiement en ligne
 
 Si vos nœuds Kubernetes ont accès à Internet, vous pouvez déployer directement le pilote CSI BeeGFS sans avoir besoin de télécharger ou de transférer manuellement les images de conteneur.  Une fois déployés, les pods téléchargeront automatiquement les images depuis image-hub et lanceront les services nécessaires.
 
 
 
+[[retrieve-the-driver-repository]]
 === Récupérer le référentiel de pilotes
 
 . Clonez le dépôt GitHub du pilote CSI BeeGFS sur votre système local :
@@ -223,6 +230,7 @@ git clone https://github.com/ThinkParQ/beegfs-csi-driver.git
 
 
 
+[[configure-the-driver]]
 === Configurer le pilote
 
 . Accédez au répertoire du dépôt cloné et, si nécessaire, mettez à jour les fichiers de configuration dans le répertoire de superposition par défaut :
@@ -258,6 +266,7 @@ NOTE: Le pilote CSI exige que le fichier de configuration soit situé à l'empla
 
 
 
+[[install-the-beegfs-csi-driver]]
 === Installez le pilote CSI BeeGFS
 
 . Installez la superposition par défaut en utilisant `kubectl` .  Cela extraira automatiquement les images requises de leurs registres respectifs et créera toutes les ressources Kubernetes nécessaires :
@@ -298,12 +307,14 @@ NOTE: Utiliser `kubectl apply -k` pour les superpositions (répertoires contenan
 
 
 
+[[deploy-example-application]]
 == Déployer une application d'exemple
 
 Après avoir installé le pilote BeeGFS CSI (en mode Air-Gapped ou en ligne), vous pouvez déployer l'application d'exemple pour valider votre configuration.  Cet exemple comprend une StorageClass, une PersistentVolumeClaim (PVC) et un pod utilisant le pilote CSI BeeGFS.
 
 
 
+[[before-deploying]]
 === Avant le déploiement :
 
 . Obtenez l'adresse IP du nœud de gestion BeeGFS :
@@ -355,6 +366,7 @@ allowVolumeExpansion: true
 
 
 
+[[deploy]]
 === Déployer
 
 . Déployez les fichiers de l'application d'exemple :

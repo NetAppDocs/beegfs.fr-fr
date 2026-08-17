@@ -18,12 +18,14 @@ Déploiement et gestion de clusters BeeGFS HA à l'aide d'Ansible.
 
 
 
+[[overview]]
 == Présentation
 
 Les sections précédentes ont parcouru les étapes nécessaires à la création d'un inventaire Ansible représentant un cluster BeeGFS HA. Cette section présente l'automatisation Ansible développée par NetApp pour déployer et gérer le cluster.
 
 
 
+[[ansible-key-concepts]]
 == Ansible : principaux concepts
 
 Avant de commencer, il est utile de connaître quelques concepts clés Ansible :
@@ -53,6 +55,7 @@ Avant de commencer, il est utile de connaître quelques concepts clés Ansible :
 
 
 
+[[beegfs-ha-role-for-ansible-key-concepts]]
 == BeeGFS HA role pour Ansible : concepts clés
 
 Tout l'automatisation nécessaire au déploiement et à la gestion de chaque version de BeeGFS sur NetApp est un rôle Ansible et distribué dans le link:https://galaxy.ansible.com/netapp_eseries/beegfs["NetApp E-Series Ansible Collection pour BeeGFS"^]:

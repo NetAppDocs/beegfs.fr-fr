@@ -18,6 +18,7 @@ La configuration logicielle de BeeGFS sur NetApp inclut des composants réseau B
 
 
 
+[[beegfs-network-configuration]]
 == Configuration réseau BeeGFS
 
 La configuration du réseau BeeGFS comprend les composants suivants.
@@ -68,6 +69,7 @@ Stripe pattern details:
 ....
 
 
+[[ef600-block-node-configuration]]
 == Configuration de nœud en mode bloc EF600
 
 Les nœuds de blocs comprennent deux contrôleurs RAID actifs/actifs avec accès partagé au même ensemble de lecteurs. En général, chaque contrôleur possède la moitié des volumes configurés sur le système, mais il peut reprendre l'autre contrôleur si nécessaire.
@@ -86,6 +88,7 @@ Dans l'exemple précédent, les clients et les services serveur préfèrent comm
 
 
 
+[[beegfs-file-node-configuration]]
 == Configuration de nœud de fichier BeeGFS
 
 Les nœuds de fichiers BeeGFS sont configurés dans un cluster haute disponibilité (HA) pour faciliter le basculement des services BeeGFS entre plusieurs nœuds de fichiers.
@@ -96,6 +99,7 @@ NetApp a rédigé et étendu plusieurs agents de ressources OCF (Open Cluster Fr
 
 
 
+[[beegfs-ha-clusters]]
 == Clusters HA BeeGFS
 
 De façon générale, lorsque vous démarrez un service BeeGFS (avec ou sans HA), quelques ressources doivent être en place :

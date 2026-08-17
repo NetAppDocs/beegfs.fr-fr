@@ -18,16 +18,19 @@ Vous pouvez également utiliser Ansible pour configurer les clients BeeGFS et mo
 
 
 
+[[overview]]
 == Présentation
 
 Pour accéder aux systèmes de fichiers BeeGFS, vous devez installer et configurer le client BeeGFS sur chaque nœud qui doit monter le système de fichiers. Cette section explique comment effectuer ces tâches à l'aide de la disponible link:https://github.com/netappeseries/beegfs/tree/master/roles/beegfs_client["Rôle Ansible"^].
 
 
 
+[[steps]]
 == Étapes
 
 
 
+[[create-the-client-inventory-file]]
 === Créez le fichier d'inventaire client
 
 . Si nécessaire, configurez une connexion SSH sans mot de passe depuis le nœud de contrôle Ansible vers chacun des hôtes que vous souhaitez configurer comme clients BeeGFS :
@@ -169,6 +172,7 @@ Pour obtenir la liste complète des paramètres pris en charge et des informatio
 
 
 
+[[create-the-beegfs-client-playbook-file]]
 === Créez le fichier BeeGFS client PlayBook
 
 . Créez un nouveau fichier `client_playbook.yml`
@@ -227,6 +231,7 @@ Pour un exemple complet de guide client, cliquez link:https://github.com/NetApp/
 
 
 
+[[run-the-beegfs-client-playbook]]
 === Exécutez le manuel de vente BeeGFS client
 
 Pour installer/construire le client et monter BeeGFS, exécutez la commande suivante :

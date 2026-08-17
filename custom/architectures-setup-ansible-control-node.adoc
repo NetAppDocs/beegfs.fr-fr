@@ -18,6 +18,7 @@ Configurez un nœud de contrôle Ansible pour déployer et gérer le système de
 
 
 
+[[overview]]
 == Présentation
 
 Un nœud de contrôle Ansible est une machine Linux physique ou virtuelle utilisée pour gérer le cluster. Il doit répondre aux exigences suivantes :

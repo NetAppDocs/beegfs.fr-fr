@@ -48,7 +48,7 @@ image:driveslots.png["Emplacements de disque EF600"]
 
 
 
-. Connectez les nœuds de bloc et de fichier à l'aide de link:beegfs-technology-requirements.html#block-file-cables["Câbles en cuivre à connexion directe InfiniBand 200 Gbit/s HDR"]la , de manière à ce qu'ils correspondent à la topologie illustrée dans la figure suivante.
+. Connectez les nœuds de bloc et de fichier à l'aide de la link:beegfs-technology-requirements.html#file-node-requirements["Câbles en cuivre à connexion directe InfiniBand 200 Gbit/s HDR"], de sorte qu'ils correspondent à la topologie illustrée dans la figure suivante.
 +
 image:directattachcable-sr665v3.png["Câblage à connexion directe SR665V3"]
 
@@ -56,7 +56,7 @@ image:directattachcable-sr665v3.png["Câblage à connexion directe SR665V3"]
 
 NOTE: Les nœuds répartis entre plusieurs éléments de base ne sont jamais directement connectés. Chaque élément de base doit être considéré comme une unité autonome et toute communication entre les éléments de base se fait par le biais de commutateurs réseau.
 
-. Connectez les ports InfiniBand restants du nœud de fichiers au commutateur InfiniBand du réseau de stockage en utilisant le link:beegfs-technology-requirements.html#file-switch-cables["Câbles InfiniBand de 2 M."] commutateur de stockage InfiniBand spécifique à votre commutateur de stockage InfiniBand.
+. Connectez les ports InfiniBand restants du nœud de fichiers au commutateur InfiniBand du réseau de stockage en utilisant le link:beegfs-technology-requirements.html#storage-network-switch-requirements["Câbles InfiniBand de 2 M."] spécifique à votre commutateur de stockage InfiniBand.
 +
 Lorsque vous utilisez des câbles de séparation pour connecter le commutateur de stockage à des nœuds de fichiers, un câble doit être branché à partir du commutateur et se connecter aux ports indiqués en vert clair. Un autre câble de séparation doit être branché à l'extérieur du commutateur et se connecter aux ports indiqués en vert foncé.
 

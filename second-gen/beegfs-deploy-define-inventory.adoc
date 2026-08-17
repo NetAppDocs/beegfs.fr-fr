@@ -25,6 +25,7 @@ NOTE: Dans les sections suivantes et ceci, ajustez selon les besoins pour géné
 
 
 
+[[step-1-create-the-ansible-inventory-file]]
 == Étape 1 : créez le fichier d'inventaire Ansible
 
 .Étapes
@@ -54,6 +55,7 @@ Dans les sections suivantes, vous allez créer des groupes Ansible supplémentai
 
 
 
+[[step-2-configure-the-inventory-for-a-management-metadata-and-storage-building-block]]
 == Étape 2 : configurer l'inventaire d'un élément de base de gestion, de métadonnées et de stockage
 
 Le premier élément de base ou du cluster doit inclure le service de gestion BeeGFS ainsi que les services de métadonnées et de stockage :
@@ -181,7 +183,7 @@ beegfs_targets:
 ....
 +
 
-NOTE: La taille du volume est indiquée sous forme de pourcentage du pool de stockage global (également appelé groupe de volumes). NetApp recommande fortement de laisser une certaine capacité libre dans chaque pool afin d'autoriser le sur-provisionnement SSD (pour plus d'informations, voir https://www.netapp.com/pdf.html?item=/media/17009-tr4800pdf.pdf["Présentation de la baie NetApp EF600"^]). Le pool de stockage, `beegfs_m1_m2_m5_m6`, alloue également 1% de la capacité du pool pour le service de gestion. Ainsi, pour les volumes de métadonnées dans le pool de stockage, `beegfs_m1_m2_m5_m6`, Si vous utilisez des disques de 1,92 To ou 3,84 To, définissez cette valeur sur `21.25`; Pour les lecteurs 7,65 To, définissez cette valeur sur `22.25`; Et pour les disques de 15,3 To, définissez cette valeur sur `23.75`.
+NOTE: La taille du volume est spécifiée en pourcentage de la capacité totale du pool de stockage (également appelé groupe de volumes). NetApp recommande fortement de laisser de la capacité libre dans chaque pool afin de permettre le surprovisionnement des SSD (pour plus d’informations, voir  https://www.netapp.com/pdf.html?item=/media/17009-tr4800.pdf["Présentation de la baie NetApp EF600"^]). Le pool de stockage, `beegfs_m1_m2_m5_m6`, alloue également 1 % de la capacité du pool au service de gestion. Ainsi, pour les volumes de métadonnées dans le pool de stockage, `beegfs_m1_m2_m5_m6`, lorsque des disques de 1,92 To ou 3,84 To sont utilisés, définissez cette valeur sur  `21.25`; pour les disques de 7,65 To, définissez cette valeur sur  `22.25`; et pour les disques de 15,3 To, définissez cette valeur sur  `23.75`.
 
 +
 |===
@@ -269,6 +271,7 @@ NOTE: Pour connaître la taille correcte à utiliser, reportez-vous à la sectio
 
 
 
+[[step-3-configure-the-inventory-for-a-metadata-storage-building-block]]
 == Étape 3 : configurer l'inventaire d'un élément de base métadonnées + stockage
 
 Elles expliquent comment configurer un inventaire Ansible pour un élément de base de stockage + de métadonnées BeeGFS.
@@ -458,6 +461,7 @@ NOTE: Pour connaître la taille correcte à utiliser, voir link:beegfs-deploy-re
 
 
 
+[[step-4-configure-the-inventory-for-a-storage-only-building-block]]
 == Étape 4 : configurer l'inventaire pour un élément de base stockage uniquement
 
 Procédure de configuration d'un inventaire Ansible pour un élément de base BeeGFS Storage uniquement. La différence majeure entre l'installation de la configuration pour un bloc de métadonnées + stockage et un bloc modulaire uniquement destiné au stockage, c'est l'omission de tous les groupes de ressources de métadonnées et la modification `criteria_drive_count` de 10 à 12 pour chaque pool de stockage.

@@ -18,6 +18,7 @@ Pour définir la configuration des nœuds de fichiers et de blocs, vous créez u
 
 
 
+[[step-1-define-configuration-for-all-building-blocks]]
 == Étape 1 : définir la configuration de tous les éléments de base
 
 Définissez la configuration qui s'applique à tous les blocs de construction, quel que soit le profil de configuration que vous pouvez appliquer individuellement.
@@ -78,6 +79,7 @@ bmc_password: <PASSWORD>
 
 
 
+[[step-2-define-configuration-for-individual-file-and-block-nodes]]
 == Étape 2 : définir la configuration des nœuds de fichiers et de blocs individuels
 
 Définissez la configuration qui s'applique aux nœuds de fichiers individuels et aux nœuds d'élément de base individuels.
@@ -174,6 +176,7 @@ eseries_controller_nvme_ib_port:
 
 
 
+[[step-3-define-configuration-that-should-apply-to-all-file-and-block-nodes]]
 == Étape 3 : définissez une configuration à appliquer à tous les nœuds de fichiers et de blocs
 
 Vous pouvez définir une configuration commune à un groupe d'hôtes sous `group_vars` dans un nom de fichier correspondant au groupe. Cela empêche de répéter une configuration partagée à plusieurs endroits.
@@ -194,6 +197,7 @@ beegfs_ha_ntp_server_pools:  # Modify the NTP server addressess if desired.
 ....
 
 
+[[step-4-define-configuration-that-should-apply-to-all-file-nodes]]
 == Étape 4 : définissez la configuration qui doit s'appliquer à tous les nœuds de fichiers
 
 La configuration partagée pour les nœuds de fichiers est définie dans un groupe appelé `ha_cluster`. Les étapes de cette section créent la configuration qui doit être incluse dans le `group_vars/ha_cluster.yml` fichier.
@@ -366,6 +370,7 @@ NOTE: Lors des tests de vérification, `randomrobin` Est généralement utilisé
 
 
 
+[[step-5-define-the-configuration-for-the-common-block-node]]
 == Étape 5 : définir la configuration pour le nœud de bloc commun
 
 La configuration partagée pour les nœuds de bloc est définie dans un groupe appelé `eseries_storage_systems`. Les étapes de cette section créent la configuration qui doit être incluse dans le `group_vars/ eseries_storage_systems.yml` fichier.
