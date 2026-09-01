@@ -10,7 +10,7 @@ summary: Configurez le chiffrement TLS pour une communication sécurisée entre 
 :nofooter: 
 :icons: font
 :linkattrs: 
-:imagesdir: ../../media/
+:imagesdir: ../media/
 
 
 [role="lead"]
