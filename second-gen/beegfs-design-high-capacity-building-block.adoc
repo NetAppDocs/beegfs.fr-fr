@@ -25,7 +25,7 @@ Les configurations matérielles et logicielles de l'élément de base haute capa
 
 Les clients qui déploient un design d'éléments de base haute capacité n'utilisent probablement que la configuration de type élément de base, qui comprend la gestion BeeGFS, les métadonnées et les services de stockage pour chaque nœud. Pour garantir une rentabilité accrue, les nœuds de stockage haute capacité doivent provisionner des volumes de métadonnées sur les disques NVMe du boîtier de contrôleur EF300 et provisionner les volumes de stockage sur les disques NL-SAS des tiroirs d'extension.
 
-image:high-capacity-rack-diagram.png[""]
+image:high-capacity-rack-diagram.png["Un schéma illustrant un rack haute capacité BeeGFS avec des plateaux d’extension EF300 NVMe et NL-SAS IOM"]
 
 
 
