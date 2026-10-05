@@ -2305,4 +2305,5 @@
   <block id="c6c1a150fe2c0ea553b51e7aa7980236" category="list-text">Connectez les ports InfiniBand restants du nœud de fichiers au commutateur InfiniBand du réseau de stockage en utilisant le <block ref="6641f55c02ab74028026a655dbf4927b" category="inline-link-macro-rx"></block> spécifique à votre commutateur de stockage InfiniBand.</block>
   <block id="bba78d7694815dc44320a2e751daa486" category="inline-image-macro">Un schéma illustrant un rack haute capacité BeeGFS avec des plateaux d’extension EF300 NVMe et NL-SAS IOM</block>
   <block id="1155b61fff96aa3c1a731c367cdcc208" category="paragraph"><block ref="1155b61fff96aa3c1a731c367cdcc208" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="5d19eac40cba34daeadf75a699707ab3" category="summary">Décidez quand utiliser Ansible ou l’outil de ligne de commandes pcs pour gérer un cluster BeeGFS HA. Utilisez Ansible pour le déploiement et les modifications de configuration, et pcs pour les modifications temporaires de l’état du cluster.</block>
 </blocks>
