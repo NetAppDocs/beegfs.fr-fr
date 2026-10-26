@@ -51,7 +51,7 @@ ansible_become_password: <PASSWORD>
 ----
 +
 
-WARNING: En particulier pour les environnements de production, ne stockez pas de mots de passe en texte brut. Utilisez plutôt Ansible Vault (voir link:https://docs.ansible.com/ansible/latest/vault_guide/index.html["Cryptage de contenu avec Ansible Vault"^]) ou le `--ask-become-pass` option lors de l'exécution du manuel de vente. Si le `ansible_ssh_user` est déjà root, alors vous pouvez éventuellement omettre le `ansible_become_password`.
+WARNING: En particulier pour les environnements de production, ne stockez pas les mots de passe en clair. Utilisez plutôt Ansible Vault (voir link:https://docs.ansible.com/projects/ansible/latest/vault_guide/index.html["Cryptage de contenu avec Ansible Vault"^]) ou l’option  `--ask-become-pass` lors de l’exécution du playbook. Si l’utilisateur  `ansible_ssh_user` est déjà root, vous pouvez alors éventuellement omettre l’option  `ansible_become_password`.
 
 . Si vous configurez des adresses IP statiques sur des interfaces ethernet ou InfiniBand (par exemple, des adresses IP de cluster) et que plusieurs interfaces se trouvent dans le même sous-réseau IP (par exemple si ib0 utilise 192.168.1.10/24 et ib1 utilise 192.168.1.11/24), Des tables et des règles de routage IP supplémentaires doivent être configurées pour que le support multihomé fonctionne correctement. Activez simplement le crochet de configuration de l'interface réseau fourni comme suit :
 +
