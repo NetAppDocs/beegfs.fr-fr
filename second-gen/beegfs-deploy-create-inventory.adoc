@@ -42,7 +42,7 @@ Sauf indication contraire, tous les fichiers et répertoires créés dans cette 
 +
 `packages`
 
-. Créez un sous-répertoire pour les mots de passe de cluster et sécurisez le fichier en le chiffrant à l'aide d'Ansible Vault (voir https://docs.ansible.com/ansible/latest/user_guide/vault.html["Cryptage de contenu avec Ansible Vault"^]) :
+. Créez un sous-répertoire pour les mots de passe du cluster et sécurisez le fichier en le chiffrant avec Ansible Vault (voir https://docs.ansible.com/projects/ansible/latest/vault_guide/index.html["Cryptage de contenu avec Ansible Vault"^]):
 +
 .. Créez le sous-répertoire `group_vars/all`.
 .. Dans le `group_vars/all` répertoire, créez un fichier de mots de passe intitulé `passwords.yml`.
@@ -182,7 +182,7 @@ eseries_controller_nvme_ib_port:
 Vous pouvez définir une configuration commune à un groupe d'hôtes sous `group_vars` dans un nom de fichier correspondant au groupe. Cela empêche de répéter une configuration partagée à plusieurs endroits.
 
 .Description de la tâche
-Les hôtes peuvent se trouver dans plusieurs groupes et au moment de l'exécution, Ansible choisit les variables qui s'appliquent à un hôte donné en fonction de ses règles de priorité de variable. (Pour plus d'informations sur ces règles, consultez la documentation Ansible pour https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html["Utilisation de variables"^].)
+Un hôte peut appartenir à plusieurs groupes et, lors de l'exécution, Ansible détermine les variables applicables à un hôte donné en fonction de ses règles de priorité. (Pour plus d'informations sur ces règles, consultez la documentation Ansible sur https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_variables.html["Utilisation de variables"^].)
 
 Les affectations hôte-groupe sont définies dans le fichier d'inventaire Ansible réel, créé à la fin de cette procédure.
 

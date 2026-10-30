@@ -191,7 +191,7 @@ Le tableau suivant répertorie les exigences logicielles déployées automatique
 [[ansible-control-node-requirements]]
 === Configuration requise pour le nœud de contrôle Ansible
 
-La solution BeeGFS sur NetApp est déployée et gérée à partir d'un nœud de contrôle Ansible. Pour plus d'informations, reportez-vous à la section https://docs.ansible.com/ansible/latest/network/getting_started/basic_concepts.html["Documentation Ansible"^].
+La solution BeeGFS on NetApp est déployée et gérée à partir d’un nœud de contrôle Ansible. Pour plus d'informations, consultez la https://docs.ansible.com/projects/ansible/latest/network/getting_started/basic_concepts.html["Documentation Ansible"^].
 
 Les exigences logicielles répertoriées dans les tableaux suivants sont spécifiques à la version de la collection NetApp BeeGFS Ansible indiquée ci-dessous.
 

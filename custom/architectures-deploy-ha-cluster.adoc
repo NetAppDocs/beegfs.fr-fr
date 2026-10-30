@@ -35,7 +35,7 @@ Cette section explique comment assembler le manuel de vente standard utilisé po
 
 Créez le fichier `playbook.yml` et remplir comme suit :
 
-. Commencez par définir un ensemble de tâches (communément appelé « a ») link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html#playbook-syntax["lecture"^]) Qui ne doit s'exécuter que sur les nœuds de blocs NetApp E-Series. Nous utilisons une tâche de pause avant d'exécuter l'installation (pour éviter les exécutions accidentelles de PlayBook), puis importez la `nar_santricity_management` rôle. Ce rôle permet d'appliquer toute configuration système générale définie dans `group_vars/eseries_storage_systems.yml` ou individuellement `host_vars/<BLOCK NODE>.yml` fichiers.
+. Commencez par définir un ensemble de tâches (généralement appelé link:https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_intro.html#playbook-syntax["lecture"^]) qui ne doivent s’exécuter que sur les nœuds de bloc NetApp E-Series. Nous utilisons une tâche de pause pour demander une confirmation avant d’exécuter l’installation (afin d’éviter les exécutions accidentelles de playbooks), puis nous importons le rôle  `nar_santricity_management`. Ce rôle gère l’application de toute configuration système générale définie dans  `group_vars/eseries_storage_systems.yml` ou dans des fichiers individuels  `host_vars/<BLOCK NODE>.yml`.
 +
 [source, yaml]
 ----

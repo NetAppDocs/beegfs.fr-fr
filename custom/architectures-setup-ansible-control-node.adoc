@@ -24,7 +24,7 @@ Configurez un nœud de contrôle Ansible pour déployer et gérer le système de
 Un nœud de contrôle Ansible est une machine Linux physique ou virtuelle utilisée pour gérer le cluster. Il doit répondre aux exigences suivantes :
 
 * Rencontrez le link:../second-gen/beegfs-technology-requirements.html#ansible-control-node-requirements["de formation"^]rôle haute disponibilité BeeGFS, y compris les versions installées d'Ansible, Python et tous les packages Python supplémentaires.
-* Rencontrez l'agent link:https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#control-node-requirements["Configuration requise pour le nœud de contrôle Ansible"^] y compris les versions de système d'exploitation.
+* Découvrez les versions officielles link:https://docs.ansible.com/projects/ansible/latest/installation_guide/intro_installation.html#control-node-requirements["Configuration requise pour le nœud de contrôle Ansible"^], y compris celles du système d'exploitation.
 * Accès SSH et HTTPS à tous les nœuds de fichiers et de blocs.
 
 

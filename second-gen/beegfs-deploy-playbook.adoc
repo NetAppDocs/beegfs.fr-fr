@@ -103,7 +103,7 @@ ansible-playbook -i inventory.yml playbook.yml --forks 20
 ....
 +
 
-NOTE:  `forks`Pour les déploiements de plus grande envergure, il est recommandé de remplacer le nombre par défaut de fourches (5) à l'aide du paramètre afin d'augmenter le nombre d'hôtes configurés en parallèle par Ansible. (Pour plus d'informations, voir https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html["Contrôle de l'exécution de PlayBook"^].) Le paramètre valeur maximale dépend de la puissance de traitement disponible sur le nœud de contrôle Ansible. L'exemple ci-dessus de 20 a été exécuté sur un nœud de contrôle Ansible virtuel avec 4 processeurs (Intel(R) Xeon(R) Gold 6146 CPU à 3,20 GHz).
+NOTE: Surtout pour les déploiements de grande envergure, il est recommandé de remplacer le nombre de forks par défaut (5) à l’aide du `forks` paramètre afin d’augmenter le nombre d’hôtes qu’Ansible configure en parallèle. (Pour plus d’informations, consultez https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_strategies.html["Contrôle de l'exécution de PlayBook"^].) Le réglage de la valeur maximale dépend de la puissance de traitement disponible sur le nœud de contrôle Ansible. L’exemple ci-dessus de 20 a été exécuté sur un nœud de contrôle Ansible virtuel avec 4 CPUs (Intel(R) Xeon(R) Gold 6146 CPU @ 3.20GHz).
 
 +
 Selon la taille du déploiement et les performances réseau entre le nœud de contrôle Ansible et les nœuds de fichier et bloc BeeGFS, la durée de déploiement peut varier.
