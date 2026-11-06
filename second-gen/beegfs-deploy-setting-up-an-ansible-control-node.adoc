@@ -16,7 +16,7 @@ summary: Pour configurer un nœud de contrôle Ansible, identifiez une machine v
 [role="lead"]
 Pour configurer un nœud de contrôle Ansible, vous devez désigner une machine virtuelle ou physique qui accède au réseau à tous les nœuds de blocs et de fichiers déployés pour la solution BeeGFS sur NetApp.
 
-Consultez le link:beegfs-technology-requirements.html#ansible-control-node-requirements["Exigences techniques"] pour obtenir la liste des versions de package recommandées. Les étapes suivantes ont été testées sur Ubuntu 22.04. Pour connaître les étapes spécifiques à votre distribution Linux préférée, consultez le https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html["Documentation Ansible"^].
+Consultez link:beegfs-technology-requirements.html#ansible-control-node-requirements["Exigences techniques"] pour obtenir la liste des versions de paquets recommandées. Les étapes suivantes ont été testées sur Ubuntu 22.04. Pour les étapes spécifiques à votre distribution Linux préférée, consultez le https://docs.ansible.com/projects/ansible/latest/installation_guide/intro_installation.html["Documentation Ansible"^].
 
 . À partir de votre nœud de contrôle Ansible, installez les packages Python et Python Virtual Environment suivants.
 +
